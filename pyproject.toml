@@ -1,0 +1,17 @@
+[project]
+name = "grupo-1-estadistica-computacional"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "José Ignacio Rodríguez", email = "69468130+joserodriguezc@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+grupo-1-estadistica-computacional = "grupo_1_estadistica_computacional:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
