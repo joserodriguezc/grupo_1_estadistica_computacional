@@ -19,3 +19,6 @@ dist/
 
 # VSCode
 .vscode
+
+anaconda_projects
+.virtual_documents

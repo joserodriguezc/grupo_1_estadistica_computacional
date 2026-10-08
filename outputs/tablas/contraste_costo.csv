@@ -1,0 +1,2 @@
+codigo,prueba,variable,unidad,n_atr,n_punt,media_atr,media_punt,de_atr,de_punt,diferencia,ic_inf,ic_sup,t,gl,p,d_av,decision_sin_ajuste
+T03,Welch: costo medio atrasadas vs puntuales,costo_producto,USD,6563,4436,207.28919701356088,214.49864743011722,48.05487615455104,47.75743150793949,-7.2094504165563364,-9.033620141138094,-5.385280691974579,-7.747115150973729,9557.164314564474,1.0357279058128193e-14,-0.15049038796223324,se rechaza H0
