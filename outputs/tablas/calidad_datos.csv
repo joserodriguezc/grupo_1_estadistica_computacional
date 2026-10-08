@@ -24,5 +24,3 @@ rango_valido,peso_gramos,>0,1001..7846,OK,
 extremos_regla_IQR,peso_gramos,conservar,bajo=0; alto=0,OK,
 duplicados_con_ID,todas,0,0,OK,
 duplicados_sin_ID,todas menos ID,0,0,OK,Perfiles idénticos no se eliminan automáticamente
-hallazgo_descuento,descuento_ofrecido,-,"descuento>10: n=2647, atraso=1.000; resto: n=8352, atraso=0.469",INFO,Exploratorio. Posible variable posterior al resultado; unidad no especificada
-hallazgo_peso,peso_gramos,-,"peso 2001-4000 g: n=1788, atraso=0.999; resto: n=9211, atraso=0.519",INFO,Exploratorio. Distribución con hueco entre 2.000 y 4.000 g
