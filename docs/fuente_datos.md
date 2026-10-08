@@ -3,7 +3,7 @@
 ## Identificación y responsabilidad
 
 **Proyecto:** Grupo 1 de Estadística computacional para la toma de decisiones.  
-**Tarea:** Y01 Obtener y registrar la fuente de datos.  
+**Tarea:** Obtener y registrar la fuente de datos.  
 **Responsable de ejecución:** José Ignacio Rodríguez.  
 **Revisor:** Sebastián Rojas.  
 **Estado:** Obtención y verificaciones iniciales completadas; revisión de Sebastián pendiente.
@@ -53,7 +53,7 @@ El tamaño y la huella corresponden al CSV extraído, no al ZIP. El registro `do
 | Categorías de bodega | A, B, C, D y F |
 | Comparación con la verificación del plan | Coinciden dimensiones, ausencia de celdas vacías y unicidad de ID |
 
-La ausencia de celdas vacías no descarta códigos especiales de ausencia ni sustituye la auditoría de tipos, dominios y rangos de Y03. La unicidad de ID no demuestra independencia ni ausencia de clientes repetidos.
+La ausencia de celdas vacías no descarta códigos especiales de ausencia ni sustituye la auditoría de calidad de datos (tipos, dominios y rangos). La unicidad de ID no demuestra independencia ni ausencia de clientes repetidos.
 
 Columnas originales, en su orden:
 
@@ -147,7 +147,7 @@ uv run python scripts/verificar_fuente.py --comparar ruta/a/Train.csv
 
 El script usa únicamente la biblioteca estándar de Python y no modifica los archivos.
 
-## Conservación y coordinación con S01
+## Conservación y coordinación con el análisis
 
 - `data/raw/ecommerce_shipping.csv`: `Train.csv` renombrado; entrada del análisis. No se edita.
 - `docs/fuente_datos.md`: este documento.
@@ -172,6 +172,6 @@ y volver a registrar el archivo con `git add --renormalize data/raw/ecommerce_sh
 - [x] Condición de licencia revisada y limitación documentada.
 - [x] Renombre a `ecommerce_shipping.csv` documentado y equivalencia de bytes verificada.
 - [x] Diferencia CRLF/LF explicada por `core.autocrlf` de Git.
-- [ ] Sebastián revisa la evidencia y confirma que S01 usará `data/raw/ecommerce_shipping.csv`.
+- [ ] Sebastián revisa la evidencia y confirma que el análisis usará `data/raw/ecommerce_shipping.csv`.
 
 Los criterios técnicos de obtención se cumplen. La revisión de Sebastián y la aclaración de los permisos de redistribución permanecen pendientes; no se afirma autorización de publicación del CSV.

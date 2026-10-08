@@ -42,7 +42,7 @@ Caracterizar los registros de envíos y analizar asociaciones preliminares entre
 
 Se realizará un **análisis observacional de los registros disponibles**, sin intervención experimental.
 
-La unidad de análisis provisional será **cada registro de envío asociado a un cliente**, pendiente de validación mediante el diccionario Y02.
+La unidad de análisis provisional será **cada registro de envío asociado a un cliente**, pendiente de validación mediante el diccionario de variables.
 
 La columna `ID` se utilizará para verificar identificación y unicidad. Se excluirá de estadísticas sustantivas y correlaciones.
 
@@ -58,7 +58,7 @@ Mientras no se documente el mecanismo de selección, no se afirmará representat
 
 La variable original de resultado será `Reached.on.Time_Y.N`.
 
-Se establece la siguiente codificación, que deberá corroborarse en Y02:
+Se establece la siguiente codificación, que deberá corroborarse en el diccionario de variables:
 
 | Valor | Interpretación | Etiqueta |
 |---|---|---|
@@ -197,7 +197,7 @@ Sea Δcosto la diferencia entre el costo medio de entregas atrasadas y puntuales
 - **H₀:** Δcosto = 0.
 - **H₁:** Δcosto ≠ 0.
 
-Se reportará la misma estructura de T02, expresando la diferencia en USD, sujeto a confirmación de la unidad en Y02.
+Se reportará la misma estructura de T02, expresando la diferencia en USD, sujeto a confirmación de la unidad en el diccionario de variables.
 
 **Magnitud de las diferencias**
 
@@ -254,7 +254,7 @@ Se aplicarán estas reglas de interpretación:
 
 ### 10. Calidad de datos y denominadores
 
-Antes de la inferencia, Y03 verificará esquema, tipos, nulos, dominios, duplicados, rangos y observaciones extremas.
+Antes de la inferencia, la auditoría de calidad de datos verificará esquema, tipos, nulos, dominios, duplicados, rangos y observaciones extremas.
 
 **Reglas de tratamiento**
 
@@ -330,15 +330,15 @@ Los bloques representan secuencia de trabajo y pueden ejecutarse dentro de una m
 
 Se trabajará con el 08-10-2026 a las 23:59 como límite para entrega y foro, salvo que Canvas establezca explícitamente otro plazo para este último.
 
-### 14. Cierre de J01
+### 14. Cierre del protocolo
 
-J01 podrá marcarse como completada cuando:
+El protocolo podrá marcarse como completado cuando:
 
-- [ ] Y02 confirme significado, unidades y dominios relevantes.
+- [ ] El diccionario de variables confirme significado, unidades y dominios relevantes.
 - [ ] Se corrobore la codificación 1 = atraso y 0 = a tiempo.
 - [ ] Yerko revise el protocolo.
 - [ ] El equipo valide las preguntas y los métodos.
 - [x] Se registre la hora oficial de cierre: 08-10-2026 a las 23:59, hora de Chile.
 - [ ] El protocolo quede disponible antes de ejecutar los contrastes.
 
-**Estado actual:** protocolo desarrollado; plazo confirmado por José. Pendiente de validación de Y02 y revisión del equipo.
+**Estado actual:** protocolo desarrollado; plazo confirmado por José. Pendiente de validación del diccionario de variables y revisión del equipo.

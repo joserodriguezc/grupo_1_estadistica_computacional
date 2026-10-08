@@ -1,4 +1,4 @@
-"""Verifica data/raw/ecommerce_shipping.csv (Train.csv renombrado) contra el registro Y01.
+"""Verifica data/raw/ecommerce_shipping.csv (Train.csv renombrado) contra docs/registro_fuente.json.
 
 No modifica archivos. Usa solo la biblioteca estándar.
 """

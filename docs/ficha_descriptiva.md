@@ -1,9 +1,9 @@
 # Ficha descriptiva del conjunto de datos
 
-**Tarea:** Y02 Construir diccionario y ficha descriptiva.
+**Tarea:** Construir diccionario y ficha descriptiva.
 **Responsable de ejecución:** Yerko Gallardo.
 **Revisor:** José Ignacio Rodríguez.
-**Estado:** Borrador para revisión; aprobación conjunta con J01 pendiente.
+**Estado:** Borrador para revisión; aprobación conjunta con el protocolo de análisis pendiente.
 
 Complementa `docs/fuente_datos.md` (procedencia e integridad) y `docs/diccionario_variables.csv` (detalle por variable, generado con `scripts/generar_diccionario.py`).
 
@@ -69,8 +69,8 @@ Distinciones aplicadas:
 
 ## 8. Decisiones iniciales
 
-- El archivo original no se modifica; las transformaciones se hacen en la carga analítica (Y03).
-- No se imputa ni se crean faltantes: no hay celdas vacías. Y03 revisará códigos especiales de ausencia.
+- El archivo original no se modifica; las transformaciones se hacen en la carga analítica.
+- No se imputa ni se crean faltantes: no hay celdas vacías. La auditoría de calidad de datos revisará códigos especiales de ausencia.
 - No se eliminan extremos válidos ni perfiles repetidos sin justificación.
 
 ## 9. Referencia
