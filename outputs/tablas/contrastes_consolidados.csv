@@ -1,0 +1,4 @@
+codigo,prueba,p,p_holm,decision_holm
+T01,Chi-cuadrado: modalidad y atraso,0.6895487627593786,0.6895487627593786,no se rechaza H0
+T02,Welch: peso medio atrasadas vs puntuales,1.9309302139796645e-180,5.792790641938994e-180,se rechaza H0
+T03,Welch: costo medio atrasadas vs puntuales,1.0357279058128193e-14,2.0714558116256385e-14,se rechaza H0
