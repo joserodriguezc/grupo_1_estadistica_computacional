@@ -129,16 +129,26 @@ Si se calculan correlaciones, se elegirá el método según la escala y la forma
 
 ### 7. Estimación e intervalos de confianza
 
-Se utilizará un nivel de confianza del **95 %**.
+Se utilizará un nivel de confianza del **95 %**, con la **aproximación normal (Teorema Central del Límite)** que solicita el curso en esta fase:
+
+- Media: x̄ ± z₀,₉₇₅ · s / √n
+- Proporción: p̂ ± z₀,₉₇₅ · √[p̂(1 − p̂) / n]
 
 | Parámetro | Estimador | Método del intervalo | Responsable |
 |---|---|---|---|
-| Proporción de atraso | Atrasos / registros con resultado válido | Wilson | José |
-| Peso medio | Media de `Weight_in_gms` | t de Student para una media | José |
-| Costo medio | Media de `Cost_of_the_Product` | t de Student para una media | Sebastián |
-| Llamadas medias | Media de `Customer_care_calls` | t de Student aproximado, con justificación | Yerko |
+| Proporción de atraso | Atrasos / registros con resultado válido | Normal para una proporción; requiere n·p̂ ≥ 10 y n·(1 − p̂) ≥ 10 | José |
+| Peso medio | Media de `Weight_in_gms` | Normal para una media | José |
+| Costo medio | Media de `Cost_of_the_Product` | Normal para una media | Sebastián |
+| Llamadas medias | Media de `Customer_care_calls` | Normal para una media (variable de conteo), con justificación | Yerko |
 
-El uso de intervalos t requiere revisar independencia, dispersión, tamaño efectivo y observaciones influyentes. Su justificación no dependerá únicamente del tamaño del archivo.
+El uso de la aproximación normal requiere revisar independencia, dispersión, tamaño efectivo y observaciones influyentes. Su justificación no dependerá únicamente del tamaño del archivo.
+
+**Buena práctica y recomendación.** Con muestras pequeñas o proporciones cercanas a 0 o 1 se recomienda:
+
+- **t de Student para medias**: al estimar σ con s, el cuantil t₀,₉₇₅,ₙ₋₁ incorpora esa incertidumbre adicional; con n pequeño, z produce intervalos demasiado estrechos.
+- **Wilson para proporciones**: el intervalo normal (Wald) puede tener cobertura bastante inferior a la nominal, salir de [0, 1] o tener ancho cero si p̂ = 0 o 1 (Brown, Cai y DasGupta, 2001, *Statistical Science*, 16(2), 101–133). Wilson invierte la prueba *score*, se mantiene dentro de [0, 1] y conserva una cobertura cercana al 95 %.
+
+En este archivo (n = 10.999, p̂ ≈ 0,60) ambos métodos difieren de la aproximación normal recién en la cuarta cifra decimal, por lo que se usa la aproximación normal sin pérdida. Si en análisis posteriores se trabaja con subgrupos pequeños o proporciones extremas, se usarán t y Wilson.
 
 Cada estimación incluirá parámetro, estimador, n efectivo, unidad, método, límites e interpretación.
 
