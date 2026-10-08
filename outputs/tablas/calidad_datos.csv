@@ -1,0 +1,28 @@
+control,variable,esperado,observado,estado,detalle
+filas,todas,10999,10999,OK,Sin exclusiones de filas
+nulos_totales,todas,0,0,OK,Sin imputación ni faltantes artificiales
+id_unico,id_envio,10999,10999,OK,No prueba independencia ni un registro por cliente
+dominio_categorico,bloque_bodega,"['A', 'B', 'C', 'D', 'F']","['A', 'B', 'C', 'D', 'F']",OK,F no se recodifica a E
+suma_frecuencias,bloque_bodega,10999,10999,OK,
+dominio_categorico,modalidad_envio,"['Flight', 'Road', 'Ship']","['Flight', 'Road', 'Ship']",OK,
+suma_frecuencias,modalidad_envio,10999,10999,OK,
+dominio_categorico,genero,"['F', 'M']","['F', 'M']",OK,
+suma_frecuencias,genero,10999,10999,OK,
+dominio_ordinal,importancia_producto,low<medium<high,"['high', 'low', 'medium']",OK,
+dominio_ordinal,calificacion_cliente,1..5,1..5,OK,
+resultado_binario,entrega_atrasada,"{0,1}","[0, 1]",OK,1 (atrasada)=6563; 0 (a tiempo)=4436
+alias_igual_original,entrega_atrasada,0,0,OK,
+rango_valido,llamadas_atencion,>0,2..7,OK,
+extremos_regla_IQR,llamadas_atencion,conservar,bajo=0; alto=0,OK,
+rango_valido,costo_producto,>0,96..310,OK,
+extremos_regla_IQR,costo_producto,conservar,bajo=0; alto=0,OK,
+rango_valido,compras_previas,>0,2..10,OK,
+extremos_regla_IQR,compras_previas,conservar,bajo=0; alto=1003,INFO,Valores válidos; no se eliminan
+rango_valido,descuento_ofrecido,>0,1..65,OK,
+extremos_regla_IQR,descuento_ofrecido,conservar,bajo=0; alto=2209,INFO,Valores válidos; no se eliminan
+rango_valido,peso_gramos,>0,1001..7846,OK,
+extremos_regla_IQR,peso_gramos,conservar,bajo=0; alto=0,OK,
+duplicados_con_ID,todas,0,0,OK,
+duplicados_sin_ID,todas menos ID,0,0,OK,Perfiles idénticos no se eliminan automáticamente
+hallazgo_descuento,descuento_ofrecido,-,"descuento>10: n=2647, atraso=1.000; resto: n=8352, atraso=0.469",INFO,Exploratorio. Posible variable posterior al resultado; unidad no especificada
+hallazgo_peso,peso_gramos,-,"peso 2001-4000 g: n=1788, atraso=0.999; resto: n=9211, atraso=0.519",INFO,Exploratorio. Distribución con hueco entre 2.000 y 4.000 g
