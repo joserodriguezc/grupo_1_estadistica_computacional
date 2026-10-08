@@ -1,0 +1,78 @@
+{
+  "tarea": "Y01",
+  "responsable": "José Ignacio Rodríguez",
+  "revisor": "Sebastián Rojas",
+  "estado_revision": "Pendiente",
+  "dataset": {
+    "title": "E-Commerce Shipping Data",
+    "publisher": "Prachi Gopalani",
+    "owner": "prachi13",
+    "ref": "prachi13/customer-analytics",
+    "id": 1176727,
+    "url": "https://www.kaggle.com/datasets/prachi13/customer-analytics",
+    "version": 1,
+    "version_published_at_utc": "2021-02-23T12:01:47.463Z",
+    "license_label": "Other (specified in description)",
+    "redistribution_permission": "No confirmado: la descripción consultada no establece términos explícitos."
+  },
+  "acquisition": {
+    "download_url": "https://www.kaggle.com/api/v1/datasets/download/prachi13/customer-analytics?datasetVersionNumber=1",
+    "metadata_url": "https://www.kaggle.com/api/v1/datasets/view/prachi13/customer-analytics",
+    "download_completed_at_utc": "2026-10-08T01:09:30.767294+00:00",
+    "download_completed_at_chile": "2026-10-07T22:09:30.767294-03:00",
+    "archive_size_bytes": 123784,
+    "archive_sha256": "8483d1682bdfd4cf8884b4b565aa2871490a5d854dbb48137532336d59680291",
+    "archive_member": "Train.csv",
+    "extraction": "Lectura binaria del miembro ZIP y escritura directa de sus bytes; sin reserializar el CSV."
+  },
+  "file": {
+    "path": "data/raw/ecommerce_shipping.csv",
+    "original_name": "Train.csv",
+    "project_name": "ecommerce_shipping.csv",
+    "rename_note": "Train.csv se renombró a ecommerce_shipping.csv al incorporarlo al proyecto; los bytes no se modificaron.",
+    "size_bytes": 440462,
+    "sha256": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+    "size_bytes_lf_normalized": 429462,
+    "sha256_lf_normalized": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6",
+    "encoding": "UTF-8 con BOM",
+    "line_endings": "CRLF",
+    "rows": 10999,
+    "columns": [
+      "ID",
+      "Warehouse_block",
+      "Mode_of_Shipment",
+      "Customer_care_calls",
+      "Customer_rating",
+      "Cost_of_the_Product",
+      "Prior_purchases",
+      "Product_importance",
+      "Gender",
+      "Discount_offered",
+      "Weight_in_gms",
+      "Reached.on.Time_Y.N"
+    ],
+    "column_count": 12,
+    "empty_cells": 0,
+    "unique_id_count": 10999,
+    "warehouse_categories": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "F"
+    ]
+  },
+  "git_storage": {
+    "repository": "https://github.com/joserodriguezc/grupo_1_estadistica_computacional",
+    "path": "data/raw/ecommerce_shipping.csv",
+    "added_in_commit": "4664077",
+    "snapshot_tree_sha": "f8de61f944040079a7655297ff791cd815675429",
+    "git_blob_sha1": "3a19806eccf1bcb198feeb28ac07cda12a7e1a2d",
+    "blob_line_endings": "LF",
+    "blob_sha256": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6",
+    "blob_size_bytes": 429462,
+    "working_copy_windows_autocrlf_true": "Bytes idénticos al Train.csv original (CRLF, SHA-256 dcdc3fd8…).",
+    "working_copy_without_autocrlf": "Forma normalizada LF; mismo contenido tabular.",
+    "cause": "core.autocrlf=true convirtió CRLF a LF al hacer commit; no hubo edición del contenido."
+  }
+}
