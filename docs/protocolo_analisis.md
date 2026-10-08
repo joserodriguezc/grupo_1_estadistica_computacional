@@ -42,7 +42,7 @@ Caracterizar los registros de envíos y analizar asociaciones preliminares entre
 
 Se realizará un **análisis observacional de los registros disponibles**, sin intervención experimental.
 
-La unidad de análisis provisional será **cada registro de envío asociado a un cliente**, pendiente de validación mediante el diccionario Y02.
+La unidad de análisis provisional será **cada registro de envío asociado a un cliente**, pendiente de validación mediante el diccionario de variables.
 
 La columna `ID` se utilizará para verificar identificación y unicidad. Se excluirá de estadísticas sustantivas y correlaciones.
 
@@ -58,7 +58,7 @@ Mientras no se documente el mecanismo de selección, no se afirmará representat
 
 La variable original de resultado será `Reached.on.Time_Y.N`.
 
-Se establece la siguiente codificación, que deberá corroborarse en Y02:
+Se establece la siguiente codificación, que deberá corroborarse en el diccionario de variables:
 
 | Valor | Interpretación | Etiqueta |
 |---|---|---|
@@ -87,7 +87,7 @@ Una diferencia positiva indicará que el promedio es mayor entre entregas atrasa
 | P06 | ¿Difiere el costo medio entre entregas atrasadas y puntuales? | Costo y resultado | Welch bilateral, diferencia e IC |
 | P07 | ¿Qué segmentos presentan patrones que ameriten investigar posteriormente? | Modalidad, bodega y variables numéricas | Comparaciones descriptivas y síntesis |
 
-P04, P05 y P06 conformarán la familia de tres contrastes planificados. P07 tendrá carácter exploratorio y no incorporará pruebas adicionales a esa familia.
+P04, P05 y P06 corresponden a los contrastes planificados T01–T03. Se agregan cuatro pruebas complementarias (E1–E4, §8). **Todas las pruebas que se ejecuten (siete) conforman una sola familia** para el ajuste de Holm. El criterio se fijó antes de ejecutar cualquier prueba y no depende de los resultados: así se conserva el control del error familiar. Es un criterio conservador: ninguna prueba queda fuera del ajuste. P07 mantiene su carácter descriptivo; cualquier prueba nueva que se ejecute también entra en la familia.
 
 ### 6. Análisis descriptivo
 
@@ -129,16 +129,26 @@ Si se calculan correlaciones, se elegirá el método según la escala y la forma
 
 ### 7. Estimación e intervalos de confianza
 
-Se utilizará un nivel de confianza del **95 %**.
+Se utilizará un nivel de confianza del **95 %**, con la **aproximación normal (Teorema Central del Límite)** que solicita el curso en esta fase:
+
+- Media: x̄ ± z₀,₉₇₅ · s / √n
+- Proporción: p̂ ± z₀,₉₇₅ · √[p̂(1 − p̂) / n]
 
 | Parámetro | Estimador | Método del intervalo | Responsable |
 |---|---|---|---|
-| Proporción de atraso | Atrasos / registros con resultado válido | Wilson | José |
-| Peso medio | Media de `Weight_in_gms` | t de Student para una media | José |
-| Costo medio | Media de `Cost_of_the_Product` | t de Student para una media | Sebastián |
-| Llamadas medias | Media de `Customer_care_calls` | t de Student aproximado, con justificación | Yerko |
+| Proporción de atraso | Atrasos / registros con resultado válido | Normal para una proporción; requiere n·p̂ ≥ 10 y n·(1 − p̂) ≥ 10 | José |
+| Peso medio | Media de `Weight_in_gms` | Normal para una media | José |
+| Costo medio | Media de `Cost_of_the_Product` | Normal para una media | Sebastián |
+| Llamadas medias | Media de `Customer_care_calls` | Normal para una media (variable de conteo), con justificación | Yerko |
 
-El uso de intervalos t requiere revisar independencia, dispersión, tamaño efectivo y observaciones influyentes. Su justificación no dependerá únicamente del tamaño del archivo.
+El uso de la aproximación normal requiere revisar independencia, dispersión, tamaño efectivo y observaciones influyentes. Su justificación no dependerá únicamente del tamaño del archivo.
+
+**Buena práctica y recomendación.** Con muestras pequeñas o proporciones cercanas a 0 o 1 se recomienda:
+
+- **t de Student para medias**: al estimar σ con s, el cuantil t₀,₉₇₅,ₙ₋₁ incorpora esa incertidumbre adicional; con n pequeño, z produce intervalos demasiado estrechos.
+- **Wilson para proporciones**: el intervalo normal (Wald) puede tener cobertura bastante inferior a la nominal, salir de [0, 1] o tener ancho cero si p̂ = 0 o 1 (Brown, Cai y DasGupta, 2001, *Statistical Science*, 16(2), 101–133). Wilson invierte la prueba *score*, se mantiene dentro de [0, 1] y conserva una cobertura cercana al 95 %.
+
+En este archivo (n = 10.999, p̂ ≈ 0,60) ambos métodos difieren de la aproximación normal recién en la cuarta cifra decimal, por lo que se usa la aproximación normal sin pérdida. Si en análisis posteriores se trabaja con subgrupos pequeños o proporciones extremas, se usarán t y Wilson.
 
 Cada estimación incluirá parámetro, estimador, n efectivo, unidad, método, límites e interpretación.
 
@@ -187,7 +197,7 @@ Sea Δcosto la diferencia entre el costo medio de entregas atrasadas y puntuales
 - **H₀:** Δcosto = 0.
 - **H₁:** Δcosto ≠ 0.
 
-Se reportará la misma estructura de T02, expresando la diferencia en USD, sujeto a confirmación de la unidad en Y02.
+Se reportará la misma estructura de T02, expresando la diferencia en USD, sujeto a confirmación de la unidad en el diccionario de variables.
 
 **Magnitud de las diferencias**
 
@@ -199,9 +209,23 @@ Como complemento, se podrá utilizar una diferencia estandarizada con denominado
 
 Su fórmula y signo se documentarán. No se establecerán umbrales de importancia operacional sin respaldo externo.
 
+#### Pruebas complementarias E1–E4
+
+**Responsable:** José  
+**Método:** según la prueba; todas bilaterales, con α = 0,05, y forman parte de la familia de Holm (§9).
+
+| Código | H₀ | Método | Efecto reportado |
+|---|---|---|---|
+| E1 | La distribución del peso es la misma en entregas atrasadas y puntuales | Mann-Whitney *U* (robustez de T02) | Correlación biserial de rangos r = 2U/(n₁n₀) − 1 |
+| E2 | La proporción de atraso es igual en productos de importancia alta y en el resto | *z* de dos proporciones | Diferencia de proporciones, IC y riesgo relativo |
+| E3 | La proporción de atraso es igual con descuento > 10 y ≤ 10 | *z* de dos proporciones | Diferencia de proporciones, IC y riesgo relativo |
+| E4 | Δdescuento = 0 (media atrasadas − media puntuales) | *t* de Welch | Diferencia, IC y dₐᵥ |
+
+En E3 se documentará la separación completa (100 % de atraso con descuento > 10). En E4 la diferencia se expresa en las unidades originales, porque la unidad del descuento no está confirmada (§10, regla 7).
+
 ### 9. Comparaciones múltiples e interpretación
 
-Sebastián consolidará los tres valores p y aplicará el procedimiento **Holm**, controlando el error familiar al nivel 0,05.
+Sebastián consolidará los **siete** valores p (T01–T03 y E1–E4) y aplicará el procedimiento **Holm**, controlando el error familiar al nivel 0,05. La familia se definió antes de ejecutar las pruebas (§5). Los valores p sin ajustar de T02 y E1–E4 están en `outputs/tablas/contraste_peso.csv` y `outputs/tablas/contrastes_complementarios.csv`, con las columnas `codigo` y `p`.
 
 Se presentarán:
 
@@ -210,6 +234,10 @@ Se presentarán:
 | T01 Modalidad y atraso | Por calcular | Por calcular | Por determinar |
 | T02 Peso medio | Por calcular | Por calcular | Por determinar |
 | T03 Costo medio | Por calcular | Por calcular | Por determinar |
+| E1 Distribución del peso (Mann-Whitney) | Por calcular | Por calcular | Por determinar |
+| E2 Atraso según importancia alta | Por calcular | Por calcular | Por determinar |
+| E3 Atraso según descuento > 10 | Por calcular | Por calcular | Por determinar |
+| E4 Descuento medio | Por calcular | Por calcular | Por determinar |
 
 La decisión principal de cada contraste se basará en el valor p ajustado.
 
@@ -226,7 +254,7 @@ Se aplicarán estas reglas de interpretación:
 
 ### 10. Calidad de datos y denominadores
 
-Antes de la inferencia, Y03 verificará esquema, tipos, nulos, dominios, duplicados, rangos y observaciones extremas.
+Antes de la inferencia, la auditoría de calidad de datos verificará esquema, tipos, nulos, dominios, duplicados, rangos y observaciones extremas.
 
 **Reglas de tratamiento**
 
@@ -302,15 +330,15 @@ Los bloques representan secuencia de trabajo y pueden ejecutarse dentro de una m
 
 Se trabajará con el 08-10-2026 a las 23:59 como límite para entrega y foro, salvo que Canvas establezca explícitamente otro plazo para este último.
 
-### 14. Cierre de J01
+### 14. Cierre del protocolo
 
-J01 podrá marcarse como completada cuando:
+El protocolo podrá marcarse como completado cuando:
 
-- [ ] Y02 confirme significado, unidades y dominios relevantes.
+- [ ] El diccionario de variables confirme significado, unidades y dominios relevantes.
 - [ ] Se corrobore la codificación 1 = atraso y 0 = a tiempo.
 - [ ] Yerko revise el protocolo.
 - [ ] El equipo valide las preguntas y los métodos.
 - [x] Se registre la hora oficial de cierre: 08-10-2026 a las 23:59, hora de Chile.
 - [ ] El protocolo quede disponible antes de ejecutar los contrastes.
 
-**Estado actual:** protocolo desarrollado; plazo confirmado por José. Pendiente de validación de Y02 y revisión del equipo.
+**Estado actual:** protocolo desarrollado; plazo confirmado por José. Pendiente de validación del diccionario de variables y revisión del equipo.

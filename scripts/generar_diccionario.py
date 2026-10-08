@@ -1,4 +1,4 @@
-"""Y02: genera docs/diccionario_variables.csv a partir del CSV original (solo lectura)."""
+"""Genera docs/diccionario_variables.csv a partir del CSV original (solo lectura)."""
 from pathlib import Path
 import pandas as pd
 
