@@ -87,7 +87,7 @@ Una diferencia positiva indicará que el promedio es mayor entre entregas atrasa
 | P06 | ¿Difiere el costo medio entre entregas atrasadas y puntuales? | Costo y resultado | Welch bilateral, diferencia e IC |
 | P07 | ¿Qué segmentos presentan patrones que ameriten investigar posteriormente? | Modalidad, bodega y variables numéricas | Comparaciones descriptivas y síntesis |
 
-P04, P05 y P06 conformarán la familia de tres contrastes planificados. P07 tendrá carácter exploratorio y no incorporará pruebas adicionales a esa familia.
+P04, P05 y P06 corresponden a los contrastes planificados T01–T03. Se agregan cuatro pruebas complementarias (E1–E4, §8). **Todas las pruebas que se ejecuten (siete) conforman una sola familia** para el ajuste de Holm. El criterio se fijó antes de ejecutar cualquier prueba y no depende de los resultados: así se conserva el control del error familiar. Es un criterio conservador: ninguna prueba queda fuera del ajuste. P07 mantiene su carácter descriptivo; cualquier prueba nueva que se ejecute también entra en la familia.
 
 ### 6. Análisis descriptivo
 
@@ -209,9 +209,23 @@ Como complemento, se podrá utilizar una diferencia estandarizada con denominado
 
 Su fórmula y signo se documentarán. No se establecerán umbrales de importancia operacional sin respaldo externo.
 
+#### Pruebas complementarias E1–E4
+
+**Responsable:** José  
+**Método:** según la prueba; todas bilaterales, con α = 0,05, y forman parte de la familia de Holm (§9).
+
+| Código | H₀ | Método | Efecto reportado |
+|---|---|---|---|
+| E1 | La distribución del peso es la misma en entregas atrasadas y puntuales | Mann-Whitney *U* (robustez de T02) | Correlación biserial de rangos r = 2U/(n₁n₀) − 1 |
+| E2 | La proporción de atraso es igual en productos de importancia alta y en el resto | *z* de dos proporciones | Diferencia de proporciones, IC y riesgo relativo |
+| E3 | La proporción de atraso es igual con descuento > 10 y ≤ 10 | *z* de dos proporciones | Diferencia de proporciones, IC y riesgo relativo |
+| E4 | Δdescuento = 0 (media atrasadas − media puntuales) | *t* de Welch | Diferencia, IC y dₐᵥ |
+
+En E3 se documentará la separación completa (100 % de atraso con descuento > 10). En E4 la diferencia se expresa en las unidades originales, porque la unidad del descuento no está confirmada (§10, regla 7).
+
 ### 9. Comparaciones múltiples e interpretación
 
-Sebastián consolidará los tres valores p y aplicará el procedimiento **Holm**, controlando el error familiar al nivel 0,05.
+Sebastián consolidará los **siete** valores p (T01–T03 y E1–E4) y aplicará el procedimiento **Holm**, controlando el error familiar al nivel 0,05. La familia se definió antes de ejecutar las pruebas (§5). Los valores p sin ajustar de T02 y E1–E4 están en `outputs/tablas/contraste_peso.csv` y `outputs/tablas/contrastes_complementarios.csv`, con las columnas `codigo` y `p`.
 
 Se presentarán:
 
@@ -220,6 +234,10 @@ Se presentarán:
 | T01 Modalidad y atraso | Por calcular | Por calcular | Por determinar |
 | T02 Peso medio | Por calcular | Por calcular | Por determinar |
 | T03 Costo medio | Por calcular | Por calcular | Por determinar |
+| E1 Distribución del peso (Mann-Whitney) | Por calcular | Por calcular | Por determinar |
+| E2 Atraso según importancia alta | Por calcular | Por calcular | Por determinar |
+| E3 Atraso según descuento > 10 | Por calcular | Por calcular | Por determinar |
+| E4 Descuento medio | Por calcular | Por calcular | Por determinar |
 
 La decisión principal de cada contraste se basará en el valor p ajustado.
 
