@@ -1,0 +1,2 @@
+codigo,contraste,h0,h1,metodo,variable,n,chi2,gl,p,v_cramer,frec_esperada_min,alfa,decision_sin_ajuste
+T01,Asociación entre modalidad de envío y atraso,Independencia,Asociación,χ² de independencia,modalidad_envio,10999,0.7434357246718558,2,0.6895487627593786,0.008221387385031968,709.824529502682,0.05,no se rechaza H0
