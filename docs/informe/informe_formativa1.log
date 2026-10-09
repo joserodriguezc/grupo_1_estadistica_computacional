@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  8 OCT 2026 23:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.8)  8 OCT 2026 23:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -623,7 +623,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.19 \tableofcontents\newpage
                               [1]
-<../../outputs/figuras/fig_eda_1_dependiente.png, id=101, 426.03165pt x 238.12965pt>
+<../../outputs/figuras/fig_eda_1_dependiente.png, id=106, 426.03165pt x 238.12965pt>
 File: ../../outputs/figuras/fig_eda_1_dependiente.png Graphic file (type png)
 <use ../../outputs/figuras/fig_eda_1_dependiente.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_eda_1_dependiente.png  used on input line 115.
@@ -633,35 +633,35 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 119.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 119.
-<../../outputs/figuras/fig_eda_2_cuantitativas.png, id=111, 1292.1876pt x 385.56046pt>
+<../../outputs/figuras/fig_eda_2_cuantitativas.png, id=116, 1292.1876pt x 385.56046pt>
 File: ../../outputs/figuras/fig_eda_2_cuantitativas.png Graphic file (type png)
 <use ../../outputs/figuras/fig_eda_2_cuantitativas.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_eda_2_cuantitativas.png  used on input line 126.
 (pdftex.def)             Requested size: 444.34743pt x 132.58315pt.
-<../../outputs/figuras/fig_eda_3_cualitativas.png, id=112, 990.8217pt x 456.38506pt>
+<../../outputs/figuras/fig_eda_3_cualitativas.png, id=117, 990.8217pt x 456.38506pt>
 File: ../../outputs/figuras/fig_eda_3_cualitativas.png Graphic file (type png)
 <use ../../outputs/figuras/fig_eda_3_cualitativas.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_eda_3_cualitativas.png  used on input line 127.
 (pdftex.def)             Requested size: 430.6053pt x 198.33786pt.
  [3 <../../outputs/figuras/fig_eda_1_dependiente.png> <../../outputs/figuras/fig_eda_2_cuantitativas.png>]
-<../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png, id=122, 990.8217pt x 456.38506pt>
+<../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png, id=127, 990.8217pt x 456.38506pt>
 File: ../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png Graphic file (type png)
 <use ../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png  used on input line 130.
 (pdftex.def)             Requested size: 412.2778pt x 189.89766pt.
-<../../outputs/figuras/fig_eda_5_correlacion.png, id=123, 428.19975pt x 340.75305pt>
+<../../outputs/figuras/fig_eda_5_correlacion.png, id=128, 428.19975pt x 340.75305pt>
 File: ../../outputs/figuras/fig_eda_5_correlacion.png Graphic file (type png)
 <use ../../outputs/figuras/fig_eda_5_correlacion.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_eda_5_correlacion.png  used on input line 131.
 (pdftex.def)             Requested size: 371.05142pt x 295.28287pt.
  [4 <../../outputs/figuras/fig_eda_3_cualitativas.png> <../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png>] [5{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc} <../../outputs/figuras/fig_eda_5_correlacion.png>]
-<../../outputs/figuras/fig_t02_peso_grupos.png, id=152, 568.40355pt x 252.58365pt>
+<../../outputs/figuras/fig_t02_peso_grupos.png, id=157, 568.40355pt x 252.58365pt>
 File: ../../outputs/figuras/fig_t02_peso_grupos.png Graphic file (type png)
 <use ../../outputs/figuras/fig_t02_peso_grupos.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_t02_peso_grupos.png  used on input line 177.
 (pdftex.def)             Requested size: 380.21518pt x 168.96422pt.
  [6]
-<../../outputs/figuras/fig_t03_descuento_grupos.png, id=161, 570.02963pt x 280.94963pt>
+<../../outputs/figuras/fig_t03_descuento_grupos.png, id=166, 570.02963pt x 280.94963pt>
 File: ../../outputs/figuras/fig_t03_descuento_grupos.png Graphic file (type png)
 <use ../../outputs/figuras/fig_t03_descuento_grupos.png>
 Package pdftex.def Info: ../../outputs/figuras/fig_t03_descuento_grupos.png  used on input line 183.
@@ -675,21 +675,21 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `informe_formativa1.out' has not changed.
-(rerunfilecheck)             Checksum: 01F20A0FDC53F196D12B73215084ED30;4201.
+(rerunfilecheck)             Checksum: CF14CC446A5856E75ADF6149517F4EE5;4447.
  ) 
 Here is how much of TeX's memory you used:
- 16831 strings out of 469453
- 269130 string characters out of 5469037
+ 16835 strings out of 469453
+ 269180 string characters out of 5469037
  731389 words of memory out of 5000000
- 45049 multiletter control sequences out of 15000+600000
- 718454 words of font info for 185 fonts, out of 8000000 for 9000
+ 45050 multiletter control sequences out of 15000+600000
+ 718537 words of font info for 186 fonts, out of 8000000 for 9000
  40 hyphenation exceptions out of 8191
  75i,13n,79p,1108b,524s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on informe_formativa1.pdf (10 pages, 1010847 bytes).
+Output written on informe_formativa1.pdf (10 pages, 1012158 bytes).
 PDF statistics:
- 295 PDF objects out of 1000 (max. 8388607)
- 222 compressed objects within 3 object streams
- 40 named destinations out of 1000 (max. 500000)
- 50340 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 302 PDF objects out of 1000 (max. 8388607)
+ 229 compressed objects within 3 object streams
+ 41 named destinations out of 1000 (max. 500000)
+ 50348 words of extra memory for PDF output out of 51595 (max. 10000000)
 

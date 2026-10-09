@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1791513913.20842 "/home/sebastian/Escritorio/magister/proyectos/grupo_1_estadistica_computacional/docs/informe/informe_formativa1.tex" "informe_formativa1.pdf" "informe_formativa1" 1791513914.31574 0
+["pdflatex"] 1791514788.54727 "/home/sebastian/Escritorio/magister/proyectos/grupo_1_estadistica_computacional/docs/informe/informe_formativa1.tex" "informe_formativa1.pdf" "informe_formativa1" 1791514789.64979 0
   "../../outputs/figuras/fig_eda_1_dependiente.png" 1791512610.09137 45588 68cff2a556e92d00433dd37baf9951b7 ""
   "../../outputs/figuras/fig_eda_2_cuantitativas.png" 1791512611.12336 217656 a8ed3c83016b84cc3e06d9f6e32cd580 ""
   "../../outputs/figuras/fig_eda_3_cualitativas.png" 1791512612.19559 140608 978cfe39ed201e7a172b95f5c8642f43 ""
@@ -7,7 +7,7 @@
   "../../outputs/figuras/fig_eda_8_dependiente_vs_cualitativas.png" 1791512618.07833 156208 08ffaf2e8ae42f0ebd696c212df22fab ""
   "../../outputs/figuras/fig_t02_peso_grupos.png" 1791512619.75232 59930 ab258d8265156ff1ae82e36acfb9a8d7 ""
   "../../outputs/figuras/fig_t03_descuento_grupos.png" 1791512620.19832 41180 6da51b3069d6bdcca6176719c3468bf5 ""
-  "/home/sebastian/Escritorio/magister/proyectos/grupo_1_estadistica_computacional/docs/informe/informe_formativa1.tex" 1791513913.04272 18584 6975a3653b47c2675ab50209b6d2df90 ""
+  "/home/sebastian/Escritorio/magister/proyectos/grupo_1_estadistica_computacional/docs/informe/informe_formativa1.tex" 1791514788.38237 19394 776dae92c76eacbad8c274a4736c0056 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1775415801 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1775415801 3486 c7eadf5dcc57b3b2d11736679f6636ba ""
   "/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1775415801 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -158,10 +158,10 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1775415801 43569 fd570f2fa160877d211e859f687312ba ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1791424216 5385779 47c0c393a77fd4a098bacfd57d66b88a ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1791507116 3113352 ae77b9471419574dea5bf36c264a001e ""
-  "informe_formativa1.aux" 1791513914.24085 6314 9b55ab64455305d6dd24b2d45a772e61 "pdflatex"
-  "informe_formativa1.out" 1791513914.24185 4201 01f20a0fdc53f196d12b73215084ed30 "pdflatex"
-  "informe_formativa1.tex" 1791513913.04272 18584 6975a3653b47c2675ab50209b6d2df90 ""
-  "informe_formativa1.toc" 1791513914.24365 1636 e4c825e90276b68f462add97540d4aaa "pdflatex"
+  "informe_formativa1.aux" 1791514789.57336 6457 39b481c4a0e4d3d8404233f2d7aae97b "pdflatex"
+  "informe_formativa1.out" 1791514789.57536 4447 cf14cc446a5856e75adf6149517f4ee5 "pdflatex"
+  "informe_formativa1.tex" 1791514788.38237 19394 776dae92c76eacbad8c274a4736c0056 ""
+  "informe_formativa1.toc" 1791514789.57611 1738 3c0081ee1d692cb0ff5ecff2e253cb70 "pdflatex"
   (generated)
   "informe_formativa1.aux"
   "informe_formativa1.log"
