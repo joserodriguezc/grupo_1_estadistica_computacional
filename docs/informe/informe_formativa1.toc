@@ -1,0 +1,17 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción y ficha descriptiva del proyecto}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Clasificación estadística de variables}{2}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Aplicación de estadística descriptiva}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Calidad y composición de los datos}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Tendencia central y dispersión}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Relaciones preliminares}{4}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Estimación puntual e intervalos de confianza}{5}{section.3}%
+\contentsline {section}{\numberline {4}Aplicación de pruebas de hipótesis}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}T01: modalidad de envío y atraso (chi-cuadrado)}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}T02: peso medio por resultado (Welch bilateral)}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}T03: descuento medio por resultado (Welch bilateral)}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Control de comparaciones múltiples}{7}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Documentación de procedimientos y resultados}{8}{section.5}%
+\contentsline {section}{\numberline {6}Interpretación preliminar, limitaciones y próximos pasos}{8}{section.6}%
+\contentsline {section}{\numberline {7}Comunicación académica y participación en el foro}{8}{section.7}%
+\contentsline {section}{Referencias}{9}{section*.14}%

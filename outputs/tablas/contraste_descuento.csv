@@ -1,0 +1,2 @@
+codigo,prueba,variable,unidad,n_atr,media_atr,de_atr,n_punt,media_punt,de_punt,diferencia,ic_inf,ic_sup,t,gl,p,d_av,decision_sin_ajuste
+T03,Welch: descuento medio atrasadas vs puntuales,descuento_ofrecido,"unidades originales, no documentadas",6563,18.663720859363096,19.108796897150274,4436,5.545987376014428,2.877726875047666,13.117733483348669,12.647653321321956,13.587813645375382,54.70286725014042,6998.092043868506,0.0,0.9599988050340049,se rechaza H0

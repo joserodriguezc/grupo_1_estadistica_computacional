@@ -2,4 +2,4 @@ codigo,prueba,estadistico,valor_estadistico,p,efecto,valor_efecto,decision_sin_a
 E1,Mann-Whitney U: peso atrasadas vs puntuales,U,10000332.5,3.398797458174781e-171,r biserial de rangos,-0.31300987570426164,se rechaza H0
 E2,z dos proporciones: atraso importancia alta vs resto,z,3.486293718277092,0.0004897629421520458,diferencia de proporciones,0.05810660987612959,se rechaza H0
 E3,z dos proporciones: atraso descuento > 10 vs <= 10,z,48.54034910242609,0.0,diferencia de proporciones,0.5311302681992337,se rechaza H0
-E4,Welch: descuento medio atrasadas vs puntuales,t,54.70286725014042,0.0,d_av,0.9599988050340049,se rechaza H0
+E4,Welch: costo medio atrasadas vs puntuales,t,-7.747115150973729,1.0357279058128193e-14,d_av,-0.15049038796223324,se rechaza H0

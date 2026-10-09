@@ -1,8 +1,8 @@
 codigo,prueba,p,p_holm,decision_holm
 T01,Chi-cuadrado: modalidad y atraso,0.6895487627593786,0.6895487627593786,no se rechaza H0
-T02,Welch: peso medio atrasadas vs puntuales,1.9309302139796645e-180,9.654651069898322e-180,se rechaza H0
-T03,Welch: costo medio atrasadas vs puntuales,1.0357279058128193e-14,3.107183717438458e-14,se rechaza H0
-E1,Mann-Whitney U: peso atrasadas vs puntuales,3.398797458174781e-171,1.3595189832699124e-170,se rechaza H0
+T02,Welch: peso medio atrasadas vs puntuales,1.9309302139796645e-180,7.723720855918658e-180,se rechaza H0
+T03,Welch: costo medio atrasadas vs puntuales,0.0,0.0,se rechaza H0
+E1,Mann-Whitney U: peso atrasadas vs puntuales,3.398797458174781e-171,1.0196392374524342e-170,se rechaza H0
 E2,z dos proporciones: atraso importancia alta vs resto,0.0004897629421520458,0.0009795258843040915,se rechaza H0
 E3,z dos proporciones: atraso descuento > 10 vs <= 10,0.0,0.0,se rechaza H0
 E4,Welch: descuento medio atrasadas vs puntuales,0.0,0.0,se rechaza H0
