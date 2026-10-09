@@ -1,0 +1,222 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage[margin=2.45cm]{geometry}\usepackage{graphicx,booktabs,tabularx,longtable,array,amsmath,amssymb,float,caption,xcolor,hyperref,fancyhdr,microtype}
+\definecolor{azul}{HTML}{1F5F8B}\definecolor{terra}{HTML}{D1603D}
+\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,citecolor=azul}
+\pagestyle{fancy}\fancyhf{}\lhead{\footnotesize MCDI501 | Formativa 1}\rhead{\footnotesize Grupo 1}\cfoot{\footnotesize \thepage}\setlength{\headheight}{14pt}
+\captionsetup{font=small,labelfont=bf}\renewcommand{\arraystretch}{1.13}
+\newcommand{\imagen}[4]{\begin{figure}[H]\centering\includegraphics[width=#1\linewidth]{../../outputs/figuras/#2}\caption{#3}\label{#4}\end{figure}}
+\begin{document}
+\begin{titlepage}\centering\vspace*{2cm}
+{\large UNIVERSIDAD ANDRÉS BELLO\par}\vspace{.5cm}
+{\Large MAGÍSTER EN CIENCIA DE DATOS E INTELIGENCIA ARTIFICIAL\par}
+\vspace{1.2cm}{\large MCDI501: Estadística Computacional para la Toma de Decisiones\par}
+\vspace{2cm}{\Huge\bfseries Evaluación Formativa 1\par}\vspace{.4cm}
+{\LARGE Análisis exploratorio e inferencial de entregas atrasadas en comercio electrónico\par}
+\vfill\begin{tabular}{rl}Equipo:& Grupo 1\\Integrantes:& José Ignacio Rodríguez\\& Yerko G. Gallardo Miranda\\& Sebastián Rojas Araya\\Dataset:& E-Commerce Shipping Data\\Repositorio:& \multicolumn{1}{l}{\url{https://github.com/joserodriguezc/grupo_1_estadistica_computacional}}\\Fecha:& Octubre de 2026\end{tabular}
+\vspace{1.6cm}\par{\large Informe técnico grupal | Evaluación formativa (0\%)}\end{titlepage}
+\tableofcontents\newpage
+\section{Introducción y ficha descriptiva del proyecto}
+Las entregas fuera del plazo previsto generan incertidumbre para las operaciones de comercio electrónico. Este estudio caracteriza los registros del conjunto \emph{E-Commerce Shipping Data}, publicado por Gopalani (2021) en Kaggle, e identifica asociaciones preliminares entre las características del envío y su resultado. La pregunta central es: \emph{¿qué características de los envíos y productos se asocian con las entregas atrasadas y qué información permiten aportar para orientar una revisión operacional posterior?}
+
+El archivo original contiene \textbf{10.999 registros y 12 variables}. La unidad provisional de observación es un registro de envío asociado a un cliente; la unicidad del identificador no demuestra independencia entre observaciones. La variable objetivo \texttt{Reached.on.Time\_Y.N} se interpreta de acuerdo con la documentación de origen: \textbf{1 = entrega atrasada; 0 = entrega a tiempo}. Se conservan \textbf{6.563 entregas atrasadas (59,67\%)} y \textbf{4.436 puntuales (40,33\%)}. La base no documenta el período, el marco de muestreo ni la identidad de la empresa, por lo que no permite generalizaciones automáticas a todo el comercio electrónico.
+
+
+\subsection{Clasificación estadística de variables}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Diccionario estadístico resumido de las doce variables originales.}
+\label{tab:diccionario}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X
+                             >{\raggedright\arraybackslash}X
+                             >{\raggedright\arraybackslash}X
+                             >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Variable original} &
+\textbf{Variable en español} &
+\textbf{Tipo estadístico} &
+\textbf{Unidad o categorías} \\
+\midrule
+
+\texttt{ID} &
+\texttt{id\_envio} &
+Identificador nominal &
+ID \\
+
+\texttt{Warehouse\_block} &
+\texttt{bloque\_bodega} &
+Cualitativa nominal &
+A, B, C, D, F \\
+
+\texttt{Mode\_of\_Shipment} &
+\texttt{modalidad\_envio} &
+Cualitativa nominal &
+Flight, Road, Ship \\
+
+\texttt{Customer\_care\_calls} &
+\texttt{llamadas\_atencion} &
+Cuantitativa discreta &
+Llamadas \\
+
+\texttt{Customer\_rating} &
+\texttt{calificacion\_cliente} &
+Cualitativa ordinal &
+Escala 1--5 \\
+
+\texttt{Cost\_of\_the\_Product} &
+\texttt{costo\_producto} &
+Cuantitativa de razón &
+USD, según fuente \\
+
+\texttt{Prior\_purchases} &
+\texttt{compras\_previas} &
+Cuantitativa discreta &
+Compras \\
+
+\texttt{Product\_importance} &
+\texttt{importancia\_producto} &
+Cualitativa ordinal &
+low, medium, high \\
+
+\texttt{Gender} &
+\texttt{genero} &
+Cualitativa nominal &
+F, M \\
+
+\texttt{Discount\_offered} &
+\texttt{descuento\_ofrecido} &
+Cuantitativa &
+Unidad no documentada \\
+
+\texttt{Weight\_in\_gms} &
+\texttt{peso\_gramos} &
+Cuantitativa de razón &
+Gramos \\
+
+\texttt{Reached.on.Time\_Y.N} &
+\texttt{entrega\_atrasada} &
+Cualitativa nominal binaria &
+0 puntual; 1 atrasada \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+Los conteos no se confunden con variables ordinales y \texttt{ID} se excluye de los análisis sustantivos. La categoría de bodega F se mantiene tal como consta en los datos, aunque la descripción externa presenta una discrepancia de denominaciones. La unidad del descuento no está acreditada: no se interpreta como porcentaje ni moneda.
+
+\section{Aplicación de estadística descriptiva}
+\subsection{Calidad y composición de los datos}
+La auditoría del notebook registró 10.999 filas antes y después del tratamiento, \textbf{cero valores nulos} y 10.999 identificadores únicos. No se efectuó imputación ni se eliminaron perfiles repetidos automáticamente. Estos controles describen integridad interna, no garantizan representatividad ni ausencia de sesgos.
+\imagen{.86}{fig_eda_1_dependiente.png}{Distribución de entregas puntuales y atrasadas (variable objetivo).}{fig:objetivo}
+El porcentaje de atraso es superior a la mitad de los registros. Por sí sola, esta frecuencia no permite inferir el comportamiento de una empresa o período externo no documentado.
+
+\subsection{Tendencia central y dispersión}
+\begin{table}[H]\centering\small\caption{Resumen descriptivo de las variables cuantitativas (n=10.999 por variable).}\begin{tabular}{@{}lrrrrr@{}}\toprule Variable & Media & Mediana & DE & Q1 & Q3\\\midrule
+Llamadas & 4,05 & 4,00 & 1,14 & 3,00 & 5,00\\
+Costo (USD) & 210,20 & 214,00 & 48,06 & 169,00 & 251,00\\
+Compras previas & 3,57 & 3,00 & 1,52 & 3,00 & 4,00\\
+Descuento (unidad sin definir) & 13,37 & 7,00 & 16,21 & 4,00 & 10,00\\
+Peso (g) & 3.634,02 & 4.149,00 & 1.635,38 & 1.839,50 & 5.050,00\\\bottomrule\end{tabular}\end{table}
+La diferencia entre media y mediana del descuento (13,37 frente a 7) indica asimetría positiva, consistente con su distribución; la unidad sigue siendo desconocida. El peso muestra una dispersión considerable (desviación estándar de 1.635,38 g). Para nominales se utilizaron frecuencias y proporciones; para ordinales se conserva el orden de categorías.
+\imagen{.97}{fig_eda_2_cuantitativas.png}{Distribución, tendencia central y dispersión de llamadas, costo, compras previas, descuento y peso.}{fig:cuant}
+\imagen{.94}{fig_eda_3_cualitativas.png}{Frecuencias de bodega, modalidad de envío, calificación, importancia y género.}{fig:cual}
+\subsection{Relaciones preliminares}
+En la modalidad de envío, \emph{Ship} concentra 7.462 registros (67,84\%), \emph{Flight} 1.777 (16,16\%) y \emph{Road} 1.760 (16,00\%). Estos porcentajes describen el volumen de envíos, no la tasa de atraso dentro de cada modalidad. Las comparaciones formales se presentan en la sección 4.
+\imagen{.90}{fig_eda_8_dependiente_vs_cualitativas.png}{Proporción de entregas atrasadas y puntuales dentro de cada categoría de envío y producto.}{fig:catcomp}
+\imagen{.81}{fig_eda_5_correlacion.png}{Coeficientes de correlación de Spearman entre variables cuantitativas, con escala de $-1$ a $1$.}{fig:corr}
+La Figura~\ref{fig:corr} presenta las correlaciones de Spearman
+entre las variables cuantitativas explicativas del conjunto de datos,
+sin incluir la variable objetivo \texttt{entrega\_atrasada}.
+Este análisis permite examinar posibles relaciones monótonas
+entre características como el peso, el costo, el descuento
+ofrecido, las compras previas y las llamadas de atención
+al cliente.
+
+Los coeficientes deben interpretarse considerando tanto
+su signo como su magnitud. Una correlación positiva indica
+que los rangos de ambas variables tienden a aumentar
+conjuntamente, mientras que una negativa indica una
+tendencia inversa. Estas asociaciones no permiten establecer
+relaciones causales ni determinar, por sí solas, qué
+variables explican los atrasos.
+
+Las asociaciones específicas con la puntualidad de
+las entregas se examinan por separado mediante
+los contrastes estadísticos de la Sección~4.
+\section{Estimación puntual e intervalos de confianza}
+Se reportan cuatro parámetros y sus intervalos de confianza del 95\%, utilizando la aproximación normal basada en el teorema central del límite (TCL), en concordancia con el método desarrollado en la guía del curso. Para medias se aplica $\bar{x}\pm z_{0.975}s/\sqrt{n}$; para la proporción, $\hat{p}\pm z_{0.975}\sqrt{\hat{p}(1-\hat{p})/n}$.\footnote{El intervalo de Wilson para proporciones y el intervalo basado en la distribución $t$ para medias pueden ofrecer mejores propiedades de cobertura bajo ciertas condiciones, especialmente con muestras pequeñas o proporciones extremas. Para la proporción de atraso de estos datos, el intervalo Wilson al 95\% resulta aproximadamente $[0,58749;\,0,60582]$, cercano al intervalo normal $[0,58752;\,0,60586]$. Esta similitud numérica no elimina posibles problemas de selección o dependencia.}
+\begin{table}[H]\centering\small\caption{Estimaciones e intervalos al 95\% según exportación del notebook.}\begin{tabularx}{\linewidth}{@{}Xrrr@{}}\toprule Parámetro & Estimador & Límite inferior & Límite superior\\\midrule
+Proporción de atraso & 0,59669 & 0,58752 & 0,60586\\
+Peso medio (g) & 3.634,02 & 3.603,45 & 3.664,58\\
+Costo medio (USD) & 210,20 & 209,30 & 211,10\\
+Llamadas medias & 4,054 & 4,033 & 4,076\\\bottomrule\end{tabularx}\end{table}
+El intervalo de la proporción equivale aproximadamente a 58,75--60,59\% de registros atrasados bajo un esquema de muestreo comparable. La estrechez de los intervalos deriva en parte del tamaño de muestra, pero \textbf{no corrige por sí sola sesgos de selección ni dependencia}. Por lo tanto, se interpretan como estimaciones condicionales a los supuestos, no como representativas de una población general identificada.
+
+\section{Aplicación de pruebas de hipótesis}
+Se presentan tres contrastes principales (T01--T03) y cuatro complementarios (E1--E4). Para mantener coherencia con la familia de siete pruebas definida en el protocolo, el ajuste de Holm se aplica conjuntamente a las siete, con $\alpha=0,05$. La sustitución de costo por descuento como T03 se realizó durante la revisión del análisis y debe entenderse como una modificación documentada del protocolo, no como una elección preespecificada antes de observar los datos.
+\subsection{T01: modalidad de envío y atraso (chi-cuadrado)}
+$H_0$: la modalidad y el resultado de entrega son independientes; $H_1$: existe asociación entre ambas variables. La Tabla~\ref{tab:contingencia} presenta las frecuencias observadas utilizadas en el contraste.
+\begin{table}[H]\centering\small
+\caption{Frecuencias observadas de modalidad de envío y resultado de entrega.}\label{tab:contingencia}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Modalidad & Puntual (0) & Atrasada (1) & Total\\\midrule
+Flight & 708 & 1.069 & 1.777\\
+Road & 725 & 1.035 & 1.760\\
+Ship & 3.003 & 4.459 & 7.462\\\midrule
+Total & 4.436 & 6.563 & 10.999\\\bottomrule
+\end{tabular}\end{table}
+La prueba $\chi^2$ de independencia entrega $\chi^2(2)=0,7434$, $p=0,68955$, y $V$ de Cramér $=0,00822$. La frecuencia esperada mínima es 709,82, por encima del umbral habitual de 5. Por lo tanto, no se rechaza $H_0$: no se observa evidencia estadística de asociación en estos datos, lo cual no demuestra independencia perfecta.
+
+\subsection{T02: peso medio por resultado (Welch bilateral)}
+$H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$ frente a $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Para 6.563 atrasadas y 4.436 puntuales, las medias son 3.272,64 g y 4.168,67 g. La diferencia estimada (atrasada menos puntual) es $-896,03$ g, IC 95\% $[-956,03;-836,03]$ g; $t=-29,27$, gl $\approx9.526,57$, $p=1,93\times10^{-180}$, efecto estandarizado $d_{av}=-0,569$. Existe evidencia de diferencias de peso, sin identificar mecanismos causales.
+\imagen{.83}{fig_t02_peso_grupos.png}{Distribución del peso (g) según entrega atrasada o puntual.}{fig:peso}
+
+\subsection{T03: descuento medio por resultado (Welch bilateral)}
+Se contrasta $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$ frente a $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\neq0$, con prueba bilateral de Welch y $\alpha=0,05$. Se comparan dos grupos de 6.563 registros atrasados y 4.436 puntuales, sin imponer igualdad de varianzas. La validez inferencial requiere, entre otros supuestos, independencia razonable entre registros.
+
+La media de descuento es 18,66 unidades originales entre las entregas atrasadas (DE = 19,11) y 5,55 entre las puntuales (DE = 2,88). La diferencia estimada (atrasadas menos puntuales) es $13,12$ unidades, IC del 95\% $[12,65;13,59]$; $t=54,70$, gl $\approx6.998,09$ y tamaño de efecto $d_{av}=0,960$. El valor $p$ calculado es extremadamente pequeño (la exportación numérica registra cero por subdesbordamiento); no debe interpretarse como probabilidad exactamente nula. Existe evidencia de diferencia estadística entre las medias, sin que pueda atribuirse al descuento una causa de atraso. La unidad del descuento no está documentada.
+\imagen{.84}{fig_t03_descuento_grupos.png}{Distribución del descuento ofrecido (unidades originales) según puntualidad de la entrega.}{fig:descuento}
+
+\subsection{Control de comparaciones múltiples}
+La Tabla~\ref{tab:holm} presenta los siete valores $p$ y la corrección Holm de la única familia documentada por el protocolo del equipo. Las decisiones se evalúan con $\alpha=0,05$; los intervalos de confianza anteriores son individuales y no están ajustados por multiplicidad.
+\begin{table}[H]\centering\footnotesize
+\caption{Familia de siete contrastes y ajuste Holm.}\label{tab:holm}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}Xlll@{}}\toprule
+Contraste & $p$ original & $p$ Holm & Decisión\\\midrule
+T01 Modalidad y atraso & 0,68955 & 0,68955 & No rechazar\\
+T02 Welch peso & $1,93\cdot10^{-180}$ & $9,65\cdot10^{-180}$ & Rechazar\\
+T03 Welch descuento & $<10^{-300}$ & $<10^{-300}$ & Rechazar\\
+E1 Mann--Whitney peso & $3,40\cdot10^{-171}$ & $1,36\cdot10^{-170}$ & Rechazar\\
+E2 Importancia alta y atraso & 0,000490 & 0,000980 & Rechazar\\
+E3 Descuento $>10$ y atraso & $<10^{-300}$ & $<10^{-300}$ & Rechazar\\
+E4 Welch costo & $1,04\cdot10^{-14}$ & $3,11\cdot10^{-14}$ & Rechazar\\\bottomrule
+\end{tabularx}\end{table}
+Los valores registrados como cero por precisión finita se expresan como extremadamente pequeños y no como probabilidad matemática nula. Como exploración adicional, el costo medio (E4) es 207,29 USD en atrasadas y 214,50 USD en puntuales, con diferencia $-7,21$ USD, IC del 95\% $[-9,03;-5,39]$ y $d_{av}=-0,150$. Esta asociación es pequeña en términos estandarizados.
+
+\section{Documentación de procedimientos y resultados}
+Los cálculos se encuentran en \texttt{notebooks/formativa\_1.ipynb}, con la fuente original en \texttt{data/raw/ecommerce\_shipping.csv}; las salidas reproducibles constan en \texttt{outputs/tablas/} y \texttt{outputs/figuras/}. La procedencia, diccionario, ficha y protocolo se documentan en \texttt{docs/}. Se emplean Python y bibliotecas estadísticas para descriptiva, inferencia y visualización. Los valores consignados aquí proceden de archivos CSV exportados por el notebook suministrado, sin recalcular selectivamente los resultados a partir de figuras.
+
+La auditoría comprueba dimensión, objetivo binario, dominios, sumas de categorías y valores faltantes. Los intervalos proceden de \texttt{estimaciones.csv}; T01, T02 y T03 se encuentran en \texttt{contraste\_modalidad.csv}, \texttt{contraste\_peso.csv} y \texttt{contraste\_descuento.csv}, respectivamente. El costo E4 está en \texttt{contraste\_costo.csv}, y los ajustes de siete pruebas se encuentran en \texttt{contrastes\_holm\_7.csv}.
+
+\section{Interpretación preliminar, limitaciones y próximos pasos}
+El análisis describe un porcentaje elevado de atrasos en los registros disponibles (59,67\%). No se detecta evidencia de asociación entre modalidad y atraso mediante T01, mientras que T02 muestra una diferencia importante de peso medio y T03 una diferencia marcada de descuento medio. E4 identifica también una diferencia menor de costo. Las decisiones operativas razonables consisten en \emph{investigar} segmentos y procesos, no en cambiar directamente transporte o precios por inferencia causal.
+
+Se deben considerar al menos cinco limitaciones: (i) origen muestral y período no especificados; (ii) posible dependencia entre envíos; (iii) carácter observacional y confusión no controlada; (iv) ambigüedad sobre unidad del descuento y discrepancia en bodega F; (v) variables de calificación o atención que podrían no estar disponibles antes del resultado. En evaluaciones posteriores convendría validar representatividad, temporalidad y capacidad de generalización, y establecer diseños adecuados para inferencia causal o predicción.
+
+\section{Comunicación académica y participación en el foro}
+El informe sintetiza los resultados obtenidos de manera reproducible y deja documentadas sus principales limitaciones para su discusión académica. La segunda etapa de la actividad se desarrolla en el foro de Canvas: el equipo debe publicar el producto y aportar al menos dos comentarios fundamentados en los trabajos de otros grupos. Esta participación se verificará mediante las publicaciones efectivamente realizadas, sin declararla aquí como completada.
+
+\section*{Referencias}\addcontentsline{toc}{section}{Referencias}
+Gopalani, P. (2021). \emph{E-Commerce Shipping Data} (versión 1) [Conjunto de datos]. Kaggle. \url{https://www.kaggle.com/datasets/prachi13/customer-analytics}.
+
+Grupo 1. (2026). \emph{Repositorio del proyecto de Estadística Computacional} [Código y documentación]. GitHub. \url{https://github.com/joserodriguezc/grupo_1_estadistica_computacional}.
+
+Virtanen, P., et al. (2020). SciPy 1.0: Fundamental Algorithms for Scientific Computing in Python. \emph{Nature Methods, 17}, 261--272.
+
+\end{document}

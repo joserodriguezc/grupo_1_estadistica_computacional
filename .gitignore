@@ -22,3 +22,5 @@ dist/
 
 anaconda_projects
 .virtual_documents
+.ipynb_checkpoints
+anaconda_projects
