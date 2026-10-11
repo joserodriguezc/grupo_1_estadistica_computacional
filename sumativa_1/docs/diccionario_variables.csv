@@ -1,0 +1,13 @@
+posicion,nombre_original,nombre_analitico,descripcion,tipo_estadistico,dtype_pandas,unidad,dominio_observado,n_distintos,n_nulos,rol,observaciones
+1,ID,id_envio,Identificador del registro de envío,Identificador nominal,int64,sin unidad,enteros 1 a 10999,10999,0,Identificador,Solo verificar unicidad; excluir de estadísticas y correlaciones. No implica orden cronológico ni un cliente por registro.
+2,Warehouse_block,bloque_bodega,Bloque de bodega desde donde sale el envío,Cualitativa nominal,str,sin unidad,A; B; C; D; F,5,0,Explicativa,"Archivo trae A, B, C, D y F; Kaggle describe A-E. No recodificar F como E."
+3,Mode_of_Shipment,modalidad_envio,Modalidad de transporte del envío,Cualitativa nominal,str,sin unidad,Flight; Road; Ship,3,0,Explicativa (contraste T01),"Categorías: Flight, Road, Ship."
+4,Customer_care_calls,llamadas_atencion,Número de llamadas de consulta del cliente por el envío,Cuantitativa discreta (conteo),int64,llamadas,2; 3; 4; 5; 6; 7,6,0,Explicativa / estimación IC,Momento de registro no documentado; podría ser posterior al atraso.
+5,Customer_rating,calificacion_cliente,"Calificación del cliente (1 = peor, 5 = mejor)",Cualitativa ordinal,int64,puntos 1-5,1; 2; 3; 4; 5,5,0,Explicativa,Orden 1<2<3<4<5; no suponer distancias iguales. Momento de registro no documentado.
+6,Cost_of_the_Product,costo_producto,Costo del producto,Cuantitativa de razón,int64,USD (según Kaggle),enteros 96 a 310,215,0,Explicativa (contraste T03),Registrado en enteros.
+7,Prior_purchases,compras_previas,Número de compras previas del cliente,Cuantitativa discreta (conteo),int64,compras,2; 3; 4; 5; 6; 7; 8; 10,8,0,Explicativa,Observado 2-10; no aparece el valor 9.
+8,Product_importance,importancia_producto,Importancia del producto,Cualitativa ordinal,str,categoría,high; low; medium,3,0,Explicativa,Orden: low < medium < high.
+9,Gender,genero,Género registrado del cliente,Cualitativa nominal,str,sin unidad,F; M,2,0,Explicativa,Categorías F y M tal como se registran.
+10,Discount_offered,descuento_ofrecido,Descuento ofrecido sobre el producto,Cuantitativa,int64,NO ESPECIFICADA,enteros 1 a 65,65,0,Explicativa,No asumir % ni moneda. Observado 1-65.
+11,Weight_in_gms,peso_gramos,Peso del producto,Cuantitativa de razón,int64,gramos (según Kaggle),enteros 1001 a 7846,4034,0,Explicativa (contraste T02),Registrado en enteros.
+12,Reached.on.Time_Y.N,entrega_atrasada,Resultado de la entrega,Nominal binaria,int64,0/1,0; 1,2,0,Resultado,1 = no llegó a tiempo (atrasada); 0 = llegó a tiempo. Confirmado en descripción de Kaggle.
