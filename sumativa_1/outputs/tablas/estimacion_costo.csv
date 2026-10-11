@@ -1,0 +1,2 @@
+parametro,variable,estimador,unidad,metodo,n,estimacion,ee,ic_inf,ic_sup,ancho,ancho_relativo_%
+Costo medio,costo_producto,media muestral,USD,Normal (TCL),10999,210.19683607600692,0.4582861469802647,209.29861173331196,211.09506041870188,1.7964486853899189,0.854650678348139
