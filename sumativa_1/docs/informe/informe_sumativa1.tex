@@ -100,10 +100,10 @@ Peso (g)
 \end{table}
 
 La Tabla~\ref{tab:descriptiva} caracteriza la forma de las distribuciones
-mediante \texttt{stats.skew(bias=False)} y
-\texttt{stats.kurtosis(fisher=True, bias=False)}
+con \texttt{stats.skew} y \texttt{stats.kurtosis} de SciPy, con la
+opción \texttt{bias=False} en ambas y \texttt{fisher=True} en la curtosis
 (SciPy, s.~f.). La curtosis se informa según la definición
-de Fisher (curtosis en exceso = curtosis de Pearson $- 3$),
+de Fisher (curtosis en exceso = curtosis de Pearson $-$ 3),
 de modo que una distribución normal tiene asimetría
 ($A$) y curtosis en exceso ($K$) iguales a cero;
 valores positivos de $K$ indican colas más pesadas
