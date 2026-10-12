@@ -14,7 +14,7 @@ El estudio incluye estadísticas descriptivas, cuatro estimaciones con intervalo
 
 - `sumativa_1/notebooks/sumativa_1.ipynb`: notebook ejecutable (96 celdas, 47 de código).
 - `sumativa_1/docs/informe/informe_sumativa1.tex`: **único archivo fuente LaTeX**, con ambos anexos integrados; no requiere otros `.tex`.
-- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **20 páginas en total**, incluidos los anexos. Verificar el límite de extensión aplicable al cuerpo principal según la pauta docente.
+- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **21 páginas en total**, incluidos los anexos. Verificar el límite de extensión aplicable al cuerpo principal según la pauta docente.
 - `sumativa_1/outputs/figuras/`: figuras utilizadas tanto en el cuerpo principal como en los anexos; **sin subcarpeta `anexos`**.
 - `sumativa_1/outputs/tablas/`: resultados cuantitativos, pruebas y metadatos de ejecución.
 - `sumativa_1/docs/protocolo_analisis.md`: diseño estadístico final de esta evaluación.
