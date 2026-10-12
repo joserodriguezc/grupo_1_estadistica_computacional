@@ -32,7 +32,7 @@ José Ignacio Rodríguez\\Yerko G. Gallardo Miranda\\Sebastián Rojas Araya
 \section{Preparación y carga de datos}
 \textbf{Contexto y pregunta.} Según Gopalani (2021), la base reúne envíos de una empresa de comercio electrónico de productos electrónicos. Se pregunta: \emph{¿qué características se asocian con el atraso y qué evidencia orienta una revisión operacional?} La empresa, el período y el marco muestral no están documentados. La unidad provisional es el registro de envío asociado a un cliente; un ID único no garantiza independencia ni un cliente por fila.
 
-El CSV contiene \textbf{10.999 filas y 12 columnas}. Se carga con \codigo{pandas.read\_csv(encoding='utf-8-sig')} y se conserva intacto, con SHA-256 documentado. La copia del repositorio conserva los valores del original de Kaggle, con saltos LF en vez de CRLF. Se crean nombres analíticos y el alias \codigo{entrega\_atrasada}: \textbf{1 = atrasada; 0 = puntual}.
+El CSV contiene \textbf{10.999 filas y 12 columnas}. Se carga con \codigo{pandas.read\_csv(encoding='utf-8-sig')} y se conserva intacto, con SHA-256 documentado. La copia del repositorio conserva los valores del original de Kaggle. Se crean nombres analíticos y el alias \codigo{entrega\_atrasada}: \textbf{1 = atrasada; 0 = puntual}.
 \begin{table}[H]\centering\small
 \caption{Clasificación estadística y papel de las doce variables.}\label{tab:diccionario}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
@@ -58,47 +58,133 @@ La Figura~\ref{fig:objetivo} muestra 6.563 atrasos y 4.436 puntuales. Dimensiona
 
 \section{Análisis exploratorio de datos}
 \subsection{Centro, dispersión y forma}
-\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{Resumen de cuantitativas; n = 10.999 por variable. A: asimetría ajustada; K: exceso de curtosis de Fisher.}\label{tab:descriptiva}
-\begin{tabular}{@{}lrrrrrrr@{}}\toprule
-Variable & Media & Mediana & DE & Q1 & Q3 & A & K\\\midrule
-Llamadas & 4,05 & 4,00 & 1,14 & 3,00 & 5,00 & 0,39 & -0,31 \\
-Costo (USD) & 210,20 & 214,00 & 48,06 & 169,00 & 251,00 & -0,16 & -0,97 \\
-Compras previas & 3,57 & 3,00 & 1,52 & 3,00 & 4,00 & 1,68 & 4,01 \\
-Descuento (u. orig.) & 13,37 & 7,00 & 16,21 & 4,00 & 10,00 & 1,80 & 2,00 \\
-Peso (g) & 3.634,02 & 4.149,00 & 1.635,38 & 1.839,50 & 5.050,00 & -0,25 & -1,45 \\
-\bottomrule\end{tabular}\end{table}
-La Tabla~\ref{tab:descriptiva} calcula la forma con \codigo{stats.skew(bias=False)} y \codigo{stats.kurtosis(fisher=True,bias=False)} (SciPy, s. f.). La referencia normal tiene A = K = 0; el exceso no es la curtosis de Pearson. Descuento y compras previas tienen asimetría positiva de \textbf{1,80 y 1,68}, y exceso de \textbf{2,00 y 4,01}: sus valores altos tienen mayor influencia relativa en los momentos. La media del descuento (13,37) supera su mediana (7).
 
-El peso tiene A = \textbf{\ensuremath{-}0,25} y K = \textbf{\ensuremath{-}1,45}, pero el histograma evidencia bimodalidad. Los coeficientes no prueban normalidad; ni media ni mediana describen por sí solas los dos grupos de valores. El IQR del peso es \textbf{3.210,50 g} y su DE \textbf{1.635,38 g}. Mínimos, máximos e IQR completos se exportan en el notebook.
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\caption{Resumen descriptivo de variables cuantitativas
+($n=10.999$ por variable).}
+\label{tab:descriptiva}
+
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{}lrrrrrrrrrr@{}}
+\toprule
+Variable & Media & Mediana & DE & Mín. & Q1 & Q3
+& Máx. & IQR & A & K \\
+\midrule
+Llamadas
+& 4,05 & 4,00 & 1,14 & 2 & 3,00 & 5,00
+& 7 & 2,00 & 0,39 & -0,31 \\
+
+Costo (USD)
+& 210,20 & 214,00 & 48,06 & 96 & 169,00 & 251,00
+& 310 & 82,00 & -0,16 & -0,97 \\
+
+Compras previas
+& 3,57 & 3,00 & 1,52 & 2 & 3,00 & 4,00
+& 10 & 1,00 & 1,68 & 4,01 \\
+
+Descuento (u. orig.)
+& 13,37 & 7,00 & 16,21 & 1 & 4,00 & 10,00
+& 65 & 6,00 & 1,80 & 2,00 \\
+
+Peso (g)
+& 3.634,02 & 4.149,00 & 1.635,38 & 1.001
+& 1.839,50 & 5.050,00 & 7.846
+& 3.210,50 & -0,25 & -1,45 \\
+
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+La Tabla~\ref{tab:descriptiva} caracteriza la forma de las distribuciones
+mediante \texttt{stats.skew(bias=False)} y
+\texttt{stats.kurtosis(fisher=True, bias=False)}
+(SciPy, s.~f.). La curtosis se informa según la definición
+de Fisher (curtosis en exceso = curtosis de Pearson $- 3$),
+de modo que una distribución normal tiene asimetría
+($A$) y curtosis en exceso ($K$) iguales a cero;
+valores positivos de $K$ indican colas más pesadas
+que las de una distribución normal.
+
+El peso tiene A = \textbf{\ensuremath{-}0,25} y K = \textbf{\ensuremath{-}1,45}, pero el histograma evidencia bimodalidad. Los coeficientes no prueban normalidad; ni media ni mediana describen por sí solas los dos grupos de valores. El IQR del peso es \textbf{3.210,50 g} y su DE \textbf{1.635,38 g}.
 \imagen{.97}{fig_eda_2_cuantitativas.pdf}{Descuento y compras previas presentan colas derechas; el peso tiene dos grupos de concentración. Histogramas y cajas conservan todos los valores.}{fig:cuant}
-La Figura~\ref{fig:cuant} respalda la forma de la Tabla~\ref{tab:descriptiva}. Las líneas distinguen media y mediana; no se eliminan extremos para mejorar la apariencia. Llamadas son conteos; calificación e importancia son ordinales y se describen con frecuencias ordenadas, sin distancias iguales entre categorías.
+La Figura~\ref{fig:cuant} respalda la forma de la Tabla~\ref{tab:descriptiva}. Las líneas distinguen media y mediana; no se eliminan extremos para. Llamadas son conteos; calificación e importancia son ordinales y se describen con frecuencias ordenadas, sin distancias iguales entre categorías.
 \newpage
 
 \subsection{Categorías y relaciones bivariadas}
-La modalidad marítima concentra \textbf{7.462 registros (67,84\%)}, aérea 1.777 (16,16\%) y terrestre 1.760 (16,00\%). La bodega F reúne 3.666 registros y cada otra bodega 1.833--1.834. La mediana de calificación es 3 (Q1 = 2; Q3 = 4). Estos volúmenes no son tasas de atraso.
+La distribución de las modalidades y demás variables categóricas se presenta en la Figura~\ref{fig:anexo_cualitativas} del Anexo~\ref{sec:anexo_figuras}.
+
+La modalidad marítima (Barco) concentra \textbf{7.462 registros (67,84\%)}, aérea (Avión) 1.777 (16,16\%) y terrestre (Carretera) 1.760 (16,00\%). La bodega F reúne 3.666 registros y cada otra bodega 1.833--1.834. La mediana de calificación es 3 (Q1 = 2; Q3 = 4).
 \imagen{.86}{fig_eda_8_dependiente_vs_cualitativas.pdf}{La importancia alta registra 64,98\% de atraso; las diferencias por modalidad y bodega son reducidas. Tasas por categoría con IC individuales de Wilson y n.}{fig:categorias}
-En la Figura~\ref{fig:categorias}, importancia alta supera la tasa global de 59,67\%; su V de Cramér frente al resultado es \textbf{0,0333}. Modalidad tiene V = \textbf{0,0082} y bodega V = \textbf{0,0100}. Superposición de IC no equivale a una prueba; E2 contrasta importancia y T01 modalidad.
+En la Figura~\ref{fig:categorias}, importancia alta supera la tasa global de 59,67\%; su V de Cramér frente al resultado es \textbf{0,0333}. Modalidad tiene V = \textbf{0,0082} y bodega V = \textbf{0,0100}. 
+Los IC son individuales: que se superpongan o no,
+no reemplaza una prueba de hipótesis. La diferencia
+de la importancia alta se contrasta formalmente
+en E2 y la de modalidad en T01 (sección~4).
+
 \imagen{.58}{fig_eda_5_correlacion.pdf}{Peso y descuento presentan la mayor asociación monótona entre cuantitativas: $\rho=-0{,}316$.}{fig:corr}
-La Figura~\ref{fig:corr} usa Spearman para explorar relaciones monótonas mediante rangos. Peso--descuento tiene \textbf{$\rho=-0{,}316$}; llamadas--costo, \textbf{$\rho=0{,}294$}; llamadas--compras previas, \textbf{$\rho=0{,}273$}; costo--compras previas, \textbf{$\rho=0{,}194$}. Las magnitudes bivariadas son limitadas, sin demostrar independencia conjunta ni ausencia de confusión. La matriz completa se exporta y excluye ID y resultado binario.
+La Figura~\ref{fig:corr} usa Spearman para explorar relaciones monótonas mediante rangos. Peso--descuento tiene \textbf{$\rho=-0{,}316$}; llamadas--costo, \textbf{$\rho=0{,}294$}; llamadas--compras previas, \textbf{$\rho=0{,}273$}; costo--compras previas, \textbf{$\rho=0{,}194$}. Las magnitudes bivariadas son limitadas, sin demostrar independencia conjunta ni ausencia de confusión. Se excluyen el identificador, que no tiene significado numérico, y la variable de resultado, cuya relación con cada predictora se analiza por separado en el anexo.
 \newpage
 
 \section{Estimación de parámetros}
-Se estiman \textbf{tres medias relevantes y una proporción}. Se conserva la aproximación normal de la guía: $\bar{x}\pm z_{0{,}975}s/\sqrt{n}$ y $\hat p\pm z_{0{,}975}\sqrt{\hat p(1-\hat p)/n}$, con $z_{0{,}975}=1{,}95996$. Se revisan tamaño, forma, extremos e influencia. En la proporción, $n\hat p=6.563$ y $n(1-\hat p)=4.436$, mayores que 10. La independencia es un supuesto de diseño no verificable con estas columnas.
-\begin{table}[H]\centering\small
-\caption{Estimaciones e IC individuales del 95\%, con n efectivo.}\label{tab:ic}
-\begin{tabularx}{\linewidth}{@{}Xrrrr@{}}\toprule Parámetro & n & Estimación & Inferior & Superior\\\midrule
-Proporción de atraso & 10.999 & 0,59669 & 0,58752 & 0,60586 \\
-Peso medio (g) & 10.999 & 3.634,02 & 3.603,45 & 3.664,58 \\
-Costo medio (USD) & 10.999 & 210,20 & 209,30 & 211,10 \\
-Llamadas medias & 10.999 & 4,054 & 4,033 & 4,076 \\
-\bottomrule\end{tabularx}\end{table}
-\textbf{Sentido del 95\%.} Caracteriza la cobertura del \emph{procedimiento}: bajo muestreo repetido y los supuestos del método, aproximadamente el 95\% de los intervalos construidos contendría el parámetro poblacional fijo. Para un intervalo calculado, no significa que el parámetro tenga 95\% de probabilidad de estar dentro, ni que el 95\% de los envíos quede en ese rango.
+Se estiman \textbf{tres medias relevantes y una proporción}. Se conserva la aproximación normal de la guía: $\bar{x}\pm z_{0{,}975}s/\sqrt{n}$ y $\hat p\pm z_{0{,}975}\sqrt{\hat p(1-\hat p)/n}$, con $z_{0{,}975}=1{,}95996$. Se revisan tamaño, forma, extremos e influencia. En la proporción, $n\hat p=6.563$ y $n(1-\hat p)=4.436$. Los intervalos suponen envíos independientes. Este supuesto depende de cómo se obtuvieron los datos y no puede verificarse con estas columnas: no hay identificador de cliente, fecha ni ruta que permita detectar envíos relacionados. Si existiera dependencia (por ejemplo, envíos de un mismo cliente o de una misma carga), los intervalos serían más estrechos de lo que corresponde.
 
-La Tabla~\ref{tab:ic} estima un atraso de 59,67\%, con intervalo 58,75--60,59\%; peso medio de 3.634,02 g, costo de USD 210,20 y llamadas de 4,054. El ancho relativo va de 0,85\% a 3,07\%. La precisión no corrige selección, dependencia ni incertidumbre del origen. Para tasas por categoría se usa Wilson, que no colapsa en 0 o 1; las diferencias de medias usan IC t de Welch. No se presentan IC simultáneos.
+La proporción de atraso es el parámetro central del estudio. Se estiman las medias de peso, costo y llamadas porque tienen unidad documentada e interpretación operacional, y porque peso y costo se comparan entre grupos en T02 y E4. No se estima la media del descuento, cuya unidad no está documentada y cuya fuerte asimetría haría poco representativa la media, ni la de compras previas, conteo asimétrico de baja relevancia para la pregunta.
+
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Estimaciones e IC individuales del 95\%,
+con tamaño muestral y ancho relativo.}
+\label{tab:ic}
+
+\begin{tabularx}{\linewidth}{@{}Xrrrrr@{}}
+\toprule
+Parámetro & n & Estimación & Inferior & Superior
+& Ancho rel. (\%) \\
+\midrule
+Proporción de atraso & 10.999 & 0,59669
+& 0,58752 & 0,60586 & 3,07 \\
+
+Peso medio (g) & 10.999 & 3.634,02
+& 3.603,45 & 3.664,58 & 1,68 \\
+
+Costo medio (USD) & 10.999 & 210,20
+& 209,30 & 211,10 & 0,85 \\
+
+Llamadas medias & 10.999 & 4,054
+& 4,033 & 4,076 & 1,05 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Que un intervalo sea de confianza al 95\,\% significa
+que el método que lo genera, aplicado a muestras
+repetidas, produce intervalos que contienen el
+parámetro en aproximadamente el 95\,\% de los casos,
+siempre que se cumplan sus supuestos. Ese porcentaje
+es una propiedad del método antes de observar los
+datos; el intervalo obtenido con esta muestra
+contiene o no el parámetro.
+
+La Tabla~\ref{tab:ic} estima un atraso de 59,67\%, con intervalo 58,75--60,59\%; peso medio de 3.634,02 g, costo de USD 210,20 y llamadas de 4,054. 
+Ningún intervalo supera el 3,1\% del valor estimado,
+por lo que todas las estimaciones son precisas. La precisión no corrige selección, dependencia ni incertidumbre del origen. 
+Para las estimaciones de proporciones se utiliza
+el intervalo de confianza de Wilson al 95\,\%,
+mientras que las diferencias de medias se estiman
+mediante intervalos basados en la prueba
+$t$ de Welch. Los intervalos presentados
+son individuales, sin ajuste por comparaciones
+múltiples.
+
 
 \section{Pruebas de hipótesis}
-Se utiliza $\alpha=0{,}05$ como tolerancia convencional al error tipo I y Holm (1979) para una familia de siete pruebas. Las comparaciones son bilaterales; $\chi^2$ contrasta independencia. El plan inicial incluyó modalidad, peso y costo. Durante el EDA se añadió descuento y se reorganizó T03; ese cambio y los contrastes complementarios son \textbf{exploratorios}, sin atribuirles preespecificación. Holm no corrige selección de hipótesis o umbrales a partir del EDA.
+Se utiliza $\alpha=0{,}05$ como tolerancia convencional al error tipo I y Holm (1979) para una familia de siete pruebas. Las comparaciones son bilaterales; $\chi^2$ contrasta independencia. Holm no corrige selección de hipótesis o umbrales a partir del EDA.
 \subsection{T01 Modalidad y atraso}
 $H_0$: modalidad y resultado independientes; $H_1$: asociación. Se emplea \codigo{stats.chi2\_contingency}. Cada envío ocupa una celda y se requiere independencia entre registros.
 \begin{table}[H]\centering\small\caption{Frecuencias observadas para el contraste de independencia.}\label{tab:contingencia}
@@ -113,13 +199,31 @@ $H_0:\mu_{atr}-\mu_{punt}=0$; $H_1:\mu_{atr}-\mu_{punt}\ne0$. Welch no impone ig
 
 Con \textbf{6.563 atrasadas y 4.436 puntuales}, las medias son \textbf{3.272,64 g y 4.168,67 g}. Diferencia atrasadas menos puntuales: $-896{,}03$ g, IC 95\% $[-956{,}03;-836{,}03]$; $t=-29{,}27$, gl = $9\,526{,}57$ y $p=1{,}93\times10^{-180}$. El efecto $d_{av}=-0{,}569$ divide la diferencia por la raíz de la media de las dos varianzas muestrales. Se rechaza $H_0$ tras Holm, sin inferir causas.
 \imagen{.90}{fig_t02_peso_grupos.pdf}{El peso medio es 896,03 g menor entre atrasadas; en (2.000, 4.000] g hay 1.787 atrasadas y una puntual.}{fig:peso}
-La Figura~\ref{fig:peso} muestra diferencias de forma; E1 complementa la comparación de medias mediante rangos. La franja con una puntual no tiene separación completa.
+La Figura~\ref{fig:peso} muestra diferencias de forma; E1 complementa la comparación de medias mediante rangos. 
+En el tramo de 2.000 a 4.000 g, 1.787 de los
+1.788 envíos llegaron atrasados (99,94\,\%).
+Una sola entrega puntual impide que haya
+separación completa, es decir, que todos los
+envíos del tramo tengan el mismo resultado.
+Aun así, en ese tramo el peso predice el
+atraso casi sin error, lo que debe considerarse
+al modelar el resultado.
+
 \subsection{T03 Descuento medio por resultado}
 $H_0:\mu_{atr}-\mu_{punt}=0$; $H_1:\mu_{atr}-\mu_{punt}\ne0$. Welch se utiliza por la diferencia de dispersión: DE = 19,11 en atrasadas y 2,88 en puntuales, con los mismos tamaños de T02.
 
 Las medias son \textbf{18,66 y 5,55 unidades originales}; diferencia $13{,}12$, IC 95\% $[12{,}65;13{,}59]$, $t=54{,}70$, gl = $6\,998{,}09$ y $d_{av}=0{,}960$. La implementación devuelve p = 0 por subdesbordamiento: no es probabilidad matemática nula. Se rechaza $H_0$ tras Holm. El descuento no se expresa como porcentaje ni dinero.
 \imagen{.90}{fig_t03_descuento_grupos.pdf}{Ningún envío puntual registra descuento mayor que 10; el segmento comprende 2.647 registros atrasados.}{fig:descuento}
-La Figura~\ref{fig:descuento} motiva revisar origen y temporalidad del descuento, sin concluir que causa el atraso.
+La Figura~\ref{fig:descuento} presenta una separación evidente que
+requiere mayor contexto. El dataset no informa
+cómo ni cuándo se asigna el descuento; si se
+otorgara después del atraso, por ejemplo como
+compensación, la relación sería inversa (el
+atraso explicaría el descuento) y el descuento
+no serviría para predecir atrasos. Aclararlo
+requiere documentación de la fuente, no
+disponible en estas columnas; por lo tanto,
+no se concluye que el descuento cause el atraso.
 \newpage
 
 \subsection{Contrastes complementarios y multiplicidad}
@@ -131,7 +235,8 @@ La Figura~\ref{fig:descuento} motiva revisar origen y temporalidad del descuento
 
 El IC de Wilson del grupo > 10 es \textbf{[99,86\%; 100\%]}, no [100\%; 100\%]. El IC normal de la diferencia exportado [52,04; 54,18] pp no incorpora varianza estimada del grupo con proporción 1 y se lee con cautela; para ese segmento se prioriza Wilson. No se asume tasa poblacional exactamente igual a 1.
 
-\textbf{E4, costo medio.} $H_0:\Delta_{costo}=0$; $H_1:\Delta_{costo}\ne0$. Welch compara USD 207,29 y USD 214,50; diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$ y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
+
+\textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 y USD 214,50; diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$ y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
 \begin{table}[H]\centering\small\caption{Una familia de siete pruebas, Holm y $\alpha=0{,}05$.}\label{tab:holm}
 \begin{tabularx}{\linewidth}{@{}Xlll@{}}\toprule Contraste & p original & p Holm & Decisión\\\midrule
 T01 Modalidad & 0,68955 & 0,68955 & No rechazar\\
@@ -173,4 +278,119 @@ Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., Cournapeau
 SciPy. (s. f.). \emph{Statistical functions (scipy.stats)} [Documentación]. \url{https://docs.scipy.org/doc/scipy/reference/stats.html}
 
 statsmodels. (s. f.). \emph{Statistical tests and tools} [Documentación]. \url{https://www.statsmodels.org/stable/stats.html}
+
+
+
+\clearpage
+\appendix
+% Anexos incorporados directamente en este archivo.
+% Anexos integrados al documento principal; ruta compartida ../../outputs/figuras/
+
+\begin{center}
+{\Large\bfseries Anexos de la Evaluación Sumativa 1}\\[5pt]
+{\normalsize Análisis exploratorio e inferencial de entregas atrasadas}\\[4pt]
+{\small Grupo 1 --- MCDI501 --- Octubre de 2026}
+\end{center}
+\noindent\textit{Documento complementario al informe principal. Las figuras siguientes no se reproducen en el cuerpo del informe; los resultados y las limitaciones se interpretan sin atribuir causalidad.}
+\section*{Anexo A. Visualizaciones complementarias}
+
+\section{Visualizaciones complementarias}\label{sec:anexo_figuras}
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_3_cualitativas.pdf}
+\caption{Frecuencias de variables cualitativas y ordinales.}\label{fig:anexo_cualitativas}
+\end{figure}
+La modalidad de envío predominante es barco (7.462 registros; 67,84\%), seguida por avión y carretera. El gráfico también describe las categorías de bodega, importancia, calificación y género. Estas frecuencias representan composición muestral y no tasas condicionales de atraso.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_4_pairplot.png}
+\caption{Relaciones por pares entre variables cuantitativas.}\label{fig:anexo_pairplot}
+\end{figure}
+La matriz de pares permite observar concentración, posibles grupos, asimetrías y relaciones no lineales. Los patrones exploratorios no establecen independencia ni dirección causal, y las escalas heterogéneas dificultan comparaciones directas de intensidad.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_6_dependiente_vs_cuantitativas.pdf}
+\caption{Variables cuantitativas según resultado de entrega.}\label{fig:anexo_cuant_obj}
+\end{figure}
+La comparación por condición de entrega destaca diferencias en peso y descuento; la forma de las distribuciones y sus valores extremos justifican complementar las medias con gráficos y medidas de dispersión. El resultado observado no demuestra que esas variables causen el atraso.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_6b_ecdf_por_resultado.pdf}
+\caption{Funciones de distribución acumulada empírica por resultado.}\label{fig:anexo_ecdf}
+\end{figure}
+La ECDF representa, para cada valor del eje horizontal, la fracción de observaciones del grupo que no lo supera. Permite contrastar la distribución completa de peso, descuento y otras variables sin depender de intervalos arbitrarios de un histograma.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_7_correlacion_dependiente.pdf}
+\caption{Correlaciones de Spearman con entrega atrasada.}\label{fig:anexo_correlacion_obj}
+\end{figure}
+Se muestran asociaciones monótonas de las variables explicativas con el indicador binario de atraso, distintas de la matriz entre explicativas del informe principal. El signo corresponde a la codificación 1 = atrasada, 0 = puntual. Una correlación no demuestra causalidad ni capacidad predictiva prospectiva.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_9_descuento_x_peso.pdf}
+\caption{Relación conjunta entre descuento, peso y atraso.}\label{fig:anexo_desc_peso}
+\end{figure}
+La visualización permite explorar cómo se combinan peso y descuento en los dos resultados de entrega y detectar segmentos con patrones marcados. La posible asignación posterior del descuento y la ausencia de fechas impiden interpretar su separación como mecanismo causal.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_10_cramer_cualitativas.pdf}
+\caption{Magnitud de asociaciones categóricas mediante V de Cramér.}\label{fig:anexo_cramer}
+\end{figure}
+V de Cramér resume la intensidad de asociación entre dos variables categóricas en una escala no negativa. Para modalidad y atraso se obtuvo V aproximadamente 0,0082, asociación de magnitud mínima; la significancia se verifica por separado mediante chi-cuadrado.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_inf_1_intervalos.pdf}
+\caption{Visualización de estimaciones e intervalos de confianza.}\label{fig:anexo_intervalos}
+\end{figure}
+Se representan estimaciones junto a sus intervalos del 95\%. La anchura refleja incertidumbre muestral bajo los supuestos del método, pero no corrige selección, dependencia ni problemas de representatividad. La comparación visual entre intervalos no sustituye un contraste formal.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_inf_2_holm.pdf}
+\caption{Resultados de las pruebas y ajuste por multiplicidad de Holm.}\label{fig:anexo_holm}
+\end{figure}
+El resumen gráfico muestra los resultados de la familia de siete contrastes tras controlar el error familiar mediante Holm. El ajuste atiende múltiples pruebas, pero no convierte en confirmatorias hipótesis seleccionadas a partir del análisis exploratorio.
+
+\clearpage
+\section{Técnicas estadísticas empleadas y justificación}\label{sec:anexo_tecnicas}
+\small
+
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Técnica} & \textbf{Motivo de selección, uso y precaución}\\
+\midrule
+Auditoría de calidad y tabulación & \texttt{read\_csv}, \texttt{isna}, \texttt{duplicated}, \texttt{nunique} y \texttt{crosstab}: verificar estructura, ausencia de faltantes y duplicados, dominios de categorías y tamaños muestrales antes de la inferencia.\\
+\addlinespace
+Tendencia central y dispersión & Media, mediana, desviación estándar, cuartiles, rango intercuartílico y extremos: describir magnitud, variabilidad y robustez ante asimetría. El IQR equivale a $Q_3-Q_1$.\\
+\addlinespace
+Asimetría y curtosis & \texttt{stats.skew(bias=False)} y \texttt{stats.kurtosis(fisher=True,bias=False)}: cuantificar forma. La curtosis de Fisher es el exceso respecto de la normal; ninguna de estas métricas constituye una prueba de normalidad.\\
+\addlinespace
+Correlación de Spearman & \texttt{DataFrame.corr(method='spearman')}: explorar asociación monótona entre rangos ante distribuciones no necesariamente normales. La matriz entre predictoras y la correlación con la variable de atraso responden preguntas diferentes.\\
+\addlinespace
+Medidas para categorías & Tablas de frecuencia, porcentajes, tasas por grupo y V de Cramér: caracterizar categorías y magnitud de asociación con el resultado; V no identifica dirección causal.\\
+\addlinespace
+IC de medias y proporciones & Aproximación normal basada en el TCL para medias y proporción global, según procedimiento del notebook; Wilson para tasas por subgrupos, especialmente cerca de cero o uno. Wilson evita los límites degenerados del intervalo de Wald. Debe verificarse que método y números del reporte correspondan al código final.\\
+\addlinespace
+Chi-cuadrado de independencia (T01) & \texttt{stats.chi2\_contingency}: contrastar modalidad categórica frente al resultado binario; requiere observaciones independientes y frecuencias esperadas suficientemente grandes.\\
+\addlinespace
+Prueba t de Welch (T02, T03, E4) & \texttt{stats.ttest\_ind(equal\_var=False)}: comparar medias de atrasadas y puntuales sin imponer igualdad de varianzas; IC de diferencia calculado con grados de libertad de Welch. Requiere independencia entre envíos y cautela frente a sesgos de selección.\\
+\addlinespace
+Mann--Whitney (E1) & \texttt{stats.mannwhitneyu}: contraste complementario por rangos del peso, menos dependiente de la forma paramétrica; sin igualdad de formas no equivale exclusivamente a un contraste de medianas.\\
+\addlinespace
+Prueba z de dos proporciones (E2, E3) & Comparar tasas de atraso entre importancia alta y resto, o descuento mayor que 10 y resto, con proporción agrupada bajo la hipótesis nula; el umbral exploratorio exige validación independiente.\\
+\addlinespace
+Corrección de Holm & \texttt{multipletests(method='holm')}: controlar error familiar al reportar conjuntamente siete valores p; no elimina la limitación de elegir hipótesis después de observar los datos.\\
+\bottomrule
+\end{tabularx}
+
+
+\paragraph{Criterios transversales de interpretación.}
+En todas las técnicas se distingue magnitud del efecto, significancia estadística y utilidad operacional. La muestra no documenta marco de selección, fechas o identificación de clientes; por ello, independencia y representatividad no quedan verificadas con estas columnas. El descuento podría ser posterior al atraso, lo cual impediría utilizarlo como predictor prospectivo sin establecer su temporalidad.
+
+\paragraph{Trazabilidad.}
+Las implementaciones y tablas se encuentran en el notebook y en \texttt{sumativa\_1/outputs/tablas/}; las figuras proceden de \texttt{sumativa\_1/outputs/figuras/}. El anexo conserva los nombres originales de archivo y remite al código reproducible del proyecto.
+
 \end{document}
+
+
+
+
