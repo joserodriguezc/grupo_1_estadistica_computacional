@@ -64,7 +64,7 @@ La Figura~\ref{fig:objetivo} muestra 6.563 atrasos y 4.436 puntuales. Dimensiona
 \scriptsize
 \setlength{\tabcolsep}{2.5pt}
 \caption{Resumen descriptivo de variables cuantitativas
-($n=10.999$ por variable).}
+($n=10\,999$ por variable).}
 \label{tab:descriptiva}
 
 \resizebox{\linewidth}{!}{%
@@ -130,7 +130,7 @@ La Figura~\ref{fig:corr} usa Spearman para explorar relaciones monótonas median
 
 
 \section{Estimación de parámetros}
-Se estiman \textbf{tres medias relevantes y una proporción}. Para la proporción global se utiliza el intervalo binomial de Wilson (score) al 95\%; para las tres medias, la aproximación normal basada en el TCL, $\bar{x}\pm z_{0{,}975}s/\sqrt{n}$, con $z_{0{,}975}=1{,}95996$. Wilson se aplica a proporciones, no a medias. Se revisan tamaños, forma, extremos e influencia. Para el resultado binario, $n\hat p=6.563$ y $n(1-\hat p)=4.436$. Los intervalos suponen envíos independientes. Este supuesto depende de cómo se obtuvieron los datos y no puede verificarse con estas columnas: no hay identificador de cliente, fecha ni ruta que permita detectar envíos relacionados. Si existiera dependencia (por ejemplo, envíos de un mismo cliente o de una misma carga), los intervalos serían más estrechos de lo que corresponde.
+Se estiman \textbf{tres medias relevantes y una proporción}. Para la proporción se usa el intervalo de Wilson, recomendado frente al de Wald por su mejor cobertura; para las medias, el intervalo $t$ de Student, $\bar{x}\pm t_{0{,}975;\,n-1}\,s/\sqrt{n}$, con $t_{0{,}975;\,10\,998}=1{,}96018$. Con $n=10\,999$, este coincide con la aproximación normal del TCL ($z_{0{,}975}=1{,}95996$) hasta el segundo decimal, por lo que la elección no afecta los resultados. Wilson se aplica a proporciones, no a medias. Se revisan tamaños, forma, extremos e influencia. Para el resultado binario, $n\hat p=6\,563$ y $n(1-\hat p)=4\,436$. Los intervalos suponen envíos independientes. Este supuesto depende de cómo se obtuvieron los datos y no puede verificarse con estas columnas: no hay identificador de cliente, fecha ni ruta que permita detectar envíos relacionados. Si existiera dependencia (por ejemplo, envíos de un mismo cliente o de una misma carga), los intervalos serían más estrechos de lo que corresponde.
 
 La proporción de atraso es el parámetro central del estudio. Se estiman las medias de peso, costo y llamadas porque tienen unidad documentada e interpretación operacional, y porque peso y costo se comparan entre grupos en T02 y E4. No se estima la media del descuento, cuya unidad no está documentada y cuya fuerte asimetría haría poco representativa la media, ni la de compras previas, conteo asimétrico de baja relevancia para la pregunta.
 
@@ -174,7 +174,7 @@ contiene o no el parámetro.
 La Tabla~\ref{tab:ic} estima un atraso de 59,67\%, con intervalo de Wilson 58,75--60,58\%; peso medio de 3.634,02 g, costo de USD 210,20 y llamadas de 4,054. 
 Ningún intervalo supera el 3,1\% del valor estimado,
 por lo que todas las estimaciones son precisas. La precisión no corrige selección, dependencia ni incertidumbre del origen. 
-Para las proporciones se emplea Wilson al 95\,\%; las tres medias globales utilizan IC normales basados en el TCL, y las diferencias de medias, IC $t$ de Welch. Los intervalos presentados
+Para las proporciones se emplea Wilson al 95\,\%; las tres medias globales, IC $t$ de Student; las diferencias de medias, IC $t$ de Welch, y las diferencias de proporciones, IC de Newcombe. Los intervalos presentados
 son individuales, sin ajuste por comparaciones
 múltiples.
 
@@ -225,11 +225,11 @@ no se concluye que el descuento cause el atraso.
 \subsection{Contrastes complementarios y multiplicidad}
 \textbf{E1, rangos del peso.} $H_0$: distribuciones iguales; $H_1$: diferencia detectable por rangos. Mann--Whitney asintótico corrige empates y continuidad: $U=10\,000\,332{,}5$, $p=3{,}40\times10^{-171}$ y efecto biserial de rangos $r=-0{,}313$. Se rechaza $H_0$; sin igualdad de formas no es una prueba exclusiva de medianas.
 
-\textbf{E2, importancia alta.} $H_0:p_{alta}=p_{resto}$; $H_1:p_{alta}\ne p_{resto}$. La prueba z usa proporción combinada bajo $H_0$; los conteos esperados son suficientes. Hay \textbf{64,98\% de atraso en 948 productos de importancia alta}, frente a \textbf{59,17\% en 10.051 del resto}. Diferencia 5,81 puntos porcentuales (pp), IC normal individual [2,63; 9,00] pp; $z=3{,}486$ y $p=0{,}000490$. Se rechaza $H_0$ con Holm, sin identificar causas.
+\textbf{E2, importancia alta.} $H_0:p_{alta}=p_{resto}$; $H_1:p_{alta}\ne p_{resto}$. La prueba z usa proporción combinada bajo $H_0$; los conteos esperados son suficientes. Hay \textbf{64,98\% de atraso en 948 productos de importancia alta}, frente a \textbf{59,17\% en 10.051 del resto}. Diferencia 5,81 puntos porcentuales (pp), IC 95\% de Newcombe [2,57; 8,93] pp; $z=3{,}486$ y $p=0{,}000490$. Se rechaza $H_0$ con Holm, sin identificar causas.
 
 \textbf{E3, descuento mayor que 10.} $H_0:p_{>10}=p_{\le10}$; $H_1:p_{>10}\ne p_{\le10}$. La prueba z combinada tiene conteos esperados bajo $H_0$ mayores que 10: $z=48{,}54$; p no representable como número positivo en la exportación. Se observa \textbf{100\% de atraso en 2.647 registros}, frente a \textbf{46,89\% en 8.352} con descuento $\le10$. Diferencia 53,11 pp; riesgo relativo descriptivo 2,13. El umbral proviene del EDA y exige validación independiente.
 
-El IC de Wilson del grupo > 10 es \textbf{[99,86\%; 100\%]}, no [100\%; 100\%]. El IC normal de la diferencia exportado [52,04; 54,18] pp no incorpora varianza estimada del grupo con proporción 1 y se lee con cautela; para ese segmento se prioriza Wilson. No se asume tasa poblacional exactamente igual a 1.
+El IC de Wilson del grupo > 10 es \textbf{[99,86\%; 100\%]}, no [100\%; 100\%]. El IC 95\% de Newcombe de la diferencia es [52,03; 54,18] pp; al construirse con los intervalos de Wilson de cada grupo, no se degenera cuando un grupo tiene proporción 1, a diferencia del de Wald. No se asume tasa poblacional exactamente igual a 1.
 
 
 \textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 y USD 214,50; diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$ y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
@@ -259,9 +259,11 @@ El atraso de \textbf{59,67\%} justifica investigar el proceso que originó los r
 \begin{itemize}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
 \item Carga y controles: \codigo{pandas.read\_csv}, \codigo{isna}, \codigo{duplicated}, \codigo{nunique}, \codigo{crosstab}.
 \item Descriptiva y correlación: \codigo{DataFrame.describe}, \codigo{stats.skew}, \codigo{stats.kurtosis},\\ \codigo{DataFrame.corr(method='spearman')}.
-\item IC: \codigo{stats.norm.ppf}; DE con \codigo{ddof=1}; \codigo{proportion\_confint(method='wilson')} para tasas por grupo.
+\item IC: \codigo{stats.t.ppf} para medias; DE con \codigo{ddof=1}; \codigo{proportion\_confint(method='wilson')} para la proporción global y las tasas por grupo.
 \item Contrastes: \codigo{stats.chi2\_contingency}, \codigo{stats.ttest\_ind(equal\_var=False)},\\ \codigo{confidence\_interval(0.95)}, \codigo{stats.mannwhitneyu(method='asymptotic')}.
-\item Proporciones: z manual combinado y \codigo{stats.norm.sf}; IC de diferencia no combinado. \\ Holm: \codigo{multipletests(method='holm')}; Cramér: \codigo{stats.contingency.association}.
+\item Proporciones: z manual combinado y \codigo{stats.norm.sf}; IC de la diferencia de Newcombe.
+\item IC de Newcombe: \codigo{confint\_proportions\_2indep(method='newcomb')}.
+\item Holm: \codigo{multipletests(method='holm')}; Cramér: \codigo{stats.contingency.association}.
 \end{itemize}
 Las tablas proceden de exportaciones, no de imágenes. No se usa simulación ni muestreo aleatorio, por lo que no corresponde semilla. Las salidas pueden regenerarse; la Formativa 1 se conserva como entrega histórica.
 \section*{Referencias}\small
@@ -363,7 +365,7 @@ Correlación de Spearman & \texttt{DataFrame.corr(method='spearman')}: explorar 
 \addlinespace
 Medidas para categorías & Tablas de frecuencia, porcentajes, tasas por grupo y V de Cramér: caracterizar categorías y magnitud de asociación con el resultado; V no identifica dirección causal.\\
 \addlinespace
-IC de medias y proporciones & Wilson para proporción global y tasas por subgrupos; aproximación normal basada en el TCL solo para medias, especialmente con tamaños muestrales grandes. Wilson evita los límites degenerados del intervalo de Wald. Debe verificarse que método y números del reporte correspondan al código final.\\
+IC de medias y proporciones & \texttt{proportion\_confint(method='wilson')} para la proporción global y las tasas por subgrupo; Wilson tiene mejor cobertura que Wald y no se degenera con proporciones 0 o 1. \texttt{stats.t.ppf} para el IC $t$ de Student de las medias ($n-1$ gl); con $n=10\,999$ coincide con la aproximación normal del TCL hasta el segundo decimal.\\
 \addlinespace
 Chi-cuadrado de independencia (T01) & \texttt{stats.chi2\_contingency}: contrastar modalidad categórica frente al resultado binario; requiere observaciones independientes y frecuencias esperadas suficientemente grandes.\\
 \addlinespace
@@ -371,7 +373,7 @@ Prueba t de Welch (T02, T03, E4) & \texttt{stats.ttest\_ind(equal\_var=False)}: 
 \addlinespace
 Mann--Whitney (E1) & \texttt{stats.mannwhitneyu}: contraste complementario por rangos del peso, menos dependiente de la forma paramétrica; sin igualdad de formas no equivale exclusivamente a un contraste de medianas.\\
 \addlinespace
-Prueba z de dos proporciones (E2, E3) & Comparar tasas de atraso entre importancia alta y resto, o descuento mayor que 10 y resto, con proporción agrupada bajo la hipótesis nula; el umbral exploratorio exige validación independiente.\\
+Prueba z de dos proporciones (E2, E3) & Comparar tasas de atraso entre importancia alta y resto, o descuento mayor que 10 y resto, con proporción agrupada bajo la hipótesis nula. El IC de la diferencia usa el método de Newcombe (\texttt{confint\_proportions\_2indep(method='newcomb')}), que combina los intervalos de Wilson de cada grupo y evita el IC degenerado de Wald cuando un grupo tiene proporción 1. El umbral exploratorio exige validación independiente.\\
 \addlinespace
 Corrección de Holm & \texttt{multipletests(method='holm')}: controlar error familiar al reportar conjuntamente siete valores p; no elimina la limitación de elegir hipótesis después de observar los datos.\\
 \bottomrule
