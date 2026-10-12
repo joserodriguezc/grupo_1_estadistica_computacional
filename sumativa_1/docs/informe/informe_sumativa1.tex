@@ -4,7 +4,10 @@
 \usepackage[margin=2.25cm]{geometry}
 \usepackage{graphicx,booktabs,tabularx,array,amsmath,amssymb,float,caption,xcolor,hyperref,fancyhdr,microtype}
 \definecolor{azul}{HTML}{1F5F8B}
-\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,citecolor=azul}
+\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,citecolor=azul,
+  pdftitle={Evaluación Sumativa 1: Análisis exploratorio e inferencial de entregas atrasadas en comercio electrónico},
+  pdfauthor={José Ignacio Rodríguez, Yerko Gallardo Miranda, Sebastián Rojas Araya},
+  pdfsubject={MCDI501 Estadística Computacional para la Toma de Decisiones, Grupo 1}}
 \pagestyle{fancy}\fancyhf{}\lhead{\footnotesize MCDI501 | Sumativa 1}\rhead{\footnotesize Grupo 1}\cfoot{\footnotesize \thepage}
 \setlength{\headheight}{14pt}\renewcommand{\headrulewidth}{0pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}\renewcommand{\arraystretch}{1.12}
@@ -232,7 +235,7 @@ no se concluye que el descuento cause el atraso.
 El IC de Wilson del grupo > 10 es \textbf{[99,86\%; 100\%]}, no [100\%; 100\%]. El IC 95\% de Newcombe de la diferencia es [52,03; 54,18] pp; al construirse con los intervalos de Wilson de cada grupo, no se degenera cuando un grupo tiene proporción 1, a diferencia del de Wald. No se asume tasa poblacional exactamente igual a 1.
 
 
-\textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 y USD 214,50; diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$ y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
+\textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 (atrasadas) y USD 214,50 (puntuales); diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$; $t=-7{,}75$, gl = $9\,557{,}16$, $p=1{,}04\times10^{-14}$, y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
 \begin{table}[H]\centering\small\caption{Una familia de siete pruebas, Holm y $\alpha=0{,}05$.}\label{tab:holm}
 \begin{tabularx}{\linewidth}{@{}Xlll@{}}\toprule Contraste & p original & p Holm & Decisión\\\midrule
 T01 Modalidad & 0,68955 & 0,68955 & No rechazar\\
@@ -318,55 +321,55 @@ Wilson, E. B. (1927). Probable inference, the law of succession, and statistical
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_3_cualitativas.pdf}
 \caption{Frecuencias de variables cualitativas y ordinales.}\label{fig:anexo_cualitativas}
 \end{figure}
-La modalidad de envío predominante es barco (7.462 registros; 67,84\%), seguida por avión y carretera. El gráfico también describe las categorías de bodega, importancia, calificación y género. Estas frecuencias representan composición muestral y no tasas condicionales de atraso.
+La muestra está desbalanceada en dos variables: Barco concentra el 67,8\% de los envíos y la bodega F el 33,3\%, el doble que cada una de las otras cuatro (16,7\%). La importancia alta es la categoría más pequeña (8,6\%; 948 envíos), por lo que su tasa de atraso tiene el intervalo más ancho entre las tasas por categoría (Figura~\ref{fig:categorias}). Calificación (19,7--20,4\%) y género (49,6--50,4\%) están prácticamente equilibrados. Esta composición describe volumen, no riesgo: que Barco concentre la mayoría de los envíos no implica que se atrase más (T01).
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_4_pairplot.png}
 \caption{Relaciones por pares entre variables cuantitativas.}\label{fig:anexo_pairplot}
 \end{figure}
-La matriz de pares permite observar concentración, posibles grupos, asimetrías y relaciones no lineales. Los patrones exploratorios no establecen independencia ni dirección causal, y las escalas heterogéneas dificultan comparaciones directas de intensidad.
+Las diagonales muestran que el peso y el descuento tienen distribuciones distintas según el resultado. En el peso, las entregas puntuales forman dos bloques separados: el 23,6\% pesa 2.000 g o menos y el 76,4\% entre 4.000 y 6.000 g, con una sola puntual en el tramo intermedio. Las atrasadas, en cambio, se reparten en los tres tramos (33,5\%, 27,2\% y 39,1\%) y son las únicas sobre 6.000 g. En el descuento, las puntuales se distribuyen de forma casi uniforme entre 1 y 10 (cerca del 10\% en cada valor) y ninguna supera ese valor; las atrasadas tienen el mismo bloque uniforme en el 59,7\% de los casos y, además, una cola plana entre 11 y 65 que reúne el 40,3\%. En llamadas, costo y compras previas, las densidades de ambos grupos casi se superponen. En los diagramas de dispersión, ningún envío de entre 4.000 y 6.000 g recibe un descuento mayor que 10, lo que explica la correlación negativa entre peso y descuento ($\rho=-0{,}32$); los demás pares no muestran una estructura marcada ($|\rho|\le0{,}29$).
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_6_dependiente_vs_cuantitativas.pdf}
-\caption{Variables cuantitativas según resultado de entrega.}\label{fig:anexo_cuant_obj}
+\caption{Tasa de atraso por tramo de cada variable cuantitativa, con IC 95\% de Wilson.}\label{fig:anexo_cuant_obj}
 \end{figure}
-La comparación por condición de entrega destaca diferencias en peso y descuento; la forma de las distribuciones y sus valores extremos justifican complementar las medias con gráficos y medidas de dispersión. El resultado observado no demuestra que esas variables causen el atraso.
+Solo el descuento y el peso producen cambios grandes en la tasa de atraso. Con descuentos de hasta 8, la tasa ronda el 46--48\%, por debajo de la global; en el quintil de 21 a 65 llega al 100\%. En el peso la relación no es monótona: la tasa sube de 67,7\% (1.001--1.678 g) a 84,7\% (1.678--3.320 g) y baja a cerca del 42\% sobre 4.512 g, por lo que la diferencia de medias de T02 resume mal este patrón. Llamadas y costo muestran un descenso gradual (de 65,2\% a 51,6\% y de 64,3\% a 55,7\%), y compras previas no tiene una tendencia clara; con 7, 8 y 10 compras, los intervalos son anchos porque hay pocos envíos.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_6b_ecdf_por_resultado.pdf}
 \caption{Funciones de distribución acumulada empírica por resultado.}\label{fig:anexo_ecdf}
 \end{figure}
-La ECDF representa, para cada valor del eje horizontal, la fracción de observaciones del grupo que no lo supera. Permite contrastar la distribución completa de peso, descuento y otras variables sin depender de intervalos arbitrarios de un histograma.
+Las curvas muestran lo que el promedio oculta. En el peso, la ECDF de las entregas puntuales queda plana entre 2.000 y 4.000 g porque casi no hay envíos puntuales en ese tramo, mientras que la de las atrasadas crece en forma continua; las medianas son 4.674 g (puntuales) y 3.231 g (atrasadas). En el descuento, todas las puntuales tienen 10 o menos, frente a cerca del 60\% de las atrasadas. En llamadas, costo y compras previas, las curvas casi se superponen: las atrasadas tienden a valores algo menores (costo mediano de 209 frente a 222 USD), diferencias coherentes con efectos pequeños ($d_{av}$ entre $-0{,}11$ y $-0{,}15$).
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_7_correlacion_dependiente.pdf}
-\caption{Correlaciones de Spearman con entrega atrasada.}\label{fig:anexo_correlacion_obj}
+\caption{Correlación punto-biserial y de Spearman de cada variable cuantitativa con el atraso.}\label{fig:anexo_correlacion_obj}
 \end{figure}
-Se muestran asociaciones monótonas de las variables explicativas con el indicador binario de atraso, distintas de la matriz entre explicativas del informe principal. El signo corresponde a la codificación 1 = atrasada, 0 = puntual. Una correlación no demuestra causalidad ni capacidad predictiva prospectiva.
+Solo el descuento ($r_{pb}=0{,}40$; $\rho=0{,}34$) y el peso ($-0{,}27$ con ambas medidas) tienen una asociación apreciable con el atraso; las otras tres variables no superan 0,08 en valor absoluto. En el descuento, la punto-biserial supera a la de Spearman porque los valores altos, todos atrasados, pesan más en una correlación lineal que en una de rangos. En el peso ambas coinciden, pero ninguna capta su relación no monótona (Figura~\ref{fig:anexo_cuant_obj}): una correlación de $-0{,}27$ subestima cuánto informa el peso sobre el atraso en el tramo de 2.000 a 4.000 g.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_9_descuento_x_peso.pdf}
 \caption{Relación conjunta entre descuento, peso y atraso.}\label{fig:anexo_desc_peso}
 \end{figure}
-La visualización permite explorar cómo se combinan peso y descuento en los dos resultados de entrega y detectar segmentos con patrones marcados. La posible asignación posterior del descuento y la ausencia de fechas impiden interpretar su separación como mecanismo causal.
+El cruce muestra dos condiciones que casi determinan el resultado: todos los envíos con descuento mayor que 10 llegaron atrasados, cualquiera sea su peso, y entre los envíos con descuento de 10 o menos, el tramo de 2.000 a 4.000 g tiene un 99,6\% de atraso. Fuera de esas condiciones la tasa queda por debajo de la global: 50,7\% bajo 2.000 g y 43,1\% entre 4.000 y 6.000 g, el segmento más grande (5.958 envíos). Así, la variación del resultado que queda por explicar se concentra en los envíos con descuento de 10 o menos fuera del tramo de 2.000--4.000 g. No hay envíos con descuento mayor que 10 entre 4.000 y 6.000 g, y sobre 6.000 g solo hay 8 envíos, por lo que esas celdas no permiten conclusiones.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_eda_10_cramer_cualitativas.pdf}
 \caption{Magnitud de asociaciones categóricas mediante V de Cramér.}\label{fig:anexo_cramer}
 \end{figure}
-V de Cramér resume la intensidad de asociación entre dos variables categóricas en una escala no negativa. Para modalidad y atraso se obtuvo V aproximadamente 0,0082, asociación de magnitud mínima; la significancia se verifica por separado mediante chi-cuadrado.
+Todas las asociaciones entre variables cualitativas son prácticamente nulas: la mayor es $V=0{,}019$ (bodega e importancia) y la menor, $V=0{,}001$ (bodega y modalidad). Las variables no son redundantes, de modo que sus tasas de atraso por categoría (Figura~\ref{fig:categorias}) pueden leerse una por una: el exceso de atraso de la importancia alta no puede atribuirse a que se concentre en alguna bodega o modalidad.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_inf_1_intervalos.pdf}
 \caption{Visualización de estimaciones e intervalos de confianza.}\label{fig:anexo_intervalos}
 \end{figure}
-Se representan estimaciones junto a sus intervalos del 95\%. La anchura refleja incertidumbre muestral bajo los supuestos del método, pero no corrige selección, dependencia ni problemas de representatividad. La comparación visual entre intervalos no sustituye un contraste formal.
+En una escala común de $\pm3\%$ alrededor de cada estimación, los cuatro intervalos son estrechos: el más ancho, el de la proporción de atraso ([58,75\%; 60,58\%]), equivale al 3,1\% del valor estimado, y el más angosto, el del costo, al 0,85\%. Con $n=10\,999$, la incertidumbre de muestreo es pequeña frente a otras fuentes de error que estos intervalos no reflejan, como la forma en que se seleccionaron los registros.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_inf_2_holm.pdf}
 \caption{Resultados de las pruebas y ajuste por multiplicidad de Holm.}\label{fig:anexo_holm}
 \end{figure}
-El resumen gráfico muestra los resultados de la familia de siete contrastes tras controlar el error familiar mediante Holm. El ajuste atiende múltiples pruebas, pero no valida umbrales derivados del análisis exploratorio, como el de descuento mayor que 10.
+Seis de los siete contrastes rechazan $H_0$ antes y después del ajuste, que no cambia ninguna decisión. El caso más cercano al umbral es E2 (importancia alta), con un $p$ ajustado de 0,001, unas 50 veces menor que 0,05; T01 (modalidad) queda lejos de él ($p=0{,}69$). En T03 y E3 el $p$ es tan pequeño que se informa como menor que $10^{-300}$. Que la evidencia sea fuerte no significa que los efectos sean grandes: E4 es significativa con un efecto muy pequeño ($d_{av}=-0{,}15$).
 
 \clearpage
 \section{Técnicas estadísticas empleadas y justificación}\label{sec:anexo_tecnicas}
@@ -494,7 +497,7 @@ V=\sqrt{\frac{\chi^2}{n\,(\min(f,c)-1)}}.
 
 \subsection{Estimación por intervalos}
 
-\subsubsection{Intervalo $t$ de Student para una media}
+\subsubsection{Intervalo \texorpdfstring{$t$}{t} de Student para una media}
 \textbf{Qué es.} Intervalo de confianza al 95\% para la media poblacional cuando la desviación estándar poblacional es desconocida.
 
 \textbf{Fórmula.}
@@ -524,7 +527,7 @@ V=\sqrt{\frac{\chi^2}{n\,(\min(f,c)-1)}}.
 
 \subsection{Pruebas de hipótesis}
 
-\subsubsection{Prueba $\chi^2$ de independencia (T01)}
+\subsubsection{Prueba \texorpdfstring{$\chi^2$}{chi-cuadrado} de independencia (T01)}
 \textbf{Qué es.} Contrasta si dos variables categóricas son independientes, comparando las frecuencias observadas con las esperadas bajo independencia.
 
 \textbf{Fórmula.}
@@ -540,7 +543,7 @@ E_{ij}=\frac{(\text{total fila } i)(\text{total columna } j)}{n},\qquad
 
 \textbf{Implementación.} \texttt{scipy.stats.chi2\_contingency}.
 
-\subsubsection{Prueba $t$ de Welch (T02, T03, E4)}
+\subsubsection{Prueba \texorpdfstring{$t$}{t} de Welch (T02, T03, E4)}
 \textbf{Qué es.} Contrasta si dos medias poblacionales difieren, sin suponer varianzas iguales entre los grupos (Welch, 1947).
 
 \textbf{Fórmula.}
@@ -573,7 +576,7 @@ donde $t_k$ es el número de observaciones empatadas en el valor $k$ y $\mp0{,}5
 
 \textbf{Implementación.} \texttt{scipy.stats.mannwhitneyu(method='asymptotic', use\_continuity=True)}.
 
-\subsubsection{Prueba $z$ de dos proporciones e intervalo de Newcombe (E2, E3)}
+\subsubsection{Prueba \texorpdfstring{$z$}{z} de dos proporciones e intervalo de Newcombe (E2, E3)}
 \textbf{Qué es.} La prueba $z$ contrasta si dos proporciones poblacionales son iguales; el intervalo de Newcombe estima su diferencia (Newcombe, 1998).
 
 \textbf{Fórmula.} Con $\bar p=(x_1+x_0)/(n_1+n_0)$ la proporción combinada bajo $H_0$:
@@ -593,7 +596,7 @@ Con $(l_1,u_1)$ y $(l_0,u_0)$ los intervalos de Wilson de cada grupo y $\hat\Del
 
 \subsection{Tamaños de efecto}
 
-\subsubsection{$d_{av}$: d de Cohen con desviación estándar promedio}
+\subsubsection{\texorpdfstring{$d_{av}$}{d\_av}: d de Cohen con desviación estándar promedio}
 \textbf{Qué es.} Diferencia de medias expresada en desviaciones estándar. Es una variante de la d de Cohen, también llamada $d'$ o $d^*$ (Cohen, 1988; Delacre et al., 2021).
 
 \textbf{Fórmula.}

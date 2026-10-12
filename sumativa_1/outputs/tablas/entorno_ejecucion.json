@@ -1,12 +1,12 @@
 {
-  "python": "3.14.6",
-  "datos_sha256": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6",
+  "python": "3.14.4",
+  "datos_sha256": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
   "paquetes": {
-    "numpy": "2.4.6",
-    "pandas": "3.0.3",
-    "scipy": "1.18.0",
-    "statsmodels": "0.14.6",
-    "matplotlib": "3.11.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0",
+    "matplotlib": "3.11.2",
     "seaborn": "0.13.2"
   }
 }
