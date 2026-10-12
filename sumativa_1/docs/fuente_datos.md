@@ -5,7 +5,7 @@
 **Proyecto:** Grupo 1 de Estadística computacional para la toma de decisiones.  
 **Tarea:** Obtener y registrar la fuente de datos.  
 **Responsable de ejecución:** José Ignacio Rodríguez.  
-**Revisor:** Sebastián Rojas.  
+**Revisor:** Sebastián Rojas Araya.  
 **Estado:** Obtención y verificaciones completadas; revisión de Sebastián completada.
 
 | Campo | Registro |
@@ -113,35 +113,35 @@ URL fijada a versión 1:
 https://www.kaggle.com/api/v1/datasets/download/prachi13/customer-analytics?datasetVersionNumber=1
 ```
 
-Ejemplo en PowerShell, desde la carpeta `sumativa_1/`:
+Ejemplo en bash, desde la carpeta `sumativa_1/`:
 
-```powershell
-$y01Destino = Join-Path (Get-Location) "data/raw/ecommerce_shipping.csv"
-if (Test-Path $y01Destino) {
-    throw "ecommerce_shipping.csv ya existe. Verifica su huella antes de reemplazarlo."
-}
-$y01Temporal = Join-Path ([System.IO.Path]::GetTempPath()) ([guid]::NewGuid().ToString())
-New-Item -ItemType Directory -Path $y01Temporal | Out-Null
-$y01Zip = Join-Path $y01Temporal "dataset_v1.zip"
-$y01Extraido = Join-Path $y01Temporal "extraido"
-Invoke-WebRequest -Uri "https://www.kaggle.com/api/v1/datasets/download/prachi13/customer-analytics?datasetVersionNumber=1" -OutFile $y01Zip
-Expand-Archive -LiteralPath $y01Zip -DestinationPath $y01Extraido
-New-Item -ItemType Directory -Force -Path "data/raw" | Out-Null
-Copy-Item -LiteralPath (Join-Path $y01Extraido "Train.csv") -Destination $y01Destino
-Get-FileHash -LiteralPath $y01Destino -Algorithm SHA256
+```bash
+destino="data/raw/ecommerce_shipping.csv"
+if [ -e "$destino" ]; then
+    echo "ecommerce_shipping.csv ya existe. Verifica su huella antes de reemplazarlo." >&2
+else
+    temporal="$(mktemp -d)"
+    curl -fL -o "$temporal/dataset_v1.zip" "https://www.kaggle.com/api/v1/datasets/download/prachi13/customer-analytics?datasetVersionNumber=1"
+    unzip -q "$temporal/dataset_v1.zip" Train.csv -d "$temporal/extraido"
+    mkdir -p data/raw
+    cp "$temporal/extraido/Train.csv" "$destino"
+    sha256sum "$destino"    # en macOS: shasum -a 256 "$destino"
+fi
 ```
+
+`unzip` sin la opción `-a` copia los bytes del miembro sin convertir saltos de línea, por lo que se conserva el CRLF original.
 
 Si Kaggle solicita autenticación, descargar la versión 1 desde la página oficial con la cuenta propia y repetir la verificación. No sustituir por copias de terceros.
 
 Verificación reproducible con el script incluido, desde la raíz del repositorio (así `uv` usa el entorno compartido):
 
-```powershell
+```bash
 uv run python sumativa_1/scripts/verificar_fuente.py
 ```
 
 Comparación opcional con un `Train.csv` recién descargado de Kaggle (ruta de ejemplo):
 
-```powershell
+```bash
 uv run python sumativa_1/scripts/verificar_fuente.py --comparar ruta/a/Train.csv
 ```
 

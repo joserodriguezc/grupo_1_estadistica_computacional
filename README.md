@@ -1,7 +1,7 @@
 # Estadística computacional para la toma de decisiones
 
 Proyecto del Grupo 1 del Magíster en Ciencia de Datos e Inteligencia Artificial (UNAB), MCDI501.
-**Integrantes:** José Ignacio Rodríguez, Yerko Gallardo Miranda y Sebastián Rojas.
+**Integrantes:** José Ignacio Rodríguez, Yerko Gallardo Miranda y Sebastián Rojas Araya.
 
 El proyecto estudia asociaciones entre características de envíos y entregas atrasadas en *E-Commerce Shipping Data*. El diseño es observacional; las asociaciones no se interpretan como causas.
 
