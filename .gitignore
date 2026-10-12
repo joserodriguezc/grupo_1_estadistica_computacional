@@ -32,3 +32,23 @@ sumativa_1/docs/informe/*.log
 sumativa_1/docs/informe/*.out
 sumativa_1/docs/informe/*.toc
 sumativa_1/docs/informe/*.synctex.gz
+
+# Temporales de LaTeX en cualquier evaluación
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+.~lock.*#
+# Temporales de edición
+*~
+*.bak
