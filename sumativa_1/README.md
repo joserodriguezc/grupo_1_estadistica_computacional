@@ -1,48 +1,45 @@
-# Evaluación Sumativa 1
+# Estadística Computacional — Grupo 1
 
-Análisis exploratorio e inferencial de entregas atrasadas en comercio electrónico.
+## Sumativa 1 — Análisis estadístico de entregas atrasadas
 
-## Archivos principales
+Repositorio del Grupo 1, MCDI501 (Magíster en Ciencia de Datos e Inteligencia Artificial, UNAB). Integrantes: José Ignacio Rodríguez, Yerko G. Gallardo Miranda y Sebastián Rojas Araya.
 
-- [Notebook ejecutado](notebooks/sumativa_1.ipynb).
-- [Informe PDF](docs/informe/informe_sumativa1.pdf): 8 páginas totales, incluida la portada.
-- [Fuente LaTeX](docs/informe/informe_sumativa1.tex).
-- [Diccionario](docs/diccionario_variables.csv) y [ficha descriptiva](docs/ficha_descriptiva.md).
-- [Protocolo](docs/protocolo_analisis.md).
-- [Matriz de correcciones](docs/cierre_sumativa1.md).
-- [Verificación](docs/verificacion_ejecucion.md).
+## Objetivo y resultados
 
-## Reproducir
+Se analiza *E-Commerce Shipping Data* (versión 1), con **10.999 registros y 12 columnas**, para describir características asociadas con el atraso de entregas. Se observan **6.563 envíos atrasados (59,67 %) y 4.436 puntuales (40,33 %)**. El diseño es observacional: los hallazgos no demuestran causalidad ni representatividad externa.
 
-Desde la raíz del repositorio:
+El estudio incluye estadísticas descriptivas, cuatro estimaciones con intervalos del 95 %, siete contrastes de hipótesis ajustados por Holm y dos anexos dentro del **mismo informe PDF**: figuras complementarias y justificación de técnicas estadísticas.
 
-```powershell
+## Archivos de la entrega
+
+- `sumativa_1/notebooks/sumativa_1.ipynb`: notebook ejecutable (96 celdas, 47 de código).
+- `sumativa_1/docs/informe/informe_sumativa1.tex`: **único archivo fuente LaTeX**, con ambos anexos integrados; no requiere otros `.tex`.
+- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **16 páginas en total**, incluidos los anexos. Verificar el límite de extensión aplicable al cuerpo principal según la pauta docente.
+- `sumativa_1/outputs/figuras/`: figuras utilizadas tanto en el cuerpo principal como en los anexos; **sin subcarpeta `anexos`**.
+- `sumativa_1/outputs/tablas/`: resultados cuantitativos, pruebas y metadatos de ejecución.
+- `sumativa_1/docs/protocolo_analisis.md`: diseño estadístico final de esta evaluación.
+- `sumativa_1/docs/verificacion_ejecucion.md`: controles de reproducibilidad y alcance de lo verificado.
+- `sumativa_1/docs/cierre_sumativa1.md`: resumen de entregables y estado de cierre.
+- `sumativa_1/docs/fuente_datos.md`, `sumativa_1/docs/ficha_descriptiva.md`, `sumativa_1/docs/diccionario_variables.csv`: documentación del conjunto de datos.
+
+## Reproducir desde la raíz del repositorio
+
+Se requiere Python compatible con `.python-version`, `uv`, Jupyter y una instalación LaTeX con `latexmk` y los paquetes utilizados por el informe.
+
+```bash
 uv sync --locked
 uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=180 sumativa_1/notebooks/sumativa_1.ipynb
-Push-Location sumativa_1/docs/informe
+cd sumativa_1/docs/informe
 latexmk -pdf -interaction=nonstopmode -halt-on-error informe_sumativa1.tex
-Pop-Location
 ```
 
-Reiniciar el kernel antes de ejecutar manualmente. `uv.lock` fija las dependencias del equipo. Las copias del entorno dentro de la evaluación permiten identificar su estructura; los comandos anteriores usan el entorno de la raíz.
+En VS Code también se puede abrir el notebook, seleccionar `.venv` y ejecutar todas las celdas desde un kernel reiniciado. Compilar **solo `informe_sumativa1.tex`**, desde su directorio para conservar las rutas relativas `../../outputs/figuras/`.
 
-## Secuencia del análisis
+## Criterios de interpretación
 
-1. Carga y clasificación por significado y escala.
-2. Auditoría de tipos, nulos, dominios, duplicados y extremos.
-3. Centro, dispersión, asimetría y exceso de curtosis; frecuencias y relaciones.
-4. Cuatro estimaciones globales con IC normal del 95 % y supuestos.
-5. Tres contrastes principales y cuatro complementarios; Holm conjunto.
-6. Síntesis, segmentos a auditar y registro de versiones y SHA-256.
+La variable `entrega_atrasada` se codifica como `1 = atrasada`, `0 = puntual`. Las diferencias entre grupos se calculan como **atrasadas menos puntuales**. El descuento conserva unidades originales no documentadas. Las tasas y pruebas son descriptivas/inferenciales condicionadas a supuestos no verificables completamente, especialmente independencia y representatividad. El umbral de descuento mayor que 10 es exploratorio y requiere validación externa.
 
-## Resultados y métodos
+Fuente: [Gopalani (2021), E-Commerce Shipping Data (Kaggle)](https://www.kaggle.com/datasets/prachi13/customer-analytics).
 
-`descriptiva_cuantitativas.csv` incorpora forma; `correlacion_spearman.csv` contiene la matriz completa; `estimaciones.csv` e `intervalos_confianza.csv` incluyen n; `contrastes_holm_7.csv` es la consolidación única. `segmento_descuento.csv` documenta las proporciones e IC Wilson de los grupos con descuento > 10 y <= 10.
+**Organización:** este es el único `README.md` del repositorio. Los documentos metodológicos y de cierre permanecen en `sumativa_1/docs/`.
 
-T01: chi-cuadrado modalidad. T02: Welch peso. T03: Welch descuento, añadido tras EDA. E1: Mann-Whitney peso. E2: z importancia alta. E3: z descuento > 10. E4: Welch costo. No se presenta el cambio de T03 o el umbral 10 como preespecificado. Holm no elimina selección exploratoria, dependencia ni confusión.
-
-Los p exportados como cero reflejan precisión finita y no probabilidad matemática nula. El IC normal de diferencia de proporciones en E3 se documenta con cautela por la proporción 1; el informe usa también Wilson por grupo. No se requieren semillas porque no hay pasos aleatorios.
-
-## Límites
-
-No se documentan empresa, período, selección ni dependencia. Descuento no equivale necesariamente a porcentaje o moneda. Los resultados orientan una investigación operacional, no cambios causales de transporte o política comercial.

@@ -1,39 +1,42 @@
-# Protocolo de análisis de la Sumativa 1
+# Protocolo definitivo de análisis — Sumativa 1
 
-Equipo: José Ignacio Rodríguez, Yerko Gallardo y Sebastián Rojas.
+**Alcance:** evaluación estadística observacional sobre 10.999 registros y 12 variables de *E-Commerce Shipping Data*, versión 1. La pregunta es qué características de los registros se asocian con la entrega atrasada y qué segmentos merecen auditoría operacional. La unidad de análisis es cada registro; no se puede comprobar que todos correspondan a clientes o cargas independientes.
 
-## Problema y alcance
+## Definiciones y preparación
 
-Identificar características y segmentos de envíos asociados con atraso para una investigación operacional posterior. Diseño observacional; unidad provisional: registro de envío asociado a un cliente. Fuente: E-Commerce Shipping Data, versión 1; 10.999 registros y 12 columnas. ID no implica independencia ni secuencia temporal. Codificación: 1 = atrasada, 0 = puntual; diferencias = atrasadas menos puntuales.
+- Objetivo binario: `entrega_atrasada = 1` para atrasada y `0` para puntual; tamaños `n_atr = 6.563`, `n_punt = 4.436`.
+- Clasificar variables por significado: nominales, ordinales y cuantitativas. No interpretar `ID` como magnitud ni incorporarlo a correlaciones.
+- Auditar integridad del CSV, nulos, duplicados, cardinalidades y categorías. Conservar observaciones extremas si no existe evidencia de error; no imputar datos inexistentes.
+- Mantener explícitas las unidades: peso en gramos y costo en USD según la documentación. La unidad de descuento no está documentada.
 
-## Descriptiva y calidad
+## Estadística descriptiva
 
-Clasificar por significado y escala documentados, no por número de valores únicos. Cuantitativas: n, media, mediana, DE muestral, cuartiles, IQR, extremos, asimetría ajustada y exceso de curtosis. Nominales: frecuencia y porcentaje; ordinales: orden preservado. Spearman entre cuantitativas, sin ID ni códigos nominales. Mantener raw intacto y auditar tipos, dominios, nulos, duplicados y extremos. No imputar ni crear faltantes artificiales.
+Para variables cuantitativas: `n`, media, mediana, desviación estándar muestral, mínimo, máximo, Q1, Q3, IQR, asimetría corregida y curtosis en exceso (Fisher). Para nominales: frecuencias y porcentajes; para ordinales: frecuencia y orden. Graficar distribuciones y relaciones con la respuesta; emplear **Spearman** para relaciones monótonas entre cuantitativas y **V de Cramér** para intensidad de asociación entre cualitativas.
 
 ## Estimación
 
-Cuatro parámetros: proporción de atraso, peso medio, costo medio y llamadas medias. IC global normal del 95 %, con n efectivo y supuestos explícitos; el 95 % describe cobertura del procedimiento bajo muestreo repetido. Para tasas por subgrupo, Wilson. IC de diferencias de medias: t de Welch. Los intervalos son individuales, sin corrección simultánea.
+Cuatro estimaciones: proporción global de atraso, medias de peso, costo y llamadas. Intervalos individuales del 95 %, con tamaño muestral indicado. En la versión documentada del notebook, la **proporción global** usa aproximación normal (Wald); las tasas por subgrupo usan **Wilson**. Las **medias globales** usan aproximación normal por gran tamaño muestral, y las **diferencias entre medias** utilizan intervalos de **Welch**. Se documentan método, límites y supuestos; **no deben presentarse todas las proporciones como Wilson si el notebook no fue recalculado**.
 
-## Hipótesis y códigos vigentes
+## Contrastes de hipótesis
 
-| Código | H0 | H1 | Método |
+Se fija `α = 0,05`, contraste bilateral cuando corresponde, y ajuste **Holm** para la familia de **siete** pruebas. Las diferencias de medias y proporciones se calculan como grupo de atrasadas menos puntuales o grupo de interés menos comparación, según el contraste.
+
+| Código | Hipótesis nula (H0) | Alternativa (H1) | Procedimiento |
 |---|---|---|---|
-| T01 | Modalidad y atraso independientes | Asociados | χ² |
-| T02 | Diferencia de peso medio = 0 | Distinta de 0 | Welch bilateral |
-| T03 | Diferencia de descuento medio = 0 | Distinta de 0 | Welch bilateral |
-| E1 | Distribuciones de peso iguales | Diferencia detectable por rangos | Mann-Whitney bilateral asintótico |
-| E2 | Tasa de atraso en importancia alta = resto | Diferentes | z bilateral combinado |
-| E3 | Tasa de atraso con descuento > 10 = <= 10 | Diferentes | z bilateral combinado |
-| E4 | Diferencia de costo medio = 0 | Distinta de 0 | Welch bilateral |
+| T01 | Modalidad de transporte y atraso independientes | Existe asociación | χ² de independencia |
+| T02 | μ_peso,atr − μ_peso,punt = 0 | Diferencia ≠ 0 | t de Welch |
+| T03 | μ_desc,atr − μ_desc,punt = 0 | Diferencia ≠ 0 | t de Welch |
+| E1 | Distribuciones del peso iguales entre grupos | Diferencia en distribuciones/rangos | Mann–Whitney bilateral |
+| E2 | p_atraso,importancia alta = p_atraso,resto | Tasas diferentes | z de dos proporciones |
+| E3 | p_atraso,descuento > 10 = p_atraso,descuento ≤ 10 | Tasas diferentes | z de dos proporciones |
+| E4 | μ_costo,atr − μ_costo,punt = 0 | Diferencia ≠ 0 | t de Welch |
 
-El plan inicial incluyó modalidad, peso y costo. Durante el EDA se añadió descuento y costo pasó a E4. Ese cambio y las pruebas complementarias se documentan como exploratorios, sin afirmar preespecificación anterior a observar los datos. Se conserva α = 0,05 y se aplica Holm a una familia de siete valores p. El ajuste no corrige selección de hipótesis ni del umbral de descuento, que surgió del EDA. No se sustituye esta familia por otra para favorecer significancia.
+**Condiciones de uso:** χ² requiere frecuencias esperadas adecuadas; Welch permite varianzas desiguales pero presupone independencia; Mann–Whitney no representa exclusivamente una comparación de medianas si cambian las formas; z requiere conteos suficientes y utiliza estimación combinada bajo H0. Wilson se prioriza para una proporción observada igual a 1. Los valores p exportados como cero numérico pueden reflejar subdesbordamiento.
 
-## Supuestos e interpretación
+## Multiplicidad, interpretación y alcance
 
-Independencia no verificable con estas columnas. χ²: frecuencias esperadas suficientes. Welch: dos grupos, varianzas distintas permitidas, revisión de forma e influencia; no exige igualdad de varianzas. Mann-Whitney: independencia, método asintótico con empates; no se afirma prueba exclusiva de medianas. z: proporción combinada bajo H0 y conteos esperados suficientes. En E3 la proporción observada 1 exige cautela con Wald; se reporta Wilson por grupo. No interpretar p = 0 de máquina como probabilidad nula.
+Holm controla el error familiar de siete contrastes bajo sus condiciones, **pero no corrige** la exploración o la selección de segmentos tras observar los datos. El umbral de descuento > 10 es un hallazgo exploratorio. No rechazar H0 no equivale a demostrar igualdad; significancia no implica magnitud relevante. Los intervalos requieren condiciones de muestreo e independencia que no pueden validarse completamente: faltan fecha, cliente, ruta y marco muestral. No adjudicar causalidad a descuento, peso o modalidad; confirmar la temporalidad del descuento antes de utilizarlo para predicción.
 
-No rechazar H0 no prueba igualdad. Magnitud, incertidumbre y limitaciones acompañan la significancia. La recomendación es auditar los 2.647 envíos con descuento > 10 y contrastarlos con <= 10, investigando campañas, productos y temporalidad antes de actuar. No atribuir causas ni generalizar a todo el comercio electrónico.
+## Evidencia reproducible
 
-## Trazabilidad
-
-Notebook: `notebooks/sumativa_1.ipynb`; matriz y resultados: `outputs/tablas/`; figuras: `outputs/figuras/`; fuente y PDF: `docs/informe/`. Versiones utilizadas y SHA-256: `outputs/tablas/entorno_ejecucion.json`. Sin pasos aleatorios; no se requiere semilla. La Formativa 1 queda congelada.
+Fuente principal: `notebooks/sumativa_1.ipynb`; exportaciones en `outputs/tablas/`; gráficos en `outputs/figuras/`; texto y anexos incorporados en `docs/informe/informe_sumativa1.tex`. El estado de comprobación se detalla en `docs/verificacion_ejecucion.md`.
