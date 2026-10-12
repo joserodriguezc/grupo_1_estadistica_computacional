@@ -15,7 +15,7 @@ Para variables cuantitativas: `n`, media, mediana, desviación estándar muestra
 
 ## Estimación
 
-Cuatro estimaciones: proporción global de atraso, medias de peso, costo y llamadas. Intervalos individuales del 95 %, con tamaño muestral indicado. En la versión documentada del notebook, la **proporción global** usa aproximación normal (Wald); las tasas por subgrupo usan **Wilson**. Las **medias globales** usan aproximación normal por gran tamaño muestral, y las **diferencias entre medias** utilizan intervalos de **Welch**. Se documentan método, límites y supuestos; **no deben presentarse todas las proporciones como Wilson si el notebook no fue recalculado**.
+Cuatro estimaciones: proporción global de atraso, medias de peso, costo y llamadas. Intervalos individuales del 95 %, con tamaño muestral indicado. La **proporción global** y las tasas por subgrupo usan **Wilson**; las **medias** usan el intervalo **t de Student** (n − 1 gl); las **diferencias entre medias**, intervalos **t de Welch**, y las **diferencias entre proporciones** (E2, E3), el intervalo de **Newcombe**. Se documentan método, límites y supuestos.
 
 ## Contrastes de hipótesis
 
@@ -31,7 +31,9 @@ Se fija `α = 0,05`, contraste bilateral cuando corresponde, y ajuste **Holm** p
 | E3 | p_atraso,descuento > 10 = p_atraso,descuento ≤ 10 | Tasas diferentes | z de dos proporciones |
 | E4 | μ_costo,atr − μ_costo,punt = 0 | Diferencia ≠ 0 | t de Welch |
 
-**Condiciones de uso:** χ² requiere frecuencias esperadas adecuadas; Welch permite varianzas desiguales pero presupone independencia; Mann–Whitney no representa exclusivamente una comparación de medianas si cambian las formas; z requiere conteos suficientes y utiliza estimación combinada bajo H0. Wilson se prioriza para una proporción observada igual a 1. Los valores p exportados como cero numérico pueden reflejar subdesbordamiento.
+**Condiciones de uso:** χ² requiere frecuencias esperadas adecuadas; Welch permite varianzas desiguales pero presupone independencia; Mann–Whitney no representa exclusivamente una comparación de medianas si cambian las formas; z requiere conteos suficientes y utiliza estimación combinada bajo H0. Wilson y Newcombe se emplean porque no se degeneran cuando una proporción observada es 0 o 1. Los valores p exportados como cero numérico pueden reflejar subdesbordamiento.
+
+**Tamaños de efecto:** $d_{av}$ (d de Cohen con desviación estándar promedio) para diferencias de medias, en todo el análisis; correlación biserial de rangos para E1; diferencia de proporciones y riesgo relativo para E2 y E3; V de Cramér para asociación entre categóricas.
 
 ## Multiplicidad, interpretación y alcance
 
@@ -39,4 +41,4 @@ Holm controla el error familiar de siete contrastes bajo sus condiciones, **pero
 
 ## Evidencia reproducible
 
-Fuente principal: `notebooks/sumativa_1.ipynb`; exportaciones en `outputs/tablas/`; gráficos en `outputs/figuras/`; texto y anexos incorporados en `docs/informe/informe_sumativa1.tex`. El estado de comprobación se detalla en `docs/verificacion_ejecucion.md`.
+Fuente principal: `notebooks/sumativa_1.ipynb`; exportaciones en `outputs/tablas/`; gráficos en `outputs/figuras/`; texto y anexos incorporados en `docs/informe/informe_sumativa1.tex`.

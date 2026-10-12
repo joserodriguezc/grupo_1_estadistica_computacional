@@ -12,12 +12,12 @@ meta = {
  "Mode_of_Shipment": ("modalidad_envio", "Modalidad de transporte del envío", "Cualitativa nominal", "sin unidad", "Explicativa (contraste T01)", "Categorías: Flight, Road, Ship."),
  "Customer_care_calls": ("llamadas_atencion", "Número de llamadas de consulta del cliente por el envío", "Cuantitativa discreta (conteo)", "llamadas", "Explicativa / estimación IC", "Momento de registro no documentado; podría ser posterior al atraso."),
  "Customer_rating": ("calificacion_cliente", "Calificación del cliente (1 = peor, 5 = mejor)", "Cualitativa ordinal", "puntos 1-5", "Explicativa", "Orden 1<2<3<4<5; no suponer distancias iguales. Momento de registro no documentado."),
- "Cost_of_the_Product": ("costo_producto", "Costo del producto", "Cuantitativa de razón", "USD (según Kaggle)", "Explicativa (contraste T03)", "Registrado en enteros."),
+ "Cost_of_the_Product": ("costo_producto", "Costo del producto", "Cuantitativa de razón", "USD (según Kaggle)", "Explicativa / estimación IC (contraste E4)", "Registrado en enteros."),
  "Prior_purchases": ("compras_previas", "Número de compras previas del cliente", "Cuantitativa discreta (conteo)", "compras", "Explicativa", "Observado 2-10; no aparece el valor 9."),
- "Product_importance": ("importancia_producto", "Importancia del producto", "Cualitativa ordinal", "categoría", "Explicativa", "Orden: low < medium < high."),
+ "Product_importance": ("importancia_producto", "Importancia del producto", "Cualitativa ordinal", "categoría", "Explicativa (contraste E2)", "Orden: low < medium < high."),
  "Gender": ("genero", "Género registrado del cliente", "Cualitativa nominal", "sin unidad", "Explicativa", "Categorías F y M tal como se registran."),
- "Discount_offered": ("descuento_ofrecido", "Descuento ofrecido sobre el producto", "Cuantitativa", "NO ESPECIFICADA", "Explicativa", "No asumir % ni moneda. Observado 1-65."),
- "Weight_in_gms": ("peso_gramos", "Peso del producto", "Cuantitativa de razón", "gramos (según Kaggle)", "Explicativa (contraste T02)", "Registrado en enteros."),
+ "Discount_offered": ("descuento_ofrecido", "Descuento ofrecido sobre el producto", "Cuantitativa", "NO ESPECIFICADA", "Explicativa (contrastes T03 y E3)", "No asumir % ni moneda. Observado 1-65."),
+ "Weight_in_gms": ("peso_gramos", "Peso del producto", "Cuantitativa de razón", "gramos (según Kaggle)", "Explicativa / estimación IC (contrastes T02 y E1)", "Registrado en enteros."),
  "Reached.on.Time_Y.N": ("entrega_atrasada", "Resultado de la entrega", "Nominal binaria", "0/1", "Resultado", "1 = no llegó a tiempo (atrasada); 0 = llegó a tiempo. Confirmado en descripción de Kaggle."),
 }
 filas = []

@@ -1,7 +1,7 @@
 # Ficha descriptiva del conjunto de datos
 
 **Tarea:** Construir diccionario y ficha descriptiva.
-**Responsable de ejecución:** Yerko Gallardo.
+**Responsable de ejecución:** Yerko Gallardo Miranda.
 **Revisor:** José Ignacio Rodríguez.
 **Estado:** Ficha de referencia del análisis de la Sumativa 1.
 
@@ -54,8 +54,9 @@ Distinciones aplicadas:
 | Relación | Variables | Uso previsto |
 |---|---|---|
 | Modalidad y atraso | `Mode_of_Shipment`, `Reached.on.Time_Y.N` | Contraste χ² (T01) |
-| Peso y atraso | `Weight_in_gms`, `Reached.on.Time_Y.N` | Welch (T02) |
-| Descuento y atraso | `Discount_offered`, `Reached.on.Time_Y.N` | Welch (T03, exploratorio) |
+| Peso y atraso | `Weight_in_gms`, `Reached.on.Time_Y.N` | Welch (T02) y Mann–Whitney (E1) |
+| Descuento y atraso | `Discount_offered`, `Reached.on.Time_Y.N` | Welch (T03) y z de dos proporciones con umbral > 10 (E3, exploratorio) |
+| Importancia y atraso | `Product_importance`, `Reached.on.Time_Y.N` | z de dos proporciones, alta frente al resto (E2) |
 | Costo y atraso | `Cost_of_the_Product`, `Reached.on.Time_Y.N` | Welch (E4, complementario) |
 | Bodega y atraso | `Warehouse_block`, `Reached.on.Time_Y.N` | Exploratoria, sin prueba formal |
 | Relaciones numéricas | Variables cuantitativas sin `ID` | Exploratoria, para fases posteriores |
@@ -71,7 +72,7 @@ Distinciones aplicadas:
 ## 8. Decisiones iniciales
 
 - El archivo original no se modifica; las transformaciones se hacen en la carga analítica.
-- No se imputa ni se crean faltantes: no hay celdas vacías. La auditoría de calidad de datos revisará códigos especiales de ausencia.
+- No se imputa ni se crean faltantes: no hay celdas vacías. La auditoría de calidad de datos revisó además dominios, rangos y duplicados, sin detectar códigos especiales de ausencia.
 - No se eliminan extremos válidos ni perfiles repetidos sin justificación.
 
 ## 9. Referencia
