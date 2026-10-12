@@ -180,7 +180,7 @@ múltiples.
 
 
 \section{Pruebas de hipótesis}
-Se utiliza $\alpha=0{,}05$ como tolerancia convencional al error tipo I y Holm (1979) para una familia de siete pruebas. Las comparaciones son bilaterales; $\chi^2$ contrasta independencia. Holm no corrige selección de hipótesis o umbrales a partir del EDA.
+Se utiliza $\alpha=0{,}05$ como tolerancia convencional al error tipo I y Holm (1979) para una familia de siete pruebas. Las comparaciones son bilaterales; $\chi^2$ contrasta independencia. Holm no valida umbrales derivados del EDA, como el de descuento mayor que 10 (E3), que es exploratorio.
 \subsection{T01 Modalidad y atraso}
 $H_0$: modalidad y resultado independientes; $H_1$: asociación. Se emplea \codigo{stats.chi2\_contingency}. Cada envío ocupa una celda y se requiere independencia entre registros.
 \begin{table}[H]\centering\small\caption{Frecuencias observadas para el contraste de independencia.}\label{tab:contingencia}
@@ -366,7 +366,7 @@ Se representan estimaciones junto a sus intervalos del 95\%. La anchura refleja 
 \includegraphics[width=0.88\linewidth,height=0.42\textheight,keepaspectratio]{../../outputs/figuras/fig_inf_2_holm.pdf}
 \caption{Resultados de las pruebas y ajuste por multiplicidad de Holm.}\label{fig:anexo_holm}
 \end{figure}
-El resumen gráfico muestra los resultados de la familia de siete contrastes tras controlar el error familiar mediante Holm. El ajuste atiende múltiples pruebas, pero no convierte en confirmatorias hipótesis seleccionadas a partir del análisis exploratorio.
+El resumen gráfico muestra los resultados de la familia de siete contrastes tras controlar el error familiar mediante Holm. El ajuste atiende múltiples pruebas, pero no valida umbrales derivados del análisis exploratorio, como el de descuento mayor que 10.
 
 \clearpage
 \section{Técnicas estadísticas empleadas y justificación}\label{sec:anexo_tecnicas}
@@ -587,7 +587,7 @@ Con $(l_1,u_1)$ y $(l_0,u_0)$ los intervalos de Wilson de cada grupo y $\hat\Del
 
 \textbf{Por qué aquí.} El resultado es binario y se comparan dos grupos: importancia alta frente al resto (E2) y descuento mayor que 10 frente al resto (E3). La proporción combinada es la correcta bajo $H_0$, y la prueba equivale a la $\chi^2$ de una tabla $2\times2$ ($z^2=\chi^2$). Para el intervalo se usa Newcombe y no Wald porque en E3 un grupo tiene proporción 1: Wald le asignaría varianza cero, mientras que Newcombe hereda el comportamiento de Wilson. Resultados: E2, diferencia de 5,81 pp, IC [2,57; 8,93] pp, $z=3{,}486$; E3, diferencia de 53,11 pp, IC [52,03; 54,18] pp, $z=48{,}54$.
 
-\textbf{Supuestos y precauciones.} Independencia entre envíos. Los grupos y el umbral de 10 se eligieron después del EDA, por lo que ambos contrastes son exploratorios.
+\textbf{Supuestos y precauciones.} Independencia entre envíos. El umbral de 10 del descuento proviene del EDA, por lo que E3 es exploratorio y requiere validación independiente.
 
 {\sloppy \textbf{Implementación.} Prueba $z$ calculada directamente con \texttt{scipy.stats.norm.sf}; IC con \texttt{confint\_proportions\_2indep(method='newcomb')}, de \texttt{statsmodels.stats.proportion}.\par}
 
@@ -649,7 +649,7 @@ r_{rb}=\frac{2U_a}{n_a\,n_p}-1=P(X_a>X_p)-P(X_a<X_p).
 
 \textbf{Por qué aquí.} Se reportan siete contrastes ($m=7$) y, sin ajuste, la probabilidad de algún falso positivo supera el 5\%. Holm controla ese error con cualquier estructura de dependencia entre las pruebas y siempre rechaza al menos lo mismo que Bonferroni, por lo que es más potente. Ninguna decisión cambia tras el ajuste.
 
-\textbf{Supuestos y precauciones.} Solo corrige por las siete pruebas de la familia: no corrige que algunas hipótesis y umbrales se eligieran después del EDA.
+\textbf{Supuestos y precauciones.} Solo corrige por las siete pruebas de la familia: no valida umbrales derivados del EDA, como el de descuento mayor que 10.
 
 \textbf{Implementación.} \texttt{statsmodels.stats.multitest.multipletests(method='holm')}.
 

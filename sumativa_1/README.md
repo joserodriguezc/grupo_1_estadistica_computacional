@@ -14,12 +14,10 @@ El estudio incluye estadísticas descriptivas, cuatro estimaciones con intervalo
 
 - `sumativa_1/notebooks/sumativa_1.ipynb`: notebook ejecutable (96 celdas, 47 de código).
 - `sumativa_1/docs/informe/informe_sumativa1.tex`: **único archivo fuente LaTeX**, con ambos anexos integrados; no requiere otros `.tex`.
-- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **16 páginas en total**, incluidos los anexos. Verificar el límite de extensión aplicable al cuerpo principal según la pauta docente.
+- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **20 páginas en total**, incluidos los anexos. Verificar el límite de extensión aplicable al cuerpo principal según la pauta docente.
 - `sumativa_1/outputs/figuras/`: figuras utilizadas tanto en el cuerpo principal como en los anexos; **sin subcarpeta `anexos`**.
 - `sumativa_1/outputs/tablas/`: resultados cuantitativos, pruebas y metadatos de ejecución.
 - `sumativa_1/docs/protocolo_analisis.md`: diseño estadístico final de esta evaluación.
-- `sumativa_1/docs/verificacion_ejecucion.md`: controles de reproducibilidad y alcance de lo verificado.
-- `sumativa_1/docs/cierre_sumativa1.md`: resumen de entregables y estado de cierre.
 - `sumativa_1/docs/fuente_datos.md`, `sumativa_1/docs/ficha_descriptiva.md`, `sumativa_1/docs/diccionario_variables.csv`: documentación del conjunto de datos.
 
 ## Reproducir desde la raíz del repositorio
@@ -41,5 +39,5 @@ La variable `entrega_atrasada` se codifica como `1 = atrasada`, `0 = puntual`. L
 
 Fuente: [Gopalani (2021), E-Commerce Shipping Data (Kaggle)](https://www.kaggle.com/datasets/prachi13/customer-analytics).
 
-**Organización:** este es el único `README.md` del repositorio. Los documentos metodológicos y de cierre permanecen en `sumativa_1/docs/`.
+**Organización:** este `README.md` describe la Sumativa 1; el de la raíz describe el repositorio y el de `formativa_1/` corresponde a la entrega histórica. Los documentos metodológicos permanecen en `sumativa_1/docs/`.
 

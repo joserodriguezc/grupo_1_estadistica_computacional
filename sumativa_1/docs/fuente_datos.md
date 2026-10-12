@@ -6,7 +6,7 @@
 **Tarea:** Obtener y registrar la fuente de datos.  
 **Responsable de ejecución:** José Ignacio Rodríguez.  
 **Revisor:** Sebastián Rojas.  
-**Estado:** Obtención y verificaciones iniciales completadas; revisión de Sebastián pendiente.
+**Estado:** Obtención y verificaciones completadas; revisión de Sebastián completada.
 
 | Campo | Registro |
 |---|---|
@@ -22,7 +22,7 @@
 | Archivo original (Kaggle) | `Train.csv` |
 | Archivo en el proyecto | `ecommerce_shipping.csv` (renombrado desde `Train.csv`, sin modificar sus bytes) |
 | Ubicación | `data/raw/ecommerce_shipping.csv` |
-| Tamaño del CSV | 440,462 bytes |
+| Tamaño del CSV | 440.462 bytes |
 | Dimensiones | 10.999 registros y 12 columnas; encabezado excluido del conteo de registros |
 | Codificación | UTF-8 con BOM |
 | Saltos de línea originales | CRLF |
@@ -82,7 +82,7 @@ SHA-256 completo de la forma normalizada:
 7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6
 ```
 
-La diferencia de 11.000 bytes corresponde a un `` por cada una de las 11.000 líneas, incluido el encabezado. Ambas formas tienen los mismos encabezados, orden de filas y valores, y el script de verificación acepta las dos e informa cuál encontró.
+La diferencia de 11.000 bytes corresponde a un retorno de carro (`\r`) por cada una de las 11.000 líneas, incluido el encabezado. Ambas formas tienen los mismos encabezados, orden de filas y valores, y el script de verificación acepta las dos e informa cuál encontró.
 
 Instantánea consultada: árbol `f8de61f944040079a7655297ff791cd815675429`; blob del CSV `3a19806eccf1bcb198feeb28ac07cda12a7e1a2d`.
 
@@ -113,7 +113,7 @@ URL fijada a versión 1:
 https://www.kaggle.com/api/v1/datasets/download/prachi13/customer-analytics?datasetVersionNumber=1
 ```
 
-Ejemplo en PowerShell, desde la raíz del proyecto:
+Ejemplo en PowerShell, desde la carpeta `sumativa_1/`:
 
 ```powershell
 $y01Destino = Join-Path (Get-Location) "data/raw/ecommerce_shipping.csv"
@@ -133,16 +133,16 @@ Get-FileHash -LiteralPath $y01Destino -Algorithm SHA256
 
 Si Kaggle solicita autenticación, descargar la versión 1 desde la página oficial con la cuenta propia y repetir la verificación. No sustituir por copias de terceros.
 
-Verificación reproducible con el script incluido, desde la raíz del proyecto:
+Verificación reproducible con el script incluido, desde la raíz del repositorio (así `uv` usa el entorno compartido):
 
 ```powershell
-uv run python scripts/verificar_fuente.py
+uv run python sumativa_1/scripts/verificar_fuente.py
 ```
 
 Comparación opcional con un `Train.csv` recién descargado de Kaggle (ruta de ejemplo):
 
 ```powershell
-uv run python scripts/verificar_fuente.py --comparar ruta/a/Train.csv
+uv run python sumativa_1/scripts/verificar_fuente.py --comparar ruta/a/Train.csv
 ```
 
 El script usa únicamente la biblioteca estándar de Python y no modifica los archivos.
@@ -154,13 +154,13 @@ El script usa únicamente la biblioteca estándar de Python y no modifica los ar
 - `docs/registro_fuente.json`: metadatos, huellas (original y normalizada LF) y resultados de la adquisición.
 - `scripts/verificar_fuente.py`: verificación de integridad y comparación opcional.
 
-Para que Git conserve los bytes originales (CRLF) en todos los equipos, se puede añadir a `.gitattributes`:
+Para que Git conserve los bytes originales (CRLF) en todos los equipos, se puede añadir a `.gitattributes` en la raíz del repositorio:
 
 ```gitattributes
-/data/raw/ecommerce_shipping.csv -text
+/sumativa_1/data/raw/ecommerce_shipping.csv -text
 ```
 
-y volver a registrar el archivo con `git add --renormalize data/raw/ecommerce_shipping.csv`. Después, el blob tendría el SHA-256 original. Verificar la huella tras el cambio.
+y volver a registrar el archivo con `git add --renormalize sumativa_1/data/raw/ecommerce_shipping.csv`. Después, el blob tendría el SHA-256 original. Verificar la huella tras el cambio.
 
 ## Criterios de aceptación
 
@@ -172,6 +172,6 @@ y volver a registrar el archivo con `git add --renormalize data/raw/ecommerce_sh
 - [x] Condición de licencia revisada y limitación documentada.
 - [x] Renombre a `ecommerce_shipping.csv` documentado y equivalencia de bytes verificada.
 - [x] Diferencia CRLF/LF explicada por `core.autocrlf` de Git.
-- [ ] Sebastián revisa la evidencia y confirma que el análisis usará `data/raw/ecommerce_shipping.csv`.
+- [x] Sebastián revisa la evidencia y confirma que el análisis usará `data/raw/ecommerce_shipping.csv`.
 
-Los criterios técnicos de obtención se cumplen. La revisión de Sebastián y la aclaración de los permisos de redistribución permanecen pendientes; no se afirma autorización de publicación del CSV.
+Los criterios técnicos de obtención se cumplen y la revisión de Sebastián está completada. La aclaración de los permisos de redistribución permanece pendiente; no se afirma autorización de publicación del CSV.
