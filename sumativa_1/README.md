@@ -2,7 +2,7 @@
 
 ## Sumativa 1 — Análisis estadístico de entregas atrasadas
 
-Repositorio del Grupo 1, MCDI501 (Magíster en Ciencia de Datos e Inteligencia Artificial, UNAB). Integrantes: José Ignacio Rodríguez, Yerko G. Gallardo Miranda y Sebastián Rojas Araya.
+Repositorio del Grupo 1, MCDI501 (Magíster en Ciencia de Datos e Inteligencia Artificial, UNAB). Integrantes: José Ignacio Rodríguez, Yerko Gallardo Miranda y Sebastián Rojas Araya.
 
 ## Objetivo y resultados
 

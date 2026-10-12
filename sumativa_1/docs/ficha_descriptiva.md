@@ -1,7 +1,7 @@
 # Ficha descriptiva del conjunto de datos
 
 **Tarea:** Construir diccionario y ficha descriptiva.
-**Responsable de ejecución:** Yerko Gallardo.
+**Responsable de ejecución:** Yerko Gallardo Miranda.
 **Revisor:** José Ignacio Rodríguez.
 **Estado:** Ficha de referencia del análisis de la Sumativa 1.
 
