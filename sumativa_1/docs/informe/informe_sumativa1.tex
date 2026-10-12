@@ -54,7 +54,7 @@ Variable original & Tipo estadístico & Unidad o categorías\\\midrule
 \textbf{Calidad y tratamiento.} Cero nulos, cero duplicados con y sin ID y 10.999 ID distintos; se conservan todas las filas. Los extremos por IQR en compras previas (1.003) y descuento (2.209) se mantienen porque no son errores acreditados. Se verifican dominios, tipos y sumas de frecuencias. No se imputan ni se fabrican faltantes. La bodega F se mantiene pese a que la descripción enumera A--E. El descuento no se interpreta como porcentaje o moneda; ID no se usa en correlaciones.
 \imagen{.96}{fig_eda_1_dependiente.pdf}{El atraso afecta al 59,67\% de los registros, frente a 40,33\% puntuales.}{fig:objetivo}
 La Figura~\ref{fig:objetivo} muestra 6.563 atrasos y 4.436 puntuales. Dimensiona el problema en el archivo, sin establecer un indicador general del comercio electrónico.
-\newpage
+
 
 \section{Análisis exploratorio de datos}
 \subsection{Centro, dispersión y forma}
@@ -111,8 +111,8 @@ que las de una distribución normal.
 
 El peso tiene A = \textbf{\ensuremath{-}0,25} y K = \textbf{\ensuremath{-}1,45}, pero el histograma evidencia bimodalidad. Los coeficientes no prueban normalidad; ni media ni mediana describen por sí solas los dos grupos de valores. El IQR del peso es \textbf{3.210,50 g} y su DE \textbf{1.635,38 g}.
 \imagen{.97}{fig_eda_2_cuantitativas.pdf}{Descuento y compras previas presentan colas derechas; el peso tiene dos grupos de concentración. Histogramas y cajas conservan todos los valores.}{fig:cuant}
-La Figura~\ref{fig:cuant} respalda la forma de la Tabla~\ref{tab:descriptiva}. Las líneas distinguen media y mediana; no se eliminan extremos para. Llamadas son conteos; calificación e importancia son ordinales y se describen con frecuencias ordenadas, sin distancias iguales entre categorías.
-\newpage
+La Figura~\ref{fig:cuant} respalda la forma de la Tabla~\ref{tab:descriptiva}. Las líneas distinguen media y mediana; no se eliminan extremos. Las llamadas son conteos; calificación e importancia son ordinales y se describen con frecuencias ordenadas, sin distancias iguales entre categorías.
+
 
 \subsection{Categorías y relaciones bivariadas}
 La distribución de las modalidades y demás variables categóricas se presenta en la Figura~\ref{fig:anexo_cualitativas} del Anexo~\ref{sec:anexo_figuras}.
@@ -127,10 +127,10 @@ en E2 y la de modalidad en T01 (sección~4).
 
 \imagen{.58}{fig_eda_5_correlacion.pdf}{Peso y descuento presentan la mayor asociación monótona entre cuantitativas: $\rho=-0{,}316$.}{fig:corr}
 La Figura~\ref{fig:corr} usa Spearman para explorar relaciones monótonas mediante rangos. Peso--descuento tiene \textbf{$\rho=-0{,}316$}; llamadas--costo, \textbf{$\rho=0{,}294$}; llamadas--compras previas, \textbf{$\rho=0{,}273$}; costo--compras previas, \textbf{$\rho=0{,}194$}. Las magnitudes bivariadas son limitadas, sin demostrar independencia conjunta ni ausencia de confusión. Se excluyen el identificador, que no tiene significado numérico, y la variable de resultado, cuya relación con cada predictora se analiza por separado en el anexo.
-\newpage
+
 
 \section{Estimación de parámetros}
-Se estiman \textbf{tres medias relevantes y una proporción}. Se conserva la aproximación normal de la guía: $\bar{x}\pm z_{0{,}975}s/\sqrt{n}$ y $\hat p\pm z_{0{,}975}\sqrt{\hat p(1-\hat p)/n}$, con $z_{0{,}975}=1{,}95996$. Se revisan tamaño, forma, extremos e influencia. En la proporción, $n\hat p=6.563$ y $n(1-\hat p)=4.436$. Los intervalos suponen envíos independientes. Este supuesto depende de cómo se obtuvieron los datos y no puede verificarse con estas columnas: no hay identificador de cliente, fecha ni ruta que permita detectar envíos relacionados. Si existiera dependencia (por ejemplo, envíos de un mismo cliente o de una misma carga), los intervalos serían más estrechos de lo que corresponde.
+Se estiman \textbf{tres medias relevantes y una proporción}. Para la proporción global se utiliza el intervalo binomial de Wilson (score) al 95\%; para las tres medias, la aproximación normal basada en el TCL, $\bar{x}\pm z_{0{,}975}s/\sqrt{n}$, con $z_{0{,}975}=1{,}95996$. Wilson se aplica a proporciones, no a medias. Se revisan tamaños, forma, extremos e influencia. Para el resultado binario, $n\hat p=6.563$ y $n(1-\hat p)=4.436$. Los intervalos suponen envíos independientes. Este supuesto depende de cómo se obtuvieron los datos y no puede verificarse con estas columnas: no hay identificador de cliente, fecha ni ruta que permita detectar envíos relacionados. Si existiera dependencia (por ejemplo, envíos de un mismo cliente o de una misma carga), los intervalos serían más estrechos de lo que corresponde.
 
 La proporción de atraso es el parámetro central del estudio. Se estiman las medias de peso, costo y llamadas porque tienen unidad documentada e interpretación operacional, y porque peso y costo se comparan entre grupos en T02 y E4. No se estima la media del descuento, cuya unidad no está documentada y cuya fuerte asimetría haría poco representativa la media, ni la de compras previas, conteo asimétrico de baja relevancia para la pregunta.
 
@@ -148,7 +148,7 @@ Parámetro & n & Estimación & Inferior & Superior
 & Ancho rel. (\%) \\
 \midrule
 Proporción de atraso & 10.999 & 0,59669
-& 0,58752 & 0,60586 & 3,07 \\
+& 0,58749 & 0,60582 & 3,07 \\
 
 Peso medio (g) & 10.999 & 3.634,02
 & 3.603,45 & 3.664,58 & 1,68 \\
@@ -171,14 +171,10 @@ es una propiedad del método antes de observar los
 datos; el intervalo obtenido con esta muestra
 contiene o no el parámetro.
 
-La Tabla~\ref{tab:ic} estima un atraso de 59,67\%, con intervalo 58,75--60,59\%; peso medio de 3.634,02 g, costo de USD 210,20 y llamadas de 4,054. 
+La Tabla~\ref{tab:ic} estima un atraso de 59,67\%, con intervalo de Wilson 58,75--60,58\%; peso medio de 3.634,02 g, costo de USD 210,20 y llamadas de 4,054. 
 Ningún intervalo supera el 3,1\% del valor estimado,
 por lo que todas las estimaciones son precisas. La precisión no corrige selección, dependencia ni incertidumbre del origen. 
-Para las estimaciones de proporciones se utiliza
-el intervalo de confianza de Wilson al 95\,\%,
-mientras que las diferencias de medias se estiman
-mediante intervalos basados en la prueba
-$t$ de Welch. Los intervalos presentados
+Para las proporciones se emplea Wilson al 95\,\%; las tres medias globales utilizan IC normales basados en el TCL, y las diferencias de medias, IC $t$ de Welch. Los intervalos presentados
 son individuales, sin ajuste por comparaciones
 múltiples.
 
@@ -192,7 +188,7 @@ $H_0$: modalidad y resultado independientes; $H_1$: asociación. Se emplea \codi
 Flight & 708 & 1.069 & 1.777\\Road & 725 & 1.035 & 1.760\\Ship & 3.003 & 4.459 & 7.462\\\midrule
 Total & 4.436 & 6.563 & 10.999\\\bottomrule\end{tabular}\end{table}
 La Tabla~\ref{tab:contingencia} produce $\chi^2(2)=0{,}7434$, $p=0{,}68955$ y V = $0{,}00822$. La mínima frecuencia esperada es 709,82, superior a 5. No se rechaza $H_0$ con Holm; no hay evidencia suficiente de asociación, lo que no demuestra independencia perfecta.
-\newpage
+
 
 \subsection{T02 Peso medio por resultado}
 $H_0:\mu_{atr}-\mu_{punt}=0$; $H_1:\mu_{atr}-\mu_{punt}\ne0$. Welch no impone igualdad de varianzas. Se revisan distribuciones, tamaños e influencia de extremos; independencia y comparabilidad siguen siendo supuestos.
@@ -224,7 +220,7 @@ no serviría para predecir atrasos. Aclararlo
 requiere documentación de la fuente, no
 disponible en estas columnas; por lo tanto,
 no se concluye que el descuento cause el atraso.
-\newpage
+
 
 \subsection{Contrastes complementarios y multiplicidad}
 \textbf{E1, rangos del peso.} $H_0$: distribuciones iguales; $H_1$: diferencia detectable por rangos. Mann--Whitney asintótico corrige empates y continuidad: $U=10\,000\,332{,}5$, $p=3{,}40\times10^{-171}$ y efecto biserial de rangos $r=-0{,}313$. Se rechaza $H_0$; sin igualdad de formas no es una prueba exclusiva de medianas.
@@ -247,7 +243,7 @@ E2 Importancia alta & 0,000490 & 0,000980 & Rechazar\\
 E3 Descuento > 10 & No repr. & No repr. & Rechazar\\
 E4 Costo (Welch) & $1{,}04\cdot10^{-14}$ & $3{,}11\cdot10^{-14}$ & Rechazar\\\bottomrule\end{tabularx}\end{table}
 ``No repr.'' indica subdesbordamiento; se conserva el cero de máquina en CSV sin inventar una cota numérica. La Tabla~\ref{tab:holm} controla multiplicidad de la familia, no vuelve confirmatoria la exploración. No rechazar $H_0$ no demuestra igualdad; significancia no implica importancia operacional.
-\newpage
+
 
 \section{Interpretación y avance del proyecto}
 El atraso de \textbf{59,67\%} justifica investigar el proceso que originó los registros. Modalidad tiene V = \textbf{0,0082} y p Holm = \textbf{0,68955}; no respalda cambiar de transporte. El peso es \textbf{3.272,64 frente a 4.168,67 g}, y descuento \textbf{18,66 frente a 5,55}: asociaciones que requieren explicar composición, temporalidad y registro antes de intervenir sobre carga o política comercial.
@@ -285,7 +281,6 @@ statsmodels. (s. f.). \emph{Statistical tests and tools} [Documentación]. \url{
 \appendix
 % Anexos incorporados directamente en este archivo.
 % Anexos integrados al documento principal; ruta compartida ../../outputs/figuras/
-
 \begin{center}
 {\Large\bfseries Anexos de la Evaluación Sumativa 1}\\[5pt]
 {\normalsize Análisis exploratorio e inferencial de entregas atrasadas}\\[4pt]
@@ -368,7 +363,7 @@ Correlación de Spearman & \texttt{DataFrame.corr(method='spearman')}: explorar 
 \addlinespace
 Medidas para categorías & Tablas de frecuencia, porcentajes, tasas por grupo y V de Cramér: caracterizar categorías y magnitud de asociación con el resultado; V no identifica dirección causal.\\
 \addlinespace
-IC de medias y proporciones & Aproximación normal basada en el TCL para medias y proporción global, según procedimiento del notebook; Wilson para tasas por subgrupos, especialmente cerca de cero o uno. Wilson evita los límites degenerados del intervalo de Wald. Debe verificarse que método y números del reporte correspondan al código final.\\
+IC de medias y proporciones & Wilson para proporción global y tasas por subgrupos; aproximación normal basada en el TCL solo para medias, especialmente con tamaños muestrales grandes. Wilson evita los límites degenerados del intervalo de Wald. Debe verificarse que método y números del reporte correspondan al código final.\\
 \addlinespace
 Chi-cuadrado de independencia (T01) & \texttt{stats.chi2\_contingency}: contrastar modalidad categórica frente al resultado binario; requiere observaciones independientes y frecuencias esperadas suficientemente grandes.\\
 \addlinespace
@@ -390,7 +385,3 @@ En todas las técnicas se distingue magnitud del efecto, significancia estadíst
 Las implementaciones y tablas se encuentran en el notebook y en \texttt{sumativa\_1/outputs/tablas/}; las figuras proceden de \texttt{sumativa\_1/outputs/figuras/}. El anexo conserva los nombres originales de archivo y remite al código reproducible del proyecto.
 
 \end{document}
-
-
-
-
