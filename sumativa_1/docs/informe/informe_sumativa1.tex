@@ -267,17 +267,39 @@ El atraso de \textbf{59,67\%} justifica investigar el proceso que originó los r
 \end{itemize}
 Las tablas proceden de exportaciones, no de imágenes. No se usa simulación ni muestreo aleatorio, por lo que no corresponde semilla. Las salidas pueden regenerarse; la Formativa 1 se conserva como entrega histórica.
 \section*{Referencias}\small
+Brown, L. D., Cai, T. T., \& DasGupta, A. (2001). Interval estimation for a binomial proportion. \emph{Statistical Science, 16}(2), 101--133.
+
+Cohen, J. (1988). \emph{Statistical power analysis for the behavioral sciences} (2.ª ed.). Lawrence Erlbaum Associates.
+
+Cramér, H. (1946). \emph{Mathematical methods of statistics}. Princeton University Press.
+
+Delacre, M., Lakens, D., Ley, C., Liu, L., \& Leys, C. (2021). \emph{Why Hedges' $g^*_s$ based on the non-pooled standard deviation should be reported with Welch's t-test} [Preprint]. PsyArXiv. \url{https://doi.org/10.31234/osf.io/tu6mp}
+
 Gopalani, P. (2021). \emph{E-Commerce Shipping Data} (versión 1) [Conjunto de datos]. Kaggle. \url{https://www.kaggle.com/datasets/prachi13/customer-analytics}
 
 Holm, S. (1979). A simple sequentially rejective multiple test procedure. \emph{Scandinavian Journal of Statistics, 6}(2), 65--70.
 
-Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, W., Bright, J., van der Walt, S. J., Brett, M., Wilson, J., Millman, K. J., Mayorov, N., Nelson, A. R. J., Jones, E., Kern, R., Larson, E., \ldots{} Vázquez-Baeza, Y. (2020). SciPy 1.0: Fundamental algorithms for scientific computing in Python. \emph{Nature Methods, 17}, 261--272. \url{https://doi.org/10.1038/s41592-019-0686-2}
+Joanes, D. N., \& Gill, C. A. (1998). Comparing measures of sample skewness and kurtosis. \emph{Journal of the Royal Statistical Society: Series D (The Statistician), 47}(1), 183--189.
+
+Kerby, D. S. (2014). The simple difference formula: An approach to teaching nonparametric correlation. \emph{Comprehensive Psychology, 3}, Artículo 1.
+
+Mann, H. B., \& Whitney, D. R. (1947). On a test of whether one of two random variables is stochastically larger than the other. \emph{The Annals of Mathematical Statistics, 18}(1), 50--60.
+
+Newcombe, R. G. (1998). Interval estimation for the difference between independent proportions: Comparison of eleven methods. \emph{Statistics in Medicine, 17}(8), 873--890.
 
 SciPy. (s. f.). \emph{Statistical functions (scipy.stats)} [Documentación]. \url{https://docs.scipy.org/doc/scipy/reference/stats.html}
 
+Spearman, C. (1904). The proof and measurement of association between two things. \emph{The American Journal of Psychology, 15}(1), 72--101.
+
 statsmodels. (s. f.). \emph{Statistical tests and tools} [Documentación]. \url{https://www.statsmodels.org/stable/stats.html}
 
+Tukey, J. W. (1977). \emph{Exploratory data analysis}. Addison-Wesley.
 
+Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, W., Bright, J., van der Walt, S. J., Brett, M., Wilson, J., Millman, K. J., Mayorov, N., Nelson, A. R. J., Jones, E., Kern, R., Larson, E., \ldots{} Vázquez-Baeza, Y. (2020). SciPy 1.0: Fundamental algorithms for scientific computing in Python. \emph{Nature Methods, 17}, 261--272. \url{https://doi.org/10.1038/s41592-019-0686-2}
+
+Welch, B. L. (1947). The generalization of ``Student's'' problem when several different population variances are involved. \emph{Biometrika, 34}(1--2), 28--35.
+
+Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. \emph{Journal of the American Statistical Association, 22}(158), 209--212.
 
 \clearpage
 \appendix
@@ -289,7 +311,6 @@ statsmodels. (s. f.). \emph{Statistical tests and tools} [Documentación]. \url{
 {\small Grupo 1 --- MCDI501 --- Octubre de 2026}
 \end{center}
 \noindent\textit{Documento complementario al informe principal. Las figuras siguientes no se reproducen en el cuerpo del informe; los resultados y las limitaciones se interpretan sin atribuir causalidad.}
-\section*{Anexo A. Visualizaciones complementarias}
 
 \section{Visualizaciones complementarias}\label{sec:anexo_figuras}
 
@@ -350,34 +371,287 @@ El resumen gráfico muestra los resultados de la familia de siete contrastes tra
 \clearpage
 \section{Técnicas estadísticas empleadas y justificación}\label{sec:anexo_tecnicas}
 \small
+Cada técnica se documenta con cinco campos: \textbf{qué es}, \textbf{fórmula}, \textbf{por qué se eligió en este caso} (con las cifras de estos datos), \textbf{supuestos y precauciones} e \textbf{implementación}. Notación: subíndice $a$ = entregas atrasadas ($n_a=6\,563$), $p$ = puntuales ($n_p=4\,436$), $n=10\,999$; $z=z_{0{,}975}=1{,}95996$.
 
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.31\linewidth}>{\raggedright\arraybackslash}X@{}}
-\toprule
-\textbf{Técnica} & \textbf{Motivo de selección, uso y precaución}\\
-\midrule
-Auditoría de calidad y tabulación & \texttt{read\_csv}, \texttt{isna}, \texttt{duplicated}, \texttt{nunique} y \texttt{crosstab}: verificar estructura, ausencia de faltantes y duplicados, dominios de categorías y tamaños muestrales antes de la inferencia.\\
-\addlinespace
-Tendencia central y dispersión & Media, mediana, desviación estándar, cuartiles, rango intercuartílico y extremos: describir magnitud, variabilidad y robustez ante asimetría. El IQR equivale a $Q_3-Q_1$.\\
-\addlinespace
-Asimetría y curtosis & \texttt{stats.skew(bias=False)} y \texttt{stats.kurtosis(fisher=True,bias=False)}: cuantificar forma. La curtosis de Fisher es el exceso respecto de la normal; ninguna de estas métricas constituye una prueba de normalidad.\\
-\addlinespace
-Correlación de Spearman & \texttt{DataFrame.corr(method='spearman')}: explorar asociación monótona entre rangos ante distribuciones no necesariamente normales. La matriz entre predictoras y la correlación con la variable de atraso responden preguntas diferentes.\\
-\addlinespace
-Medidas para categorías & Tablas de frecuencia, porcentajes, tasas por grupo y V de Cramér: caracterizar categorías y magnitud de asociación con el resultado; V no identifica dirección causal.\\
-\addlinespace
-IC de medias y proporciones & \texttt{proportion\_confint(method='wilson')} para la proporción global y las tasas por subgrupo; Wilson tiene mejor cobertura que Wald y no se degenera con proporciones 0 o 1. \texttt{stats.t.ppf} para el IC $t$ de Student de las medias ($n-1$ gl); con $n=10\,999$ coincide con la aproximación normal del TCL hasta el segundo decimal.\\
-\addlinespace
-Chi-cuadrado de independencia (T01) & \texttt{stats.chi2\_contingency}: contrastar modalidad categórica frente al resultado binario; requiere observaciones independientes y frecuencias esperadas suficientemente grandes.\\
-\addlinespace
-Prueba t de Welch (T02, T03, E4) & \texttt{stats.ttest\_ind(equal\_var=False)}: comparar medias de atrasadas y puntuales sin imponer igualdad de varianzas; IC de diferencia calculado con grados de libertad de Welch. Requiere independencia entre envíos y cautela frente a sesgos de selección.\\
-\addlinespace
-Mann--Whitney (E1) & \texttt{stats.mannwhitneyu}: contraste complementario por rangos del peso, menos dependiente de la forma paramétrica; sin igualdad de formas no equivale exclusivamente a un contraste de medianas.\\
-\addlinespace
-Prueba z de dos proporciones (E2, E3) & Comparar tasas de atraso entre importancia alta y resto, o descuento mayor que 10 y resto, con proporción agrupada bajo la hipótesis nula. El IC de la diferencia usa el método de Newcombe (\texttt{confint\_proportions\_2indep(method='newcomb')}), que combina los intervalos de Wilson de cada grupo y evita el IC degenerado de Wald cuando un grupo tiene proporción 1. El umbral exploratorio exige validación independiente.\\
-\addlinespace
-Corrección de Holm & \texttt{multipletests(method='holm')}: controlar error familiar al reportar conjuntamente siete valores p; no elimina la limitación de elegir hipótesis después de observar los datos.\\
-\bottomrule
-\end{tabularx}
+\subsection{Estadística descriptiva}
+
+\subsubsection{Media, mediana, desviación estándar, cuartiles e IQR}
+\textbf{Qué es.} Medidas de centro (media, mediana) y de dispersión (desviación estándar, cuartiles y rango intercuartílico) de cada variable cuantitativa.
+
+\textbf{Fórmula.}
+\[
+\bar x=\frac1n\sum_{i=1}^{n}x_i,\qquad
+s=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar x)^2},\qquad
+\mathrm{IQR}=Q_3-Q_1,
+\]
+donde $Q_1$, la mediana ($Q_2$) y $Q_3$ son los cuantiles 0,25, 0,50 y 0,75, calculados por interpolación lineal entre observaciones ordenadas.
+
+\textbf{Por qué aquí.} La media y la desviación estándar son la base de los intervalos y de la prueba de Welch. Como varias variables son asimétricas, se reportan además la mediana y el IQR, que no dependen de la magnitud de los valores extremos: en el descuento la media (13,37) casi duplica la mediana (7). En el peso, bimodal, ni la media (3.634,02 g) ni la mediana (4.149 g) describen por sí solas a un envío típico, por lo que se complementan con histogramas.
+
+\textbf{Supuestos y precauciones.} La media y la desviación estándar son sensibles a valores extremos; la mediana y el IQR son robustos. La desviación estándar usa $n-1$ para estimar sin sesgo la varianza poblacional.
+
+\textbf{Implementación.} \texttt{DataFrame.describe()}; \texttt{std(ddof=1)}; \texttt{quantile()}.
+
+\subsubsection{Regla de 1,5·IQR para valores extremos}
+\textbf{Qué es.} Criterio de Tukey (1977) para señalar observaciones alejadas del centro de la distribución.
+
+\textbf{Fórmula.} Una observación es extrema si
+\[
+x_i<Q_1-1{,}5\,\mathrm{IQR}\quad\text{o}\quad x_i>Q_3+1{,}5\,\mathrm{IQR}.
+\]
+
+\textbf{Por qué aquí.} No supone normalidad y usa cuartiles, que no se ven afectados por los propios extremos. Identifica 1.003 valores altos en compras previas y 2.209 en descuento; se conservan porque son valores válidos, no errores de registro.
+
+\textbf{Supuestos y precauciones.} En distribuciones asimétricas la regla marca como ``extrema'' gran parte de la cola sin que esos valores sean anómalos: en el descuento señala el 20,1\% de los registros. Por eso se usa para describir, no para eliminar datos.
+
+\textbf{Implementación.} Cálculo directo con \texttt{quantile([0.25, 0.75])}.
+
+\subsubsection{Asimetría y curtosis en exceso ajustadas}
+\textbf{Qué es.} Medidas de forma basadas en el tercer y el cuarto momento: la asimetría ($G_1$) indica hacia qué lado se extiende la cola; la curtosis en exceso ($G_2$), el peso de las colas respecto de la normal.
+
+\textbf{Fórmula.} Con los momentos centrales $m_k=\frac1n\sum(x_i-\bar x)^k$:
+\[
+G_1=\frac{\sqrt{n(n-1)}}{n-2}\,\frac{m_3}{m_2^{3/2}},\qquad
+G_2=\frac{n-1}{(n-2)(n-3)}\left[(n+1)\left(\frac{m_4}{m_2^{2}}-3\right)+6\right].
+\]
+$G_2$ sigue la definición de Fisher (curtosis de Pearson $-\,3$), de modo que una normal tiene $G_1=G_2=0$ (Joanes y Gill, 1998).
+
+\textbf{Por qué aquí.} Cuantifica lo que muestran los histogramas y orienta qué resúmenes usar. Descuento ($G_1=1{,}80$; $G_2=2{,}00$) y compras previas ($G_1=1{,}68$; $G_2=4{,}01$) tienen colas derechas pesadas, por lo que la mediana es más representativa que la media. El peso tiene $G_2=-1{,}45$, reflejo de su bimodalidad.
+
+\textbf{Supuestos y precauciones.} No son pruebas de normalidad. Al elevar desviaciones a la tercera y cuarta potencia, los pocos valores altos dominan ambas medidas. Un $G_2$ negativo en una variable bimodal no significa colas ``livianas'' en el sentido habitual.
+
+\textbf{Implementación.} \texttt{scipy.stats.skew(bias=False)}; \texttt{scipy.stats.kurtosis(fisher=True, bias=False)}.
+
+\subsubsection{Función de distribución acumulada empírica (ECDF)}
+\textbf{Qué es.} Para cada valor $x$, la proporción de observaciones del grupo que no lo superan.
+
+\textbf{Fórmula.}
+\[
+\hat F_n(x)=\frac1n\sum_{i=1}^{n}\mathbf 1(x_i\le x).
+\]
+
+\textbf{Por qué aquí.} Compara la distribución completa de atrasadas y puntuales sin elegir intervalos de histograma ni ocultar valores. En el descuento muestra lo que un diagrama de caja oculta: la ECDF de las puntuales llega al 100\% en 10, mientras que cerca del 40\% de las atrasadas supera ese valor.
+
+\textbf{Supuestos y precauciones.} Es descriptiva; la diferencia entre curvas no se contrasta formalmente con esta técnica.
+
+\textbf{Implementación.} \texttt{seaborn.ecdfplot}.
+
+\subsubsection{Frecuencias y tasas por categoría}
+\textbf{Qué es.} Conteo y porcentaje de cada categoría, y proporción de entregas atrasadas dentro de cada una.
+
+\textbf{Fórmula.} Para la categoría $k$, con $x_k$ atrasos entre $n_k$ envíos: $\hat p_k=x_k/n_k$.
+
+\textbf{Por qué aquí.} Es la única descripción válida para variables nominales (bodega, modalidad, género), y para las ordinales (calificación, importancia) se presenta respetando su orden. La tasa por categoría permite comparar cada grupo con la tasa global (59,67\%).
+
+\textbf{Supuestos y precauciones.} La composición de la muestra (cuántos envíos hay por categoría) no es la tasa de atraso. Cada tasa se acompaña de su IC de Wilson (B.3.2).
+
+\textbf{Implementación.} \texttt{value\_counts()}; \texttt{groupby().mean()}; \texttt{pandas.crosstab}.
+
+\subsection{Medidas de asociación}
+
+\subsubsection{Correlación de Spearman}
+\textbf{Qué es.} Correlación de Pearson calculada sobre los rangos de las observaciones (Spearman, 1904). Mide asociación monótona, sea o no lineal, entre $-1$ y $1$.
+
+\textbf{Fórmula.} Con $R_i$ y $S_i$ los rangos de $x_i$ e $y_i$ (rangos promedio en caso de empates):
+\[
+\rho_s=\frac{\sum_i(R_i-\bar R)(S_i-\bar S)}{\sqrt{\sum_i(R_i-\bar R)^2\sum_i(S_i-\bar S)^2}}.
+\]
+La fórmula abreviada $1-6\sum d_i^2/[n(n^2-1)]$ solo es exacta sin empates, lo que no ocurre en estos datos.
+
+\textbf{Por qué aquí.} Las variables no cumplen las condiciones en que Pearson es adecuado: descuento y compras previas son muy asimétricas, el peso es bimodal y llamadas y compras previas son conteos con muchos empates. Al usar rangos, ningún valor extremo domina el coeficiente. La mayor asociación entre predictoras es peso--descuento ($\rho_s=-0{,}316$).
+
+\textbf{Supuestos y precauciones.} No detecta relaciones no monótonas: la relación del peso con el atraso, alta en 2.000--4.000 g y baja en los extremos, no se refleja bien en un solo coeficiente. No implica causalidad.
+
+\textbf{Implementación.} \texttt{DataFrame.corr(method='spearman')}; \texttt{scipy.stats.spearmanr}.
+
+\subsubsection{Correlación punto-biserial}
+\textbf{Qué es.} Correlación de Pearson entre una variable cuantitativa y una binaria codificada 0/1.
+
+\textbf{Fórmula.} Con $s_n$ la desviación estándar de todas las observaciones (denominador $n$):
+\[
+r_{pb}=\frac{\bar x_a-\bar x_p}{s_n}\sqrt{\frac{n_a\,n_p}{n^2}}.
+\]
+
+\textbf{Por qué aquí.} El resultado es binario (1 = atrasada), por lo que la correlación de Pearson con cada predictora es la punto-biserial. Se presenta junto a Spearman para comprobar que el signo y el orden de las asociaciones no dependen del método: descuento $r_{pb}=0{,}397$ ($\rho_s=0{,}335$) y peso $r_{pb}=-0{,}269$ ($\rho_s=-0{,}266$).
+
+\textbf{Supuestos y precauciones.} Como toda correlación de Pearson, es sensible a valores extremos y solo capta la parte lineal de la relación. Su valor máximo posible depende de la proporción de unos.
+
+\textbf{Implementación.} \texttt{scipy.stats.pointbiserialr}.
+
+\subsubsection{V de Cramér}
+\textbf{Qué es.} Medida de la intensidad de asociación entre dos variables categóricas, entre 0 (independencia en la muestra) y 1 (asociación perfecta) (Cramér, 1946).
+
+\textbf{Fórmula.} Para una tabla de $f$ filas y $c$ columnas:
+\[
+V=\sqrt{\frac{\chi^2}{n\,(\min(f,c)-1)}}.
+\]
+
+\textbf{Por qué aquí.} Con $n=10\,999$, la prueba $\chi^2$ detecta asociaciones mínimas; $V$ elimina el efecto del tamaño muestral y expresa la magnitud. Frente al atraso, la mayor es la de la importancia ($V=0{,}033$) y la de modalidad es $V=0{,}0082$; entre las cualitativas ninguna supera 0,019, por lo que no son redundantes entre sí.
+
+\textbf{Supuestos y precauciones.} No indica dirección ni qué categoría difiere (para eso se usan las tasas por categoría). Ignora el orden de las variables ordinales y tiene un leve sesgo positivo en muestras pequeñas, despreciable aquí.
+
+\textbf{Implementación.} \texttt{scipy.stats.contingency.association(method='cramer')}.
+
+\subsection{Estimación por intervalos}
+
+\subsubsection{Intervalo $t$ de Student para una media}
+\textbf{Qué es.} Intervalo de confianza al 95\% para la media poblacional cuando la desviación estándar poblacional es desconocida.
+
+\textbf{Fórmula.}
+\[
+\bar x\pm t_{0{,}975;\,n-1}\,\frac{s}{\sqrt n},\qquad t_{0{,}975;\,10\,998}=1{,}96018.
+\]
+
+\textbf{Por qué aquí.} Se estima $\sigma$ con $s$, y la distribución $t$ incorpora esa incertidumbre. Con $n=10\,999$ coincide con la aproximación normal del TCL ($z=1{,}95996$) hasta el segundo decimal. El TCL respalda la normalidad aproximada de la media de peso (bimodal), costo y llamadas (discreta), cuyas asimetrías son bajas ($|G_1|\le0{,}39$). No se estima la media del descuento, cuya unidad no está documentada.
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos, no verificable con estas columnas. El intervalo es individual, sin ajuste por comparaciones múltiples.
+
+\textbf{Implementación.} \texttt{scipy.stats.t.ppf}; \texttt{std(ddof=1)}.
+
+\subsubsection{Intervalo de Wilson para una proporción}
+\textbf{Qué es.} Intervalo de confianza para una proporción binomial obtenido invirtiendo la prueba $z$ de puntuación (\emph{score}) (Wilson, 1927).
+
+\textbf{Fórmula.}
+\[
+\frac{\hat p+\dfrac{z^2}{2n}\pm z\sqrt{\dfrac{\hat p(1-\hat p)}{n}+\dfrac{z^2}{4n^2}}}{1+\dfrac{z^2}{n}}.
+\]
+
+\textbf{Por qué aquí.} El intervalo de Wald ($\hat p\pm z\sqrt{\hat p(1-\hat p)/n}$) tiene una cobertura irregular, por debajo del 95\% nominal incluso con $n$ moderado, y se degenera cuando $\hat p=0$ o $1$ (Brown et al., 2001). Aquí se estiman tasas en categorías desde 948 envíos y en grupos con 100\% de atraso: con descuento mayor que 10, Wilson da [99,86\%; 100\%] en vez del intervalo de ancho cero de Wald. Para la tasa global da [58,75\%; 60,58\%].
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos. Los intervalos por categoría son individuales: que se superpongan o no, no reemplaza una prueba de hipótesis.
+
+\textbf{Implementación.} \texttt{proportion\_confint(method='wilson')}, de \texttt{statsmodels.stats.proportion}.
+
+\subsection{Pruebas de hipótesis}
+
+\subsubsection{Prueba $\chi^2$ de independencia (T01)}
+\textbf{Qué es.} Contrasta si dos variables categóricas son independientes, comparando las frecuencias observadas con las esperadas bajo independencia.
+
+\textbf{Fórmula.}
+\[
+\chi^2=\sum_{i=1}^{f}\sum_{j=1}^{c}\frac{(O_{ij}-E_{ij})^2}{E_{ij}},\qquad
+E_{ij}=\frac{(\text{total fila } i)(\text{total columna } j)}{n},\qquad
+\text{gl}=(f-1)(c-1).
+\]
+
+\textbf{Por qué aquí.} Modalidad (3 categorías) y resultado (2) son categóricas, y la pregunta es si la tasa de atraso depende de la modalidad. La aproximación $\chi^2$ requiere frecuencias esperadas suficientes: la mínima es 709,82, muy por encima del umbral habitual de 5. Resultado: $\chi^2(2)=0{,}7434$, $p=0{,}690$. Con 2 grados de libertad no se aplica la corrección de continuidad de Yates.
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos. La prueba no mide la magnitud de la asociación (para eso, $V$ de Cramér), y no rechazar $H_0$ no demuestra independencia.
+
+\textbf{Implementación.} \texttt{scipy.stats.chi2\_contingency}.
+
+\subsubsection{Prueba $t$ de Welch (T02, T03, E4)}
+\textbf{Qué es.} Contrasta si dos medias poblacionales difieren, sin suponer varianzas iguales entre los grupos (Welch, 1947).
+
+\textbf{Fórmula.}
+\[
+t=\frac{\bar x_a-\bar x_p}{\sqrt{s_a^2/n_a+s_p^2/n_p}},\qquad
+\nu=\frac{\left(s_a^2/n_a+s_p^2/n_p\right)^2}{\dfrac{(s_a^2/n_a)^2}{n_a-1}+\dfrac{(s_p^2/n_p)^2}{n_p-1}},
+\]
+con IC al 95\% para la diferencia: $(\bar x_a-\bar x_p)\pm t_{0{,}975;\,\nu}\sqrt{s_a^2/n_a+s_p^2/n_p}$.
+
+\textbf{Por qué aquí.} Los grupos tienen tamaños distintos y, en el descuento, varianzas muy distintas (desviaciones estándar de 19,11 y 2,88). La $t$ clásica supone varianzas iguales y en ese escenario distorsiona la tasa de error tipo I; Welch mantiene el nivel nominal. Cuando las varianzas son similares, como en peso (1.576 y 1.574 g) y costo, coincide con la $t$ clásica, por lo que usarlo siempre no tiene costo.
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos. La normalidad aproximada de las medias se apoya en el TCL por el tamaño de los grupos, pese a la bimodalidad del peso; E1 verifica que la conclusión de T02 no dependa de ese supuesto.
+
+\textbf{Implementación.} \texttt{scipy.stats.ttest\_ind(equal\_var=False)}; \texttt{confidence\_interval(0.95)}.
+
+\subsubsection{Prueba de Mann--Whitney (E1)}
+\textbf{Qué es.} Prueba no paramétrica que compara dos grupos a partir de los rangos de las observaciones combinadas (Mann y Whitney, 1947).
+
+\textbf{Fórmula.} Con $R_a$ la suma de rangos de las atrasadas en la muestra combinada:
+\[
+U_a=R_a-\frac{n_a(n_a+1)}{2},\qquad
+z=\frac{U_a-n_an_p/2\mp0{,}5}{\sigma_U},\qquad
+\sigma_U^2=\frac{n_an_p}{12}\left[(n+1)-\frac{\sum_k(t_k^3-t_k)}{n(n-1)}\right],
+\]
+donde $t_k$ es el número de observaciones empatadas en el valor $k$ y $\mp0{,}5$ es la corrección de continuidad.
+
+\textbf{Por qué aquí.} Complementa T02 sin depender de la normalidad ni de que la media represente bien a una variable bimodal como el peso. Al usar rangos, ninguna observación influye por su magnitud. Resultado: $U=10\,000\,332{,}5$, $p=3{,}40\times10^{-171}$; la conclusión coincide con T02.
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos. Contrasta si un grupo tiende a tomar valores mayores que el otro, es decir, $P(X_a>X_p)\ne1/2$; solo equivale a comparar medianas si ambas distribuciones tienen la misma forma, lo que no ocurre con el peso.
+
+\textbf{Implementación.} \texttt{scipy.stats.mannwhitneyu(method='asymptotic', use\_continuity=True)}.
+
+\subsubsection{Prueba $z$ de dos proporciones e intervalo de Newcombe (E2, E3)}
+\textbf{Qué es.} La prueba $z$ contrasta si dos proporciones poblacionales son iguales; el intervalo de Newcombe estima su diferencia (Newcombe, 1998).
+
+\textbf{Fórmula.} Con $\bar p=(x_1+x_0)/(n_1+n_0)$ la proporción combinada bajo $H_0$:
+\[
+z=\frac{\hat p_1-\hat p_0}{\sqrt{\bar p(1-\bar p)\left(\frac1{n_1}+\frac1{n_0}\right)}}.
+\]
+Con $(l_1,u_1)$ y $(l_0,u_0)$ los intervalos de Wilson de cada grupo y $\hat\Delta=\hat p_1-\hat p_0$, el IC de Newcombe es
+\[
+\left[\hat\Delta-\sqrt{(\hat p_1-l_1)^2+(u_0-\hat p_0)^2}\,;\ \hat\Delta+\sqrt{(u_1-\hat p_1)^2+(\hat p_0-l_0)^2}\right].
+\]
+
+\textbf{Por qué aquí.} El resultado es binario y se comparan dos grupos: importancia alta frente al resto (E2) y descuento mayor que 10 frente al resto (E3). La proporción combinada es la correcta bajo $H_0$, y la prueba equivale a la $\chi^2$ de una tabla $2\times2$ ($z^2=\chi^2$). Para el intervalo se usa Newcombe y no Wald porque en E3 un grupo tiene proporción 1: Wald le asignaría varianza cero, mientras que Newcombe hereda el comportamiento de Wilson. Resultados: E2, diferencia de 5,81 pp, IC [2,57; 8,93] pp, $z=3{,}486$; E3, diferencia de 53,11 pp, IC [52,03; 54,18] pp, $z=48{,}54$.
+
+\textbf{Supuestos y precauciones.} Independencia entre envíos. Los grupos y el umbral de 10 se eligieron después del EDA, por lo que ambos contrastes son exploratorios.
+
+{\sloppy \textbf{Implementación.} Prueba $z$ calculada directamente con \texttt{scipy.stats.norm.sf}; IC con \texttt{confint\_proportions\_2indep(method='newcomb')}, de \texttt{statsmodels.stats.proportion}.\par}
+
+\subsection{Tamaños de efecto}
+
+\subsubsection{$d_{av}$: d de Cohen con desviación estándar promedio}
+\textbf{Qué es.} Diferencia de medias expresada en desviaciones estándar. Es una variante de la d de Cohen, también llamada $d'$ o $d^*$ (Cohen, 1988; Delacre et al., 2021).
+
+\textbf{Fórmula.}
+\[
+d_{av}=\frac{\bar x_a-\bar x_p}{\sqrt{\left(s_a^2+s_p^2\right)/2}}.
+\]
+A diferencia de la d clásica, cuyo denominador pondera las varianzas por $n-1$, aquí ambos grupos pesan igual.
+
+\textbf{Por qué aquí.} Con $n=10\,999$ casi cualquier diferencia es significativa, por lo que se necesita una medida de magnitud. Se eligió esta variante porque no supone varianzas iguales ni depende de cuál grupo es más grande, en coherencia con la prueba de Welch. Resultados: peso $-0{,}569$, descuento $0{,}960$ y costo $-0{,}150$. Como referencia orientativa, Cohen (1988) sugiere 0,2, 0,5 y 0,8 para efectos pequeños, medianos y grandes.
+
+\textbf{Supuestos y precauciones.} Cuando las varianzas difieren mucho, el valor depende de cómo se combinan: en el descuento, la d clásica daría 0,882 en vez de 0,960, con la misma interpretación (efecto grande). Los umbrales de Cohen no reemplazan un criterio de relevancia operacional.
+
+\textbf{Implementación.} Cálculo directo; columna \texttt{d\_av} de las tablas exportadas.
+
+\subsubsection{Correlación biserial de rangos (efecto de E1)}
+\textbf{Qué es.} Tamaño de efecto asociado a Mann--Whitney, entre $-1$ y $1$ (Kerby, 2014).
+
+\textbf{Fórmula.}
+\[
+r_{rb}=\frac{2U_a}{n_a\,n_p}-1=P(X_a>X_p)-P(X_a<X_p).
+\]
+
+\textbf{Por qué aquí.} Es la medida de magnitud coherente con una prueba de rangos y se interpreta directamente como probabilidad. Con $r_{rb}=-0{,}313$, al comparar un envío atrasado con uno puntual elegidos al azar, es más probable que el puntual pese más.
+
+\textbf{Supuestos y precauciones.} Resume el desplazamiento entre las distribuciones, no la diferencia de medianas.
+
+\textbf{Implementación.} Cálculo directo a partir del estadístico $U$ de \texttt{mannwhitneyu}.
+
+\subsubsection{Diferencia de proporciones y riesgo relativo (E2, E3)}
+\textbf{Qué es.} Comparación absoluta y relativa de dos tasas de atraso.
+
+\textbf{Fórmula.}
+\[
+\hat\Delta=\hat p_1-\hat p_0\ \text{(puntos porcentuales)},\qquad
+\widehat{RR}=\frac{\hat p_1}{\hat p_0}.
+\]
+
+\textbf{Por qué aquí.} La diferencia indica cuántos puntos porcentuales cambia la tasa y el riesgo relativo, cuántas veces es mayor. En E3, la tasa con descuento mayor que 10 es 53,11 pp mayor y 2,13 veces la del resto.
+
+\textbf{Supuestos y precauciones.} El riesgo relativo se reporta de forma descriptiva, sin intervalo de confianza.
+
+\textbf{Implementación.} Cálculo directo.
+
+\subsection{Comparaciones múltiples}
+
+\subsubsection{Corrección de Holm}
+\textbf{Qué es.} Procedimiento secuencial que controla la probabilidad de cometer al menos un error tipo I en una familia de $m$ pruebas (\emph{familywise error rate}) (Holm, 1979).
+
+\textbf{Fórmula.} Se ordenan los valores $p$ de menor a mayor, $p_{(1)}\le\dots\le p_{(m)}$, y se rechaza $H_{(i)}$ mientras $p_{(i)}\le\alpha/(m-i+1)$, deteniéndose en la primera que no cumple. Los valores $p$ ajustados son
+\[
+\tilde p_{(i)}=\max_{j\le i}\ \min\left\{1,\ (m-j+1)\,p_{(j)}\right\}.
+\]
+
+\textbf{Por qué aquí.} Se reportan siete contrastes ($m=7$) y, sin ajuste, la probabilidad de algún falso positivo supera el 5\%. Holm controla ese error con cualquier estructura de dependencia entre las pruebas y siempre rechaza al menos lo mismo que Bonferroni, por lo que es más potente. Ninguna decisión cambia tras el ajuste.
+
+\textbf{Supuestos y precauciones.} Solo corrige por las siete pruebas de la familia: no corrige que algunas hipótesis y umbrales se eligieran después del EDA.
+
+\textbf{Implementación.} \texttt{statsmodels.stats.multitest.multipletests(method='holm')}.
 
 
 \paragraph{Criterios transversales de interpretación.}
