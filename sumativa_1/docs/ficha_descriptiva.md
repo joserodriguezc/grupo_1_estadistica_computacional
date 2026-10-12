@@ -3,7 +3,7 @@
 **Tarea:** Construir diccionario y ficha descriptiva.
 **Responsable de ejecución:** Yerko Gallardo.
 **Revisor:** José Ignacio Rodríguez.
-**Estado:** Borrador para revisión; aprobación conjunta con el protocolo de análisis pendiente.
+**Estado:** Ficha de referencia del análisis de la Sumativa 1.
 
 Complementa `docs/fuente_datos.md` (procedencia e integridad) y `docs/diccionario_variables.csv` (detalle por variable, generado con `scripts/generar_diccionario.py`).
 
@@ -23,7 +23,7 @@ Registro de envío asociado a un cliente. Que `ID` sea único no prueba que cada
 
 ## 4. Variable de resultado
 
-`Reached.on.Time_Y.N`: **1 = no llegó a tiempo (atrasada)**, **0 = llegó a tiempo**. Codificación confirmada en la descripción de Kaggle. Se conserva la columna original y se creará el alias `entrega_atrasada` con los mismos valores.
+`Reached.on.Time_Y.N`: **1 = no llegó a tiempo (atrasada)**, **0 = llegó a tiempo**. Codificación confirmada en la descripción de Kaggle. Se conserva la columna original y se utiliza el alias `entrega_atrasada` con los mismos valores.
 
 Distribución observada: 6.563 atrasadas (59,7 %) y 4.436 a tiempo (40,3 %), sobre 10.999 registros.
 
@@ -55,7 +55,8 @@ Distinciones aplicadas:
 |---|---|---|
 | Modalidad y atraso | `Mode_of_Shipment`, `Reached.on.Time_Y.N` | Contraste χ² (T01) |
 | Peso y atraso | `Weight_in_gms`, `Reached.on.Time_Y.N` | Welch (T02) |
-| Costo y atraso | `Cost_of_the_Product`, `Reached.on.Time_Y.N` | Welch (T03) |
+| Descuento y atraso | `Discount_offered`, `Reached.on.Time_Y.N` | Welch (T03, exploratorio) |
+| Costo y atraso | `Cost_of_the_Product`, `Reached.on.Time_Y.N` | Welch (E4, complementario) |
 | Bodega y atraso | `Warehouse_block`, `Reached.on.Time_Y.N` | Exploratoria, sin prueba formal |
 | Relaciones numéricas | Variables cuantitativas sin `ID` | Exploratoria, para fases posteriores |
 
@@ -65,7 +66,7 @@ Distinciones aplicadas:
 2. **Unidad de `Discount_offered`.** No está especificada. No se interpreta como porcentaje ni como moneda.
 3. **Momento de registro.** No se documenta cuándo se registraron `Customer_care_calls` y `Customer_rating`. Podrían ser posteriores al atraso, por lo que su asociación con él no demuestra capacidad de anticiparlo.
 4. **Selección y dependencia.** No se conoce cómo se seleccionaron los registros ni si un cliente aparece varias veces.
-5. **Escala de `Customer_rating`.** No se especifica el sentido de la escala 1–5. Se asume 5 = mejor calificación, a verificar.
+5. **Escala de `Customer_rating`.** La descripción de Kaggle indica 1 = peor y 5 = mejor; se conserva el orden sin asumir distancias iguales.
 
 ## 8. Decisiones iniciales
 
