@@ -4,7 +4,10 @@
 \usepackage[margin=2.25cm]{geometry}
 \usepackage{graphicx,booktabs,tabularx,array,amsmath,amssymb,float,caption,xcolor,hyperref,fancyhdr,microtype}
 \definecolor{azul}{HTML}{1F5F8B}
-\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,citecolor=azul}
+\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,citecolor=azul,
+  pdftitle={Evaluación Sumativa 1: Análisis exploratorio e inferencial de entregas atrasadas en comercio electrónico},
+  pdfauthor={José Ignacio Rodríguez, Yerko Gallardo Miranda, Sebastián Rojas Araya},
+  pdfsubject={MCDI501 Estadística Computacional para la Toma de Decisiones, Grupo 1}}
 \pagestyle{fancy}\fancyhf{}\lhead{\footnotesize MCDI501 | Sumativa 1}\rhead{\footnotesize Grupo 1}\cfoot{\footnotesize \thepage}
 \setlength{\headheight}{14pt}\renewcommand{\headrulewidth}{0pt}
 \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}\renewcommand{\arraystretch}{1.12}
@@ -232,7 +235,7 @@ no se concluye que el descuento cause el atraso.
 El IC de Wilson del grupo > 10 es \textbf{[99,86\%; 100\%]}, no [100\%; 100\%]. El IC 95\% de Newcombe de la diferencia es [52,03; 54,18] pp; al construirse con los intervalos de Wilson de cada grupo, no se degenera cuando un grupo tiene proporción 1, a diferencia del de Wald. No se asume tasa poblacional exactamente igual a 1.
 
 
-\textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 y USD 214,50; diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$ y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
+\textbf{E4, costo medio.} $H_0:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}=0$; $H_1:\mu_{\mathrm{atr}}-\mu_{\mathrm{punt}}\ne0$. Welch compara USD 207,29 (atrasadas) y USD 214,50 (puntuales); diferencia $-7{,}21$ USD, IC 95\% $[-9{,}03;-5{,}39]$; $t=-7{,}75$, gl = $9\,557{,}16$, $p=1{,}04\times10^{-14}$, y $d_{av}=-0{,}150$. Se rechaza $H_0$ con Holm, pero el efecto es menor que para peso y descuento.
 \begin{table}[H]\centering\small\caption{Una familia de siete pruebas, Holm y $\alpha=0{,}05$.}\label{tab:holm}
 \begin{tabularx}{\linewidth}{@{}Xlll@{}}\toprule Contraste & p original & p Holm & Decisión\\\midrule
 T01 Modalidad & 0,68955 & 0,68955 & No rechazar\\
@@ -494,7 +497,7 @@ V=\sqrt{\frac{\chi^2}{n\,(\min(f,c)-1)}}.
 
 \subsection{Estimación por intervalos}
 
-\subsubsection{Intervalo $t$ de Student para una media}
+\subsubsection{Intervalo \texorpdfstring{$t$}{t} de Student para una media}
 \textbf{Qué es.} Intervalo de confianza al 95\% para la media poblacional cuando la desviación estándar poblacional es desconocida.
 
 \textbf{Fórmula.}
@@ -524,7 +527,7 @@ V=\sqrt{\frac{\chi^2}{n\,(\min(f,c)-1)}}.
 
 \subsection{Pruebas de hipótesis}
 
-\subsubsection{Prueba $\chi^2$ de independencia (T01)}
+\subsubsection{Prueba \texorpdfstring{$\chi^2$}{chi-cuadrado} de independencia (T01)}
 \textbf{Qué es.} Contrasta si dos variables categóricas son independientes, comparando las frecuencias observadas con las esperadas bajo independencia.
 
 \textbf{Fórmula.}
@@ -540,7 +543,7 @@ E_{ij}=\frac{(\text{total fila } i)(\text{total columna } j)}{n},\qquad
 
 \textbf{Implementación.} \texttt{scipy.stats.chi2\_contingency}.
 
-\subsubsection{Prueba $t$ de Welch (T02, T03, E4)}
+\subsubsection{Prueba \texorpdfstring{$t$}{t} de Welch (T02, T03, E4)}
 \textbf{Qué es.} Contrasta si dos medias poblacionales difieren, sin suponer varianzas iguales entre los grupos (Welch, 1947).
 
 \textbf{Fórmula.}
@@ -573,7 +576,7 @@ donde $t_k$ es el número de observaciones empatadas en el valor $k$ y $\mp0{,}5
 
 \textbf{Implementación.} \texttt{scipy.stats.mannwhitneyu(method='asymptotic', use\_continuity=True)}.
 
-\subsubsection{Prueba $z$ de dos proporciones e intervalo de Newcombe (E2, E3)}
+\subsubsection{Prueba \texorpdfstring{$z$}{z} de dos proporciones e intervalo de Newcombe (E2, E3)}
 \textbf{Qué es.} La prueba $z$ contrasta si dos proporciones poblacionales son iguales; el intervalo de Newcombe estima su diferencia (Newcombe, 1998).
 
 \textbf{Fórmula.} Con $\bar p=(x_1+x_0)/(n_1+n_0)$ la proporción combinada bajo $H_0$:
@@ -593,7 +596,7 @@ Con $(l_1,u_1)$ y $(l_0,u_0)$ los intervalos de Wilson de cada grupo y $\hat\Del
 
 \subsection{Tamaños de efecto}
 
-\subsubsection{$d_{av}$: d de Cohen con desviación estándar promedio}
+\subsubsection{\texorpdfstring{$d_{av}$}{d\_av}: d de Cohen con desviación estándar promedio}
 \textbf{Qué es.} Diferencia de medias expresada en desviaciones estándar. Es una variante de la d de Cohen, también llamada $d'$ o $d^*$ (Cohen, 1988; Delacre et al., 2021).
 
 \textbf{Fórmula.}
