@@ -19,6 +19,8 @@ El estudio incluye estadísticas descriptivas, cuatro estimaciones con intervalo
 - `sumativa_1/outputs/tablas/`: resultados cuantitativos, pruebas y metadatos de ejecución.
 - `sumativa_1/docs/protocolo_analisis.md`: diseño estadístico final de esta evaluación.
 - `sumativa_1/docs/fuente_datos.md`, `sumativa_1/docs/ficha_descriptiva.md`, `sumativa_1/docs/diccionario_variables.csv`: documentación del conjunto de datos.
+- `sumativa_1/docs/registro_fuente.json`: metadatos de obtención, tamaños y huellas SHA-256 del CSV.
+- `sumativa_1/scripts/verificar_fuente.py`: verifica la integridad del CSV contra el registro; `sumativa_1/scripts/generar_diccionario.py`: genera `diccionario_variables.csv`.
 
 ## Reproducir desde la raíz del repositorio
 
