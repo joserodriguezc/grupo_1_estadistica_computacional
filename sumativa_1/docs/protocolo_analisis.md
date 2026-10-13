@@ -41,4 +41,4 @@ Holm controla el error familiar de siete contrastes bajo sus condiciones, **pero
 
 ## Evidencia reproducible
 
-Fuente principal: `notebooks/sumativa_1.ipynb`; exportaciones en `outputs/tablas/`; gráficos en `outputs/figuras/`; texto y anexos incorporados en `docs/informe/informe_sumativa1.tex`.
+Fuente principal: `notebooks/sumativa_1_grupo1.ipynb`; exportaciones en `outputs/tablas/`; gráficos en `outputs/figuras/`; texto y anexos incorporados en `docs/informe/informe_sumativa1_grupo1.tex`.

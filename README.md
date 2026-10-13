@@ -10,7 +10,7 @@ El proyecto estudia asociaciones entre características de envíos y entregas at
 | Carpeta | Estado y contenido | Informe |
 |---|---|---|
 | `formativa_1/` | Entrega histórica congelada; no modificar análisis, datos ni resultados | `docs/informe/informe_formativa1.pdf` |
-| `sumativa_1/` | Análisis exploratorio e inferencial revisado; notebook, tablas, figuras y fuentes | `docs/informe/informe_sumativa1.pdf` |
+| `sumativa_1/` | Análisis exploratorio e inferencial revisado; notebook, tablas, figuras y fuentes | `docs/informe/informe_sumativa1_grupo1.pdf` |
 
 El detalle metodológico y de ejecución está en [sumativa_1/README.md](sumativa_1/README.md).
 
@@ -22,9 +22,9 @@ Desde la raíz del repositorio:
 
 ```bash
 uv sync --locked
-uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=180 sumativa_1/notebooks/sumativa_1.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=180 sumativa_1/notebooks/sumativa_1_grupo1.ipynb
 cd sumativa_1/docs/informe
-latexmk -pdf -interaction=nonstopmode -halt-on-error informe_sumativa1.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error informe_sumativa1_grupo1.tex
 cd ../../..
 ```
 

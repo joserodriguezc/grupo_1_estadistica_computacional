@@ -12,9 +12,9 @@ El estudio incluye estadísticas descriptivas, cuatro estimaciones con intervalo
 
 ## Archivos de la entrega
 
-- `sumativa_1/notebooks/sumativa_1.ipynb`: notebook ejecutable (96 celdas, 47 de código).
-- `sumativa_1/docs/informe/informe_sumativa1.tex`: **único archivo fuente LaTeX**, con ambos anexos integrados; no requiere otros `.tex`.
-- `sumativa_1/docs/informe/informe_sumativa1.pdf`: informe unificado, **21 páginas en total**, incluidos los anexos.
+- `sumativa_1/notebooks/sumativa_1_grupo1.ipynb`: notebook ejecutable (96 celdas, 47 de código).
+- `sumativa_1/docs/informe/informe_sumativa1_grupo1.tex`: **único archivo fuente LaTeX**, con ambos anexos integrados; no requiere otros `.tex`.
+- `sumativa_1/docs/informe/informe_sumativa1_grupo1.pdf`: informe unificado, **21 páginas en total**, incluidos los anexos.
 - `sumativa_1/outputs/figuras/`: figuras utilizadas tanto en el cuerpo principal como en los anexos; **sin subcarpeta `anexos`**.
 - `sumativa_1/outputs/tablas/`: resultados cuantitativos, pruebas y metadatos de ejecución.
 - `sumativa_1/docs/protocolo_analisis.md`: diseño estadístico final de esta evaluación.
@@ -28,12 +28,12 @@ Se requiere Python compatible con `.python-version`, `uv`, Jupyter y una instala
 
 ```bash
 uv sync --locked
-uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=180 sumativa_1/notebooks/sumativa_1.ipynb
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=180 sumativa_1/notebooks/sumativa_1_grupo1.ipynb
 cd sumativa_1/docs/informe
-latexmk -pdf -interaction=nonstopmode -halt-on-error informe_sumativa1.tex
+latexmk -pdf -interaction=nonstopmode -halt-on-error informe_sumativa1_grupo1.tex
 ```
 
-En VS Code también se puede abrir el notebook, seleccionar `.venv` y ejecutar todas las celdas desde un kernel reiniciado. Compilar **solo `informe_sumativa1.tex`**, desde su directorio para conservar las rutas relativas `../../outputs/figuras/`.
+En VS Code también se puede abrir el notebook, seleccionar `.venv` y ejecutar todas las celdas desde un kernel reiniciado. Compilar **solo `informe_sumativa1_grupo1.tex`**, desde su directorio para conservar las rutas relativas `../../outputs/figuras/`.
 
 ## Criterios de interpretación
 
