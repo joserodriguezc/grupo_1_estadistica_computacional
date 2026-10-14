@@ -52,3 +52,6 @@ sumativa_1/docs/informe/*.synctex.gz
 # Temporales de edición
 *~
 *.bak
+
+# Documentos internos de planificación (no forman parte de los entregables)
+Planificacion_*.pdf
