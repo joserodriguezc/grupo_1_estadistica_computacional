@@ -1,0 +1,21 @@
+{
+  "proposito": "Semilla única de la Sumativa 2 (bootstrap, Montecarlo y otros métodos aleatorios).",
+  "fuente": "Random UChile, beacon de aleatoriedad de la Universidad de Chile",
+  "api": "https://random.uchile.cl/beacon/2.1-beta",
+  "regla": "Primer pulso con timeStamp >= momento_fijado_utc (consulta /pulse?timeGE=momento_fijado_utc)",
+  "momento_fijado_utc": "2026-10-14T15:00:00.000Z",
+  "derivacion": "semilla = int(outputValue, 16) mod 2**32",
+  "pulso": {
+    "uri": "https://random.uchile.cl/beacon/2.1-beta/chain/2/pulse/1053589",
+    "version": "2.1-beta",
+    "chainIndex": 2,
+    "pulseIndex": 1053589,
+    "timeStamp": "2026-10-14T15:00:00.000Z",
+    "statusCode": 0,
+    "certificateId": "e61cd50b0a62880e49fcef7002e52dabb262bf6f5de261797adfb68461ad0bb5b1030c2544719b56adc369e39a941c4f2c203b6287b02066489adc572daffd2c",
+    "outputValue": "d9b084d3eebe033bfcd7c32d2a74cd93e31a29e0dfd96db1475502c27d89a4c9c04fa16453acc0495abfb2aa5462baee7c9a5b3c274cea2327a1f00c59bc5277",
+    "signatureValue": "9eee61cf31fc6679b3f018fdaba3649464c876920c9be3986c807b4a21e0510c8e0cc7a0e775897d836d8b282e8ca5f28176e274c9c2cd49469d5fcc0880f92d5f7cde27cff696daf6c95249c3eedc800456fe6f0e13156a19f6603c4fb4c4774fbfd2ffe0b88b2be50274b28325ed48836ca4223b0c34c1d069973ee636089637c3666a930a40e8631b5116a67cd75ac59af910c67d278c6a0e9c00414ad971ba1eaeae442b910c499e13eb456e638a66401110125b2c7869a8a053c30cfe9ba3326f78eecca0a5cdd4af2dfeadf4ebe2c19fec495eca35470bc7641dfa1b0db447615bb9d060abc5594d36f21405da93782dc2ad47ad9f4a30e5c129b485b95c0f82a5328bc710e170eef9f4f2df6911009020a81adc7b71b0b90a31217a281813570b61f877c5af65736a07e621d166fd620d3fc503ea1c7b135d1badf02020cbd2cf48d10db0706dd8191f00ec4bb4f6e4e93c20bad864aa55b5f360174a6d66a495610020492ddc51cc893b169f7262df3f292e390fff8cae4b5de785a568b6b5875020886ec051eac9ad3619c14e5f5c33b01d0070a66eb2056ae927bab57c4029a6479456898057c9daeb850f1e696c2cb9d4575a2379a1fc64ed0cb73ca94f4efc0360a569b513315d05cdc6e3e34c4db7b6d0d8f5874fa6355671d2cc41daf606cadeca57870000a7ccc6eecef2ac71e3d6c2f6456b31a00746799a"
+  },
+  "obtenido_utc": "2026-10-14T18:34:11+00:00",
+  "semilla": 1505514103
+}
