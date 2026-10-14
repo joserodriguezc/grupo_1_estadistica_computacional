@@ -4,7 +4,32 @@ La Sumativa 2 usa métodos con aleatoriedad (bootstrap, Montecarlo y otros). Par
 
 ## Fuente
 
-**Random UChile**, el *beacon* de aleatoriedad de la Universidad de Chile (API `https://random.uchile.cl/beacon/2.1-beta`). Emite un pulso cada 60 segundos. Cada pulso tiene una dirección permanente (`/chain/{cadena}/pulse/{pulso}`), un valor aleatorio de 512 bits (`outputValue`), una firma digital y el valor del pulso anterior, por lo que no puede alterarse después de emitido.
+**Random UChile**, el Faro de Aleatoriedad (*Randomness Beacon*) de la Universidad de Chile (API `https://random.uchile.cl/beacon/2.1-beta`). Cada minuto genera aleatoriedad "fresca": un número de **512 bits** (`outputValue`). Cada pulso tiene una dirección permanente (`/chain/{cadena}/pulse/{pulso}`), una firma digital y el valor del pulso anterior, por lo que no puede alterarse después de emitido.
+
+### Cómo se genera cada pulso
+
+Según Random UChile, cada minuto se ejecuta el mismo algoritmo en tres partes:
+
+1. **Entropía externa.** Durante los primeros 30 segundos se recolectan datos de fuentes públicas difíciles de predecir. Una fuente es válida si entrega la misma información a cualquier persona que la consulte al mismo tiempo, está a cargo de un organismo confiable sin motivos para sesgarla, refleja un fenómeno aleatorio con un mínimo de entropía en cada emisión, cambia con frecuencia y está disponible la mayor parte del tiempo. Las fuentes actuales son:
+
+   | Fuente | Organismo | Dato que aporta |
+   |---|---|---|
+   | Sismos | Centro Sismológico Nacional | Último sismo registrado en Chile: fecha (UTC), latitud, longitud, profundidad y magnitud |
+   | Radio | Radio Universidad de Chile (transmisión en línea) | Bytes de unos 7 segundos de transmisión, muestreados cada minuto |
+   | Ethereum | Blockchain de Ethereum | Hash del último bloque |
+   | Buses | Red Movilidad | Posición de cada bus activo en Santiago: fecha (UTC), patente, latitud, longitud, velocidad, recorrido y dirección |
+
+2. **Entropía local.** Un generador de números verdaderamente aleatorios (TRNG), un hardware basado en un proceso cuántico, produce 512 bits cada minuto. Ese valor se usa en el minuto siguiente y queda oculto mediante un esquema criptográfico de compromiso (*commitment*), que impide cambiarlo después.
+
+3. **Criptografía y publicación.** La entropía externa se concatena y pasa por una función verificable de retraso (VDF, *Verifiable Delay Function*), que obliga a esperar un tiempo mínimo para obtener el resultado, sin importar el poder de cómputo disponible. Ese resultado se concatena con la entropía local y con información propia del sistema, se firma digitalmente y se obtiene el valor de 512 bits que se publica como pulso del minuto.
+
+### Por qué sirve para fijar la semilla
+
+Random UChile sostiene que este algoritmo demuestra matemáticamente que ni la propia institución ni ninguna otra entidad puede manipular el valor de forma efectiva ni predecirlo con más de 60 segundos de anticipación. Como la regla de este protocolo se publicó unas 14 horas antes de que se emitiera el pulso fijado, nadie del equipo pudo conocer la semilla ni influir en ella al definirla.
+
+La semilla usa los últimos 32 bits del valor de 512 bits (ver la derivación). Esa reducción no afecta su imprevisibilidad: depende de un valor que nadie conocía de antemano.
+
+Fuente: Random UChile, <https://random.uchile.cl/>.
 
 ## Regla (fijada antes de la emisión del pulso)
 
