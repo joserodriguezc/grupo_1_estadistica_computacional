@@ -79,4 +79,14 @@ rng = np.random.default_rng(SEMILLA)
 
 ## Estado
 
-**Pendiente de obtención.** El pulso fijado se emite el 2026-10-14 a las 15:00 UTC. Después de esa hora se ejecuta `obtener` y se registra la semilla en un commit separado.
+**Semilla obtenida y congelada.**
+
+| Dato | Valor |
+|---|---|
+| **SEMILLA** | **1505514103** |
+| Pulso | Cadena 2, pulso 1053589: <https://random.uchile.cl/beacon/2.1-beta/chain/2/pulse/1053589> |
+| `timeStamp` | 2026-10-14T15:00:00.000Z (el pulso exacto del momento fijado) |
+| `statusCode` | 0 (normal) |
+| Obtenida | 2026-10-14T18:34:11Z |
+
+La regla se publicó en GitHub el 2026-10-14 a las 00:55 UTC, unas 14 horas antes de la emisión del pulso. El registro completo, con el `outputValue` de 512 bits y la firma del pulso, está en `docs/registro_semilla.json`; `verificar` lo comprueba contra el *beacon*.
