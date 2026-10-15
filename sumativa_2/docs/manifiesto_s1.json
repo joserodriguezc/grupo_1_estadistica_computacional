@@ -1,0 +1,214 @@
+{
+  "commit_s1": "04e6df05454a5d12e73b174f022313b20fd80032",
+  "datos": {
+    "ruta": "sumativa_1/data/raw/ecommerce_shipping.csv",
+    "sha256": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6"
+  },
+  "tablas": [
+    {
+      "archivo": "asociacion_cramer.csv",
+      "ruta": "sumativa_1/outputs/tablas/asociacion_cramer.csv",
+      "familia": "asociaciones",
+      "sha256": "af69ed795cca99a9f6d3eae3aa0741a4afa071be5a5a3a32266107570fba7afd"
+    },
+    {
+      "archivo": "calidad_datos.csv",
+      "ruta": "sumativa_1/outputs/tablas/calidad_datos.csv",
+      "familia": "control de calidad (sin estimandos)",
+      "sha256": "b395d4ad29363c7294e7fb2b2169912983bc6e3fbd4e3aea259143ac4d1d9e7b"
+    },
+    {
+      "archivo": "comparaciones_proporciones.csv",
+      "ruta": "sumativa_1/outputs/tablas/comparaciones_proporciones.csv",
+      "familia": "contrastes",
+      "sha256": "8fd8e0c004069857de0fd6d4fe1189b18e5ed7928540545e210d3b9e2e586fe8"
+    },
+    {
+      "archivo": "contraste_costo.csv",
+      "ruta": "sumativa_1/outputs/tablas/contraste_costo.csv",
+      "familia": "contrastes",
+      "sha256": "227bdbe27baf98e0c96bedd1ecf6acf82c1203d1986537d336cf7cc295a68667"
+    },
+    {
+      "archivo": "contraste_descuento.csv",
+      "ruta": "sumativa_1/outputs/tablas/contraste_descuento.csv",
+      "familia": "contrastes",
+      "sha256": "0211f9e8b6524807aa4c4c5638d6991d6c7cb4a7f29b29fa0dd7e61fb4720472"
+    },
+    {
+      "archivo": "contraste_modalidad.csv",
+      "ruta": "sumativa_1/outputs/tablas/contraste_modalidad.csv",
+      "familia": "contrastes",
+      "sha256": "512ce409c69bf6221221870bef2c75182f26521e5826d5d742cc21e7a357d885"
+    },
+    {
+      "archivo": "contraste_peso.csv",
+      "ruta": "sumativa_1/outputs/tablas/contraste_peso.csv",
+      "familia": "contrastes",
+      "sha256": "749f2c97cf53f2dc06a3a37d7cd321b5e088ee4e1dbf1b2891370c4a15bd9f61"
+    },
+    {
+      "archivo": "contrastes_complementarios.csv",
+      "ruta": "sumativa_1/outputs/tablas/contrastes_complementarios.csv",
+      "familia": "contrastes",
+      "sha256": "a301c14460904472ec933e1806d4015c0ee20c46d22eaf0270df1d2fa422ce73"
+    },
+    {
+      "archivo": "contrastes_consolidados.csv",
+      "ruta": "sumativa_1/outputs/tablas/contrastes_consolidados.csv",
+      "familia": "contrastes",
+      "sha256": "bd2c5c59e6456fb9aab8fd12612b4ae7ff65fdac186b867c4a7ec46e90ae694c"
+    },
+    {
+      "archivo": "contrastes_holm_7.csv",
+      "ruta": "sumativa_1/outputs/tablas/contrastes_holm_7.csv",
+      "familia": "contrastes",
+      "sha256": "28c310ad2b4866453915482349da61ac515b72e0227f4b20d3f255eaa6b2c71a"
+    },
+    {
+      "archivo": "correlacion_dependiente_cuantitativas.csv",
+      "ruta": "sumativa_1/outputs/tablas/correlacion_dependiente_cuantitativas.csv",
+      "familia": "correlaciones",
+      "sha256": "e5f618696f9379cd8cea1d84d68d407110da1f8f613029d7a2b81b4eb75b30c6"
+    },
+    {
+      "archivo": "correlacion_spearman.csv",
+      "ruta": "sumativa_1/outputs/tablas/correlacion_spearman.csv",
+      "familia": "correlaciones",
+      "sha256": "5da00d51d31c07fe8422b3fb474d1884414d84da67573564ec846cbbbe232479"
+    },
+    {
+      "archivo": "descriptiva_cuantitativas.csv",
+      "ruta": "sumativa_1/outputs/tablas/descriptiva_cuantitativas.csv",
+      "familia": "descriptivas",
+      "sha256": "471aec9f79509b9b2ea3cca6059466e73aebb6a584aa2d221e5929d4b7654064"
+    },
+    {
+      "archivo": "entorno_ejecucion.json",
+      "ruta": "sumativa_1/outputs/tablas/entorno_ejecucion.json",
+      "familia": "entorno (sin estimandos)",
+      "sha256": "12752b5df0efbb837a1a561e9fb178fe6ffacf93ce7f2e0e4f3b330dcad7ef85"
+    },
+    {
+      "archivo": "estimaciones.csv",
+      "ruta": "sumativa_1/outputs/tablas/estimaciones.csv",
+      "familia": "parametros",
+      "sha256": "ee94bf7b71d1a461324597d6e0dd04d0cae9c705dc220295421012362b9eb3f3"
+    },
+    {
+      "archivo": "frecuencias.csv",
+      "ruta": "sumativa_1/outputs/tablas/frecuencias.csv",
+      "familia": "descriptivas",
+      "sha256": "9cb2a622d07ebb224a6f47f6d5999b2b5deeeb77eaaed3c5626d6561e8f8eceb"
+    },
+    {
+      "archivo": "intervalos_confianza.csv",
+      "ruta": "sumativa_1/outputs/tablas/intervalos_confianza.csv",
+      "familia": "parametros",
+      "sha256": "ee94bf7b71d1a461324597d6e0dd04d0cae9c705dc220295421012362b9eb3f3"
+    },
+    {
+      "archivo": "relacion_dependiente_cualitativas.csv",
+      "ruta": "sumativa_1/outputs/tablas/relacion_dependiente_cualitativas.csv",
+      "familia": "asociaciones",
+      "sha256": "71a73d2a810d000a692519307e90413355e99266d362f03cfed98c81113a865a"
+    },
+    {
+      "archivo": "relacion_dependiente_cuantitativas.csv",
+      "ruta": "sumativa_1/outputs/tablas/relacion_dependiente_cuantitativas.csv",
+      "familia": "descriptivas",
+      "sha256": "ffd558ec93355af799af8194224c4eac617387b27a072ff6de121c8ea618b188"
+    },
+    {
+      "archivo": "segmento_descuento.csv",
+      "ruta": "sumativa_1/outputs/tablas/segmento_descuento.csv",
+      "familia": "descriptivas",
+      "sha256": "0529f8e063c0c6406dd10f8f040791dca255425f78114a1690d1613e066b54bf"
+    },
+    {
+      "archivo": "supuestos_intervalos.csv",
+      "ruta": "sumativa_1/outputs/tablas/supuestos_intervalos.csv",
+      "familia": "descriptivas",
+      "sha256": "e02a4f128bc1b18844c078c66606e036fbf2e9980d009ad92d0883f6cc52fcb0"
+    }
+  ],
+  "parametros_principales": [
+    {
+      "parametro": "Proporción de entregas atrasadas",
+      "variable": "entrega_atrasada",
+      "estimacion": 0.5966906082371125,
+      "ic_95": [
+        0.5874905859803646,
+        0.605823114663285
+      ],
+      "metodo": "Wilson (score)",
+      "fuente": "sumativa_1/outputs/tablas/estimaciones.csv"
+    },
+    {
+      "parametro": "Peso medio",
+      "variable": "peso_gramos",
+      "estimacion": 3634.016728793527,
+      "ic_95": [
+        3603.450825107208,
+        3664.5826324798463
+      ],
+      "metodo": "t de Student",
+      "fuente": "sumativa_1/outputs/tablas/estimaciones.csv"
+    },
+    {
+      "parametro": "Costo medio",
+      "variable": "costo_producto",
+      "estimacion": 210.1968360760069,
+      "ic_95": [
+        209.2985128701855,
+        211.09515928182836
+      ],
+      "metodo": "t de Student",
+      "fuente": "sumativa_1/outputs/tablas/estimaciones.csv"
+    },
+    {
+      "parametro": "Llamadas medias",
+      "variable": "llamadas_atencion",
+      "estimacion": 4.054459496317847,
+      "ic_95": [
+        4.033124564220411,
+        4.075794428415283
+      ],
+      "metodo": "t de Student",
+      "fuente": "sumativa_1/outputs/tablas/estimaciones.csv"
+    }
+  ],
+  "matriz_cobertura": {
+    "inventario": "sumativa_2/outputs/tablas/inventario_resultados_s1.csv",
+    "resultados": 194,
+    "por_familia_y_metodo": {
+      "Bootstrap (Y02): remuestreo de filas, IC percentil y BCa": {
+        "parametros": 4,
+        "descriptivas": 62
+      },
+      "Bootstrap (Y02): remuestreo dentro de cada grupo, IC percentil y BCa": {
+        "efectos": 13,
+        "descriptivas": 39
+      },
+      "Bootstrap (Y02): solo diagnóstico; el bootstrap de extremos no tiene cobertura poblacional": {
+        "descriptivas": 10
+      },
+      "Bootstrap de coeficientes (S02): filas emparejadas, IC percentil": {
+        "correlaciones": 20,
+        "asociaciones": 15
+      },
+      "Bootstrap de coeficientes (S02): no se recalcula el p; se evalúa con el IC del coeficiente": {
+        "correlaciones": 10
+      },
+      "Permutación (S01): Holm sobre los 7 p de permutación": {
+        "pruebas": 7
+      },
+      "Permutación (S01): estadístico recalculado en cada permutación": {
+        "pruebas": 7
+      },
+      "Permutación (S01): p de permutación": {
+        "pruebas": 7
+      }
+    }
+  }
+}
