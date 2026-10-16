@@ -525,6 +525,7 @@ name = "grupo-1-estadistica-computacional"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "ipython" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "pandas" },
@@ -541,6 +542,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "ipython", specifier = ">=9.17.1" },
     { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "numpy", specifier = ">=2.5.3" },
     { name = "pandas", specifier = ">=3.0.6" },
