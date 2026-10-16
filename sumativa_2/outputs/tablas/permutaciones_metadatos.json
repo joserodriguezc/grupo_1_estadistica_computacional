@@ -1,0 +1,33 @@
+{
+  "semilla": 1505514103,
+  "flujo": "permutaciones",
+  "spawn_key": [
+    1
+  ],
+  "orden_pruebas": [
+    "T01",
+    "T02",
+    "T03",
+    "E1",
+    "E2",
+    "E3",
+    "E4"
+  ],
+  "n": 10999,
+  "alfa": 0.05,
+  "historial_precision": [
+    {
+      "B": 10000,
+      "decision_ambigua": false
+    }
+  ],
+  "commit_s1": "04e6df05454a5d12e73b174f022313b20fd80032",
+  "sha256_datos": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6",
+  "versiones": {
+    "python": "3.14.6",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scipy": "1.18.0",
+    "statsmodels": "0.14.6"
+  }
+}
