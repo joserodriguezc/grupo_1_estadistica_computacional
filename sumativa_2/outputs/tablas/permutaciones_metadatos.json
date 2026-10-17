@@ -22,9 +22,9 @@
     }
   ],
   "commit_s1": "04e6df05454a5d12e73b174f022313b20fd80032",
-  "sha256_datos": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+  "sha256_datos": "7f4d81e18f762de35c411f8003fe4a0565dd886a50e311729041c1aa41b076f6",
   "versiones": {
-    "python": "3.14.4",
+    "python": "3.14.6",
     "numpy": "2.5.3",
     "pandas": "3.0.6",
     "scipy": "1.18.1",
