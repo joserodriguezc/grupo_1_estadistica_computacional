@@ -1,0 +1,23 @@
+{
+  "semilla": 1505514103,
+  "flujo_declarado": "montecarlo_empirico",
+  "consumo_flujo": "ninguno: se reutilizan las réplicas de 2.1, 2.2 y 3.1",
+  "B_minimo": 10000,
+  "lotes_mcse_cuantiles": 20,
+  "resultados": 194,
+  "cobertura": {
+    "réplicas bootstrap (2.1)": 128,
+    "réplicas bootstrap emparejadas (3.1)": 35,
+    "permutación (2.2)": 14,
+    "no aplicable": 10,
+    "distribución nula de permutación (2.2)": 7
+  },
+  "commit_s1": "04e6df05454a5d12e73b174f022313b20fd80032",
+  "sha256_datos": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+  "versiones": {
+    "python": "3.14.4",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1"
+  }
+}
