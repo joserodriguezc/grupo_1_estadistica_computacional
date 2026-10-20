@@ -1,0 +1,46 @@
+{
+  "semilla": 1505514103,
+  "pulso": "https://random.uchile.cl/beacon/2.1-beta/chain/2/pulse/1053589",
+  "flujos": {
+    "bootstrap_parametros": [
+      0
+    ],
+    "permutaciones": [
+      1
+    ],
+    "bootstrap_coeficientes": [
+      2
+    ],
+    "montecarlo_lotes": [
+      3
+    ],
+    "montecarlo_empirico": [
+      4
+    ],
+    "sensibilidad_escenarios": [
+      5
+    ],
+    "sensibilidad_montecarlo": [
+      6
+    ]
+  },
+  "B": 10000,
+  "sha256_datos": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+  "tablas_s1": {
+    "estimaciones.csv": "ee94bf7b71d1a461324597d6e0dd04d0cae9c705dc220295421012362b9eb3f3",
+    "contraste_modalidad.csv": "512ce409c69bf6221221870bef2c75182f26521e5826d5d742cc21e7a357d885",
+    "contraste_peso.csv": "749f2c97cf53f2dc06a3a37d7cd321b5e088ee4e1dbf1b2891370c4a15bd9f61",
+    "contraste_descuento.csv": "0211f9e8b6524807aa4c4c5638d6991d6c7cb4a7f29b29fa0dd7e61fb4720472",
+    "contrastes_holm_7.csv": "28c310ad2b4866453915482349da61ac515b72e0227f4b20d3f255eaa6b2c71a",
+    "correlacion_dependiente_cuantitativas.csv": "e5f618696f9379cd8cea1d84d68d407110da1f8f613029d7a2b81b4eb75b30c6",
+    "correlacion_spearman.csv": "5da00d51d31c07fe8422b3fb474d1884414d84da67573564ec846cbbbe232479",
+    "segmento_descuento.csv": "0529f8e063c0c6406dd10f8f040791dca255425f78114a1690d1613e066b54bf"
+  },
+  "versiones": {
+    "python": "3.14.4",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1"
+  },
+  "sha256_lock": "2164fe3cefad4803e0239c5f58f91ef82539c2c32e63b0e3d6897c3c7a6f2b93"
+}
