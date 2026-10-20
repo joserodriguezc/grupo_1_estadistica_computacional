@@ -1,0 +1,32 @@
+{
+  "semilla": 1505514103,
+  "flujo": "montecarlo_lotes",
+  "spawn_key": [
+    3
+  ],
+  "p": 0.5966906082371125,
+  "p_fraccion": "6563/10999",
+  "tamanos": [
+    100,
+    500,
+    1000,
+    5000
+  ],
+  "B": 10000,
+  "B_max": 50000,
+  "umbral": 0.6,
+  "tolerancias": {
+    "mcse_media": 0.001,
+    "mcse_prob": 0.005
+  },
+  "orden": "un generador; tamaños en el orden de TAMANOS",
+  "segundos": 0.01519980002194643,
+  "commit_s1": "04e6df05454a5d12e73b174f022313b20fd80032",
+  "sha256_datos": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+  "versiones": {
+    "python": "3.14.4",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1"
+  }
+}
