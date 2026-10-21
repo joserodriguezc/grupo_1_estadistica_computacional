@@ -24,6 +24,7 @@ anaconda_projects
 .virtual_documents
 .ipynb_checkpoints
 anaconda_projects
+
 # LaTeX: temporales de compilación del informe sumativo (se versionan solo .tex y .pdf)
 sumativa_1/docs/informe/*.aux
 sumativa_1/docs/informe/*.fdb_latexmk
