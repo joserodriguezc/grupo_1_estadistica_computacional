@@ -249,7 +249,6 @@ Lotes de 1.000 envíos (Monte Carlo) & Sensible & Percentil 99 = 63,3\,\%; P($>$
 \item \textbf{Modelar por segmento de descuento o con interacción.} En el segmento $> 10$ hay separación completa (100\,\% de atraso), que impide una regresión logística estándar; conviene penalizar o tratar ese segmento aparte.
 \item \textbf{Conservar el peso} como predictor principal, con términos no lineales por su bimodalidad, y modelarlo junto con el descuento ($\rho = -0{,}32$).
 \item \textbf{No basar decisiones en costo, compras previas ni modalidad.} No excluir envíos por la regla IQR ni winsorizar: no cambia las conclusiones y altera la población.
-\item \textbf{Fijar alertas por tamaño de lote} con el percentil 99 simulado, revisado con el IC de $p$ y por segmento.
 \item \textbf{Mantener remuestreo y permutación como validación} y evaluar la dependencia por bodega o período (\emph{bootstrap} por bloques) si se obtienen esas variables. La concordancia entre métodos no demuestra causalidad ni transportabilidad.
 \end{enumerate}
 
