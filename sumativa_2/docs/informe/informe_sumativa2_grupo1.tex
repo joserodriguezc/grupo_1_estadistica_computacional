@@ -112,7 +112,7 @@ La Sumativa 1 (S1) preguntó \emph{qué características se asocian con el atras
 
 \textbf{Datos y reproducibilidad.} Los datos se leen desde el CSV original de S1 (\codigo{sumativa\_1/data/raw/}), con huella SHA-256 verificada, y las cifras de referencia, desde las tablas exportadas de S1. La semilla \codigo{1505514103} proviene del pulso 1.053.589 del faro de aleatoriedad de la Universidad de Chile, registrado antes de su publicación. Con \codigo{SeedSequence(SEMILLA).spawn(7)} se derivan siete flujos independientes, uno por técnica, de modo que reejecutar una sección no altera las demás. Todas las técnicas usan $B = 10.000$ réplicas.
 
-\textbf{Alcance.} El cuerpo desarrolla los resultados que sostienen la conclusión de S1. Los Anexos A--F aplican las mismas técnicas a los \textbf{194 resultados} del inventario de S1 (notebook de validación completa). Remuestrear supone envíos independientes e idénticamente distribuidos, igual que S1, y no corrige sesgos de selección ni permite conclusiones causales.
+\textbf{Alcance.} El cuerpo desarrolla los resultados que sostienen la conclusión de S1. El notebook de validación completa aplica las mismas técnicas a los \textbf{194 resultados} del inventario de S1. Los anexos presentan las siete pruebas, las correlaciones y asociaciones, y la matriz de resultados validados. Remuestrear supone envíos independientes e idénticamente distribuidos, igual que S1, y no corrige sesgos de selección ni permite conclusiones causales.
 
 % =====================================================================
 \section{Validación de resultados de S1 mediante bootstrap}
@@ -134,7 +134,7 @@ Dif. de peso (g) & Welch [$-$956,0; $-$836,0] & [$-$955,5; $-$836,6] & [$-$955,4
 
 \textbf{Los IC de S1 se confirman} (tabla \ref{tab:boot} y figura \ref{fig:boot}). Los anchos difieren a lo sumo un 2,3\,\%, el centro del BCa se desplaza como máximo 0,04 errores estándar (EE) y el EE \emph{bootstrap} difiere del analítico en menos de 1,3\,\%. \textbf{No hay discrepancias, y la razón es clara}: las distribuciones \emph{bootstrap} son simétricas (asimetría entre $-0{,}04$ y $0{,}005$), por lo que $|z_0| \le 0{,}027$ y $|a| \le 0{,}0011$, y el BCa casi coincide con el percentil. Aunque el peso es bimodal, con 10.999 envíos (4.436 en el grupo menor) el teorema central del límite normaliza la media, así que los supuestos de forma de S1 no comprometían sus IC.
 
-\textbf{Confiabilidad de cada método.} El IC $t$ es exacto bajo normalidad y aquí se sostiene por tamaño muestral. El percentil no supone forma, pero hereda el sesgo de la distribución \emph{bootstrap}; el BCa lo corrige, pero falla en casos degenerados. En el Anexo A, 37 de los 128 estimandos no admiten BCa: tasas constantes como el 100\,\% de atraso con descuento $> 10$, cuya réplica es siempre 1, o \emph{jackknife} sin variación. En la tasa con descuento $> 10$ se conserva el IC de Wilson de S1, [0,9986; 1], porque el IC \emph{bootstrap} [1; 1] no expresa certeza poblacional. Los extremos (mínimo y máximo) quedan solo como diagnóstico. Ningún método corrige una posible dependencia entre envíos.
+\textbf{Confiabilidad de cada método.} El IC $t$ es exacto bajo normalidad y aquí se sostiene por tamaño muestral. El percentil no supone forma, pero hereda el sesgo de la distribución \emph{bootstrap}; el BCa lo corrige, pero falla en casos degenerados. En la validación completa, 37 de los 128 estimandos no admiten BCa: tasas constantes como el 100\,\% de atraso con descuento $> 10$, cuya réplica es siempre 1, o \emph{jackknife} sin variación. En la tasa con descuento $> 10$ se conserva el IC de Wilson de S1, [0,9986; 1], porque el IC \emph{bootstrap} [1; 1] no expresa certeza poblacional. Los extremos (mínimo y máximo) quedan solo como diagnóstico. Ningún método corrige una posible dependencia entre envíos.
 
 % =====================================================================
 \section{Validación de pruebas de hipótesis mediante permutación}
@@ -154,7 +154,7 @@ T01 modalidad & $\chi^2 = 0{,}743$ & 6.911 & 0,691 (0,005) & 0,690 & No rechaza 
 
 \textbf{Concordancia.} Ninguna de las 10.000 permutaciones alcanzó $|t| = 29{,}27$, y las decisiones coinciden con S1 (tabla \ref{tab:perm}). También coinciden con el ajuste de Holm sobre las siete pruebas: la cota de Bonferroni del $p_{perm}$, mayor o igual que el $p$ de Holm, es 0,0007 en T02 y T03. En T01, los dos $p$ difieren en 0,0016, menos de un MCSE. La figura \ref{fig:perm} muestra además que \textbf{la distribución de referencia de S1 era adecuada}. La nula de T02 tiene media $-0{,}008$, DE 0,999 y valor crítico al 95\,\% de 1,94, frente al 1,96 de la $t$; la de T01 tiene crítico 6,10, frente a 5,99 de $\chi^2_2$. Esto vale incluso en T03, cuyas DE del descuento son 19,1 y 2,9.
 
-\textbf{Qué enfoque es más apropiado.} La permutación no supone normalidad, así que es la validación más robusta de la \emph{decisión}. Su resolución, en cambio, está acotada por $B$: no distingue un $p$ de $10^{-5}$ de uno de $10^{-180}$. Conviene informar la decisión con la permutación y la magnitud con el $p$ paramétrico, ya validado. El Anexo B extiende la comparación a las siete pruebas de S1, incluidas U de Mann--Whitney y $z$ de proporciones: las siete coinciden con S1, en la familia cruda y con Holm.
+\textbf{Qué enfoque es más apropiado.} La permutación no supone normalidad, así que es la validación más robusta de la \emph{decisión}. Su resolución, en cambio, está acotada por $B$: no distingue un $p$ de $10^{-5}$ de uno de $10^{-180}$. Conviene informar la decisión con la permutación y la magnitud con el $p$ paramétrico, ya validado. El Anexo A extiende la comparación a las siete pruebas de S1, incluidas U de Mann--Whitney y $z$ de proporciones: las siete coinciden con S1, en la familia cruda y con Holm.
 
 % =====================================================================
 \section{Evaluación de estabilidad de correlaciones}
@@ -174,7 +174,7 @@ Costo -- atraso ($r_{pb}$) & $-$0,074 & [$-$0,092; $-$0,055] & 12,9\,\% & Débil
 Compras previas -- atraso ($r_{pb}$) & $-$0,056 & [$-$0,075; $-$0,037] & 17,3\,\% & Débil, inestable\\\bottomrule
 \end{tabular}\end{table}
 
-Con los datos completos, \textbf{ninguna correlación incluye el cero}. Los IC miden entre 0,019 y 0,037, y la distribución \emph{bootstrap} es simétrica y sin sesgo apreciable ($\le 0{,}0002$). Sin embargo, \textbf{precisión no es estabilidad}. Costo y compras previas explican menos del 0,6\,\% de la varianza del atraso ($r^2$) y tienen una variabilidad relativa de 13\,\% a 17\,\%; su signo está determinado, pero su importancia práctica es mínima. La relación descuento--peso ($\rho = -0{,}316$) indica que los envíos con más descuento son más livianos, de modo que parte de la asociación de cada uno con el atraso puede deberse al otro. La estabilidad frente a la composición de la muestra se evalúa en la sección 5: solo peso--atraso conserva su IC lejos del cero en todos los escenarios. El Anexo C presenta las 20 correlaciones y las 15 V de Cramér.
+Con los datos completos, \textbf{ninguna correlación incluye el cero}. Los IC miden entre 0,019 y 0,037, y la distribución \emph{bootstrap} es simétrica y sin sesgo apreciable ($\le 0{,}0002$). Sin embargo, \textbf{precisión no es estabilidad}. Costo y compras previas explican menos del 0,6\,\% de la varianza del atraso ($r^2$) y tienen una variabilidad relativa de 13\,\% a 17\,\%; su signo está determinado, pero su importancia práctica es mínima. La relación descuento--peso ($\rho = -0{,}316$) indica que los envíos con más descuento son más livianos, de modo que parte de la asociación de cada uno con el atraso puede deberse al otro. La estabilidad frente a la composición de la muestra se evalúa en la sección 5: solo peso--atraso conserva su IC lejos del cero en todos los escenarios. El Anexo B presenta las 20 correlaciones y las 15 V de Cramér.
 
 % =====================================================================
 \section{Simulación Monte Carlo basada en parámetros de S1}
@@ -197,7 +197,7 @@ $N$ & Rango central 95\,\% & Percentil 99 & P(tasa $> 60\,\%$) & Exacta & MCSE p
 
 \textbf{Interpretación.} En un lote de 1.000 envíos, la tasa de atraso fluctúa entre 56,6\,\% y 62,7\,\% solo por azar, con una DE de 1,6 puntos porcentuales (4,9 con 100 envíos). Una auditoría que compare lotes pequeños verá diferencias de 10 puntos sin que exista un problema operacional. \textbf{Un umbral de 60\,\% no sirve como alerta}: como $p$ está solo 0,33 puntos por debajo, un lote de 1.000 lo supera en el 40\,\% de los casos sin que nada cambie. Un límite coherente con S1 es el percentil 99 (63,3\,\% con 1.000 envíos): superarlo tiene una probabilidad menor que 1\,\% bajo el proceso de S1 y justifica revisar el lote.
 
-\textbf{Convergencia.} Con $B = 10.000$ se cumplen ambas tolerancias ($\mathrm{MCSE}_{media} \le 0{,}0005$; $\mathrm{MCSE}_{prob} \le 0{,}005$). La media y la DE coinciden con las binomiales, y las probabilidades quedan a menos de 2 MCSE de las exactas. La trayectoria acumulada permanece dentro de la banda exacta $\pm 2$ MCSE (figura \ref{fig:mc}). La coincidencia valida el simulador, no el modelo: los cuantiles están condicionados a $p$ y a envíos independientes, y no son un IC de $p$. La sección 5 relaja ambos supuestos; el Anexo D documenta todos los experimentos.
+\textbf{Convergencia.} Con $B = 10.000$ se cumplen ambas tolerancias ($\mathrm{MCSE}_{media} \le 0{,}0005$; $\mathrm{MCSE}_{prob} \le 0{,}005$). La media y la DE coinciden con las binomiales, y las probabilidades quedan a menos de 2 MCSE de las exactas. La trayectoria acumulada permanece dentro de la banda exacta $\pm 2$ MCSE (figura \ref{fig:mc}). La coincidencia valida el simulador, no el modelo: los cuantiles están condicionados a $p$ y a envíos independientes, y no son un IC de $p$. La sección 5 relaja ambos supuestos.
 
 % =====================================================================
 \section{Análisis de robustez}
@@ -220,7 +220,7 @@ $r$ costo -- atraso & $-$0,074 & $-$0,074 & $-$0,010 [$-$0,033; 0,012] & 0,003 [
 
 \fig{0.58}{fig_6_escenarios.pdf}{Efectos de T02 y T03 (relativos a los datos completos) y correlaciones con IC \emph{bootstrap} por escenario. Hueco: no significativo.}{fig:esc}
 
-\textbf{Extremos y composición.} La winsorización 1/99 de peso y costo modifica 425 envíos y no cambia ninguna conclusión: \textbf{los resultados no dependen de los valores extremos}. Los escenarios restringidos describen subpoblaciones, no correcciones, y muestran que \textbf{la composición sí importa} (tabla \ref{tab:esc}, figura \ref{fig:esc}). Al retirar el descuento $> 10$, la diferencia de descuento de T03 deja de ser significativa y $r$ descuento--atraso pasa a incluir el cero: \textbf{la asociación del descuento con el atraso existe solo por ese segmento}. Lo mismo ocurre con la relación descuento--peso. El peso, en cambio, conserva signo, significancia e IC alejado del cero en todos los escenarios, aunque su magnitud cae a un tercio. El Anexo E agrega dos discrepancias materiales en las otras pruebas de S1. E4 (costo por atraso) deja de ser significativa con la exclusión IQR y con descuento $\le 10$ (Holm 0,71 y 1,00). E2 (atraso con importancia alta) pierde significancia con Holm en ambos escenarios (0,086 y 0,143). La modalidad (T01) no muestra asociación en ningún escenario.
+\textbf{Extremos y composición.} La winsorización 1/99 de peso y costo modifica 425 envíos y no cambia ninguna conclusión: \textbf{los resultados no dependen de los valores extremos}. Los escenarios restringidos describen subpoblaciones, no correcciones, y muestran que \textbf{la composición sí importa} (tabla \ref{tab:esc}, figura \ref{fig:esc}). Al retirar el descuento $> 10$, la diferencia de descuento de T03 deja de ser significativa y $r$ descuento--atraso pasa a incluir el cero: \textbf{la asociación del descuento con el atraso existe solo por ese segmento}. Lo mismo ocurre con la relación descuento--peso. El peso, en cambio, conserva signo, significancia e IC alejado del cero en todos los escenarios, aunque su magnitud cae a un tercio. Se observan dos discrepancias materiales en las otras pruebas de S1. E4 (costo por atraso) deja de ser significativa con la exclusión IQR y con descuento $\le 10$ (Holm 0,71 y 1,00). E2 (atraso con importancia alta) pierde significancia con Holm en ambos escenarios (0,086 y 0,143). La modalidad (T01) no muestra asociación en ningún escenario.
 
 \fig{0.70}{fig_7_sensibilidad_montecarlo.pdf}{Izquierda: P(tasa $> 60\,\%$) en lotes de 1.000 según $p$ dentro del IC de Wilson de S1. Derecha: proceso homogéneo frente a dos segmentos de descuento.}{fig:smc}
 
@@ -230,7 +230,7 @@ $r$ costo -- atraso & $-$0,074 & $-$0,074 & $-$0,010 [$-$0,033; 0,012] & 0,003 [
 \section{Preparación para la Sumativa 3}
 
 \begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{Resultados validados (síntesis de \codigo{outputs/resultados\_validados.csv}; matriz completa en el Anexo F).}\label{tab:val}
+\caption{Resultados validados (síntesis de \codigo{outputs/resultados\_validados.csv}; matriz completa en el Anexo C).}\label{tab:val}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{5.4cm} >{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{6.4cm}@{}}\toprule
 Resultado de S1 & Estado & Evidencia de S2\\\midrule
 Proporción de atraso, peso, costo y llamadas medios & Respaldados & IC \emph{bootstrap}, BCa y \emph{jackknife} coinciden con S1; sin influencia de extremos\\
@@ -241,7 +241,7 @@ Modalidad -- atraso (T01) & No concluyente & Sin asociación con ningún método
 Lotes de 1.000 envíos (Monte Carlo) & Sensible & Percentil 99 = 63,3\,\%; P($>$60\,\%) depende de $p$ (20\,\%--63\,\%)\\\bottomrule
 \end{tabular}\end{table}
 
-\textbf{Observaciones influyentes.} Ningún envío individual debe eliminarse; lo influyente es el \textbf{bloque de registros 1--3.135} (diez envíos más influyentes por resultado en el Anexo E).
+\textbf{Observaciones influyentes.} Ningún envío individual debe eliminarse; lo influyente es el \textbf{bloque de registros 1--3.135}.
 
 \textbf{Recomendaciones metodológicas para S3.}
 \begin{enumerate}
@@ -281,14 +281,11 @@ Welch, B. L. (1947). The generalization of ``Student's'' problem when several di
 \setcounter{secnumdepth}{0}
 \begin{center}\vspace*{5cm}
 {\LARGE\bfseries Anexos}\\[0.8cm]
-{\normalsize\color{gris}Desarrollo completo sobre los 194 resultados de S1. No forman parte del cuerpo de siete páginas.}\\[1.2cm]
+{\normalsize\color{gris}Pruebas, correlaciones y matriz de resultados validados de S1. No forman parte del cuerpo de siete páginas.}\\[1.2cm]
 \begin{tabular}{@{}l l@{}}
-A & \emph{Bootstrap} de todos los parámetros, descriptivas y efectos\\
-B & Permutación de las siete pruebas de S1\\
-C & Las 20 correlaciones y las 15 asociaciones de S1\\
-D & Simulación Monte Carlo ampliada\\
-E & Robustez: \emph{jackknife}, influencia y escenarios\\
-F & Matriz de resultados validados para S3\\
+A & Permutación de las siete pruebas de S1\\
+B & Las 20 correlaciones y las 15 asociaciones de S1\\
+C & Matriz de resultados validados para S3\\
 \end{tabular}\\[1.2cm]
 {\small\color{gris}Generados desde las tablas de \codigo{outputs/validacion\_completa/} y \codigo{outputs/}\\ con \codigo{docs/informe/generar\_anexos.py}.}
 \end{center}
