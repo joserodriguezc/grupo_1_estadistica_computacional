@@ -1,0 +1,6 @@
+variable,r_pb_S1,p_S1,asimetria_S1,extremos_IQR_S1,IC_bootstrap_S2,r_descuento_le10_S2,estado_S2
+peso_gramos,-0.2687925839387988,2.3546582802901985e-181,-0.2497467569788316,bajo=0; alto=0,[-0.287; -0.251],-0.088 [-0.109; -0.066],"respaldado, magnitud sensible"
+descuento_ofrecido,0.3971084735832168,0.0,1.7989291087435193,bajo=0; alto=2209,[0.388; 0.407],-0.014 [-0.036; 0.007],sensible
+costo_producto,-0.0735872105903013,1.099885972621695e-14,-0.1571171192691364,bajo=0; alto=0,[-0.092; -0.055],0.003 [-0.018; 0.025],sensible
+compras_previas,-0.0555150112135965,5.6761404839661775e-09,1.6818973153494554,bajo=0; alto=1003,[-0.075; -0.037],-0.012 [-0.033; 0.010],sensible
+llamadas_atencion,-0.0671258557119834,1.827535178624024e-12,0.3919257752012462,bajo=0; alto=0,—,—,no evaluada en S2

@@ -12,6 +12,7 @@ El proyecto estudia asociaciones entre características de envíos y entregas at
 | [formativa_1/](formativa_1/) | Entrega histórica congelada; no modificar análisis, datos ni resultados | [PDF](formativa_1/docs/informe/informe_formativa1.pdf) |
 | [sumativa_1/](sumativa_1/) | Análisis exploratorio e inferencial revisado; notebook, tablas, figuras y fuentes | [PDF](sumativa_1/docs/informe/informe_sumativa1_grupo1.pdf) |
 | [sumativa_2/](sumativa_2/) | Validación por *bootstrap*, permutación, Monte Carlo, *jackknife* y sensibilidad | [PDF](sumativa_2/docs/informe/informe_sumativa2_grupo1.pdf) |
+| [formativa_2/](formativa_2/) | Regresión logística para anticipar atrasos, integrando los resultados de S1 y S2 | [Notebook](formativa_2/notebooks/formativa_2_grupo1.ipynb) |
 
 El detalle metodológico y de ejecución de la Sumativa 1 está en [sumativa_1/README.md](sumativa_1/README.md).
 
@@ -55,7 +56,13 @@ uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor
 uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=3600 sumativa_2/notebooks/sumativa_2_validacion_completa_grupo1.ipynb
 ```
 
-Las tablas de S1 ya están incluidas: no es necesario volver a ejecutar S1 para ejecutar S2. La validación completa comprueba sus huellas contra `sumativa_2/docs/manifiesto_s1.json`; si las tablas cambian, se detiene para señalar la diferencia.
+Para reproducir la Formativa 2:
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=600 formativa_2/notebooks/formativa_2_grupo1.ipynb
+```
+
+Las tablas de S1 y S2 ya están incluidas: no es necesario volver a ejecutar S1 para ejecutar S2, ni S1 o S2 para ejecutar la Formativa 2. La validación completa comprueba sus huellas contra `sumativa_2/docs/manifiesto_s1.json`; si las tablas cambian, se detiene para señalar la diferencia.
 
 Los comandos con `--inplace` actualizan los notebooks y regeneran sus salidas. Cada notebook reconoce su carpeta de evaluación y guarda allí los resultados; el CSV original no se modifica. La validación completa requiere más tiempo que el notebook de entrega; la duración depende del equipo.
 
