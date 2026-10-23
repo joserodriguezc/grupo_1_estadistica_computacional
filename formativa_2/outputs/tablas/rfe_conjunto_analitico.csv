@@ -1,0 +1,5 @@
+k,variables
+1,descuento_ofrecido
+2,"peso_gramos, descuento_ofrecido"
+3,"peso_gramos, descuento_ofrecido, compras_previas"
+4,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas"
