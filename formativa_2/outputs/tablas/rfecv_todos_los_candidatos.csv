@@ -1,0 +1,16 @@
+,ranking_rfe,seleccionada_rfecv,motivo_exclusion_analitica
+peso_gramos,1,True,
+descuento_ofrecido,1,True,
+compras_previas,1,True,
+llamadas_atencion,1,True,temporalidad
+importancia_producto_medium,1,True,no seleccionada en S1/S2
+importancia_producto_low,1,True,no seleccionada en S1/S2
+costo_producto,2,False,
+bloque_bodega_B,3,False,no seleccionada en S1/S2
+bloque_bodega_C,4,False,no seleccionada en S1/S2
+calificacion_cliente,5,False,temporalidad
+modalidad_envio_Road,6,False,modalidad: T01 sin asociación
+genero_M,7,False,no seleccionada en S1/S2
+bloque_bodega_F,8,False,no seleccionada en S1/S2
+bloque_bodega_D,9,False,no seleccionada en S1/S2
+modalidad_envio_Ship,10,False,modalidad: T01 sin asociación
