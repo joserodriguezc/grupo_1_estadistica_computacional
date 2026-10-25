@@ -1,0 +1,6 @@
+variable,r_punto_biserial_s1,rho_s1,estado_s2
+compras_previas,-0.0555150112135965,-0.0746430771145202,sensible
+llamadas_atencion,-0.0671258557119834,-0.064283112157635,no evaluada en S2
+costo_producto,-0.0735872105903013,-0.071850433792868,sensible
+peso_gramos,-0.2687925839387988,-0.2659576382284079,"respaldado, magnitud sensible"
+descuento_ofrecido,0.3971084735832168,0.3351082281853291,sensible

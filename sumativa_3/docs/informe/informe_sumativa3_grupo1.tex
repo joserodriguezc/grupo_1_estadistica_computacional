@@ -1,0 +1,175 @@
+\documentclass[11pt,a4paper]{article}
+
+% ===================== Codificación y fuentes =====================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ===================== Página y utilidades ========================
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[most]{tcolorbox}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+% ===================== Etiquetas en español (sin babel) ===========
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\refname}{Bibliografía}
+
+% ===================== Escala de grises (sin color) ================
+\definecolor{negro}{RGB}{0,0,0}
+\definecolor{gris}{RGB}{90,90,90}
+\definecolor{grisclaro}{RGB}{150,150,150}
+\definecolor{fillgray}{RGB}{175,175,175}
+
+% ===================== Hipervínculos (negro) =======================
+\hypersetup{colorlinks=true, linkcolor=negro, urlcolor=negro, citecolor=negro,
+  pdftitle={Evaluación Sumativa 3: Cierre y comunicación del proyecto},
+  pdfauthor={José Ignacio Rodríguez, Yerko Gallardo Miranda, Sebastián Rojas Araya}}
+
+% ===================== Estilo de títulos ===========================
+\titleformat{\section}{\large\bfseries\color{negro}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{negro}}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.0em}{0.3em}
+\titlespacing*{\subsection}{0pt}{0.7em}{0.2em}
+
+% ===================== Pie de página ===============================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\footnotesize\color{gris}Magíster en Ciencia de Datos e Inteligencia Artificial}
+\fancyfoot[R]{\footnotesize\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ===================== Ajustes del informe =========================
+\captionsetup{font=small,labelfont=bf,skip=3pt}
+\setlength{\floatsep}{6pt}\setlength{\textfloatsep}{8pt}\setlength{\intextsep}{6pt}
+\setlist{nosep,leftmargin=1.2em}
+\newcommand{\fig}[4]{\begin{figure}[!htb]\centering\includegraphics[width=#1\linewidth]{../../outputs/figuras/#2}\caption{#3}\label{#4}\end{figure}}
+\newcommand{\codigo}[1]{{\small\texttt{#1}}}
+
+% ===================== Datos del grupo ==============================
+\newcommand{\proyTitulo}{Factores asociados al atraso en envíos de comercio electrónico: del análisis exploratorio a la clasificación}
+\newcommand{\proyIntegrantes}{José Ignacio Rodríguez, Yerko Gallardo Miranda y Sebastián Rojas Araya}
+\newcommand{\proyDataset}{\emph{E-Commerce Shipping Data} (Gopalani, 2021), 10.999 envíos}
+\newcommand{\proyDocente}{J. P. Maidana}
+\newcommand{\proyFecha}{28/10/2026}
+\newcommand{\proyRepo}{\url{https://github.com/joserodriguezc/grupo_1_estadistica_computacional}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3em}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.0cm}
+\includegraphics[height=4.4cm]{logo_unab.png}\\[1.3cm]
+
+{\footnotesize\color{gris}\MakeUppercase{Magíster en Ciencia de Datos e Inteligencia Artificial}}\\[0.15cm]
+{\footnotesize\color{grisclaro}MCDI501: Estadística Computacional para la Toma de Decisiones}\\[2.0cm]
+
+{\Large\bfseries\color{negro} Evaluación Sumativa 3}\\[0.45cm]
+{\large\color{negro} Cierre y Comunicación del Proyecto}\\[1.0cm]
+
+{\small\itshape\color{gris} Informe final integrado \textperiodcentered\ 60\,\%}
+\end{center}
+
+\vspace{1.6cm}
+
+\begin{flushleft}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{@{}>{\bfseries\color{negro}}l >{\raggedright\arraybackslash}p{10.5cm}@{}}
+Título del proyecto: & \proyTitulo \\
+Integrantes:         & \proyIntegrantes \\
+Dataset:             & \proyDataset \\
+Docente:             & \proyDocente \\
+Fecha:               & \proyFecha \\
+Repositorio GitHub:  & \proyRepo \\
+\end{tabular}
+\end{flushleft}
+
+\clearpage
+\pagenumbering{arabic}
+
+% =====================================================================
+% Máximo 10 páginas (portada aparte). Presupuesto y responsables según la planificación.
+% Cada sección declara qué fase (S1, S2, S3) informa a la siguiente.
+% Todas las cifras deben provenir de sumativa_3/outputs/tablas/.
+% =====================================================================
+
+\section*{Resumen ejecutivo}
+% 0,5 páginas - José. Problema, enfoque S1 -> S2 -> S3, resultado principal y recomendación accionable.
+\emph{(Pendiente.)}
+
+\section{Introducción}
+% 0,75 páginas - José. Contexto, pregunta de S1, qué aportó cada fase y objetivo de S3.
+\emph{(Pendiente.)}
+
+\section{Metodología integrada}
+% 2,5 páginas en total.
+\subsection{Datos, trazabilidad y punto de partida}
+% José. Datos de S1 con huella, semilla del beacon, partición común; hallazgos de S1 y S2 que guían S3 (figura 0).
+\emph{(Pendiente.)}
+\subsection{Datos faltantes e imputación por regresión}
+% Yerko. Faltantes en S1, simulación MAR, predictores (S1 + estabilidad S2), supuestos y estrategias.
+\emph{(Pendiente.)}
+\subsection{Regresión logística: preparación, selección y evaluación}
+% Sebastián. Outliers, codificación, M1 (S1 + S2), M2 (stepwise), M3 (AIC/BIC), métricas y criterio de selección.
+\emph{(Pendiente.)}
+\subsection{Estabilidad y diagnóstico}
+% Yerko (bootstrap) y Sebastián (VIF, linealidad en el logit, influyentes y residuos).
+\emph{(Pendiente.)}
+
+\section{Resultados integrados}
+% 4 páginas en total.
+\subsection{Datos faltantes e imputación}
+% Yerko.
+\emph{(Pendiente.)}
+\subsection{Modelos logísticos y desempeño}
+% Sebastián.
+\emph{(Pendiente.)}
+\subsection{Estabilidad del modelo final}
+% Yerko.
+\emph{(Pendiente.)}
+\subsection{Diagnóstico del modelo final}
+% Sebastián.
+\emph{(Pendiente.)}
+\subsection{Impacto de la estrategia de imputación}
+% José.
+\emph{(Pendiente.)}
+
+\section{Discusión}
+% 1,25 páginas - los tres; José integra. Qué se confirma de S1 y S2; límites (descuento, bloque 1-3.135,
+% MAR simulado, causalidad) y validez externa.
+\emph{(Pendiente.)}
+
+\section{Conclusiones y recomendaciones}
+% 0,75 páginas - José. Respuestas accionables para la empresa y para un análisis futuro.
+\emph{(Pendiente.)}
+
+\section*{Referencias}
+% 0,25 páginas - José.
+\begin{small}
+\begin{itemize}
+\item Efron, B. y Tibshirani, R. J. (1993). \emph{An Introduction to the Bootstrap}. Chapman \& Hall.
+\item Gopalani, P. (2021). \emph{E-Commerce Shipping Data}, versión 1. Kaggle.
+\item Hosmer, D. W., Lemeshow, S. y Sturdivant, R. X. (2013). \emph{Applied Logistic Regression} (3.\textsuperscript{a} ed.). Wiley.
+\item Little, R. J. A. y Rubin, D. B. (2019). \emph{Statistical Analysis with Missing Data} (3.\textsuperscript{a} ed.). Wiley.
+\end{itemize}
+\end{small}
+
+\end{document}

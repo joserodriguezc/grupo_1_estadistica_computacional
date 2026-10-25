@@ -1,0 +1,52 @@
+{
+  "semilla": 1505514103,
+  "flujos": {
+    "bootstrap_parametros": [
+      0
+    ],
+    "permutaciones": [
+      1
+    ],
+    "bootstrap_coeficientes": [
+      2
+    ],
+    "montecarlo_lotes": [
+      3
+    ],
+    "montecarlo_empirico": [
+      4
+    ],
+    "sensibilidad_escenarios": [
+      5
+    ],
+    "sensibilidad_montecarlo": [
+      6
+    ],
+    "formativa2_faltantes": [
+      7
+    ],
+    "s3_faltantes": [
+      8
+    ],
+    "s3_bootstrap": [
+      9
+    ]
+  },
+  "particion": {
+    "test_size": 0.3,
+    "stratify": "entrega_atrasada",
+    "random_state": 1505514103,
+    "n_train": 7699,
+    "n_test": 3300
+  },
+  "sha256_datos": "dcdc3fd8f0507ec400174ef70d88d634321cc2ce8f4ea11bf4e8c847fdd325b3",
+  "versiones": {
+    "python": "3.14.4",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0",
+    "sklearn": "1.9.1"
+  },
+  "sha256_lock": "6ff688d0b505ddd0e5a94d68044bfc5ca48cbc6a2ae045aea40a30efde864bdb"
+}

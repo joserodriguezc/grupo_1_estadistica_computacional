@@ -13,6 +13,7 @@ El proyecto estudia asociaciones entre características de envíos y entregas at
 | [sumativa_1/](sumativa_1/) | Análisis exploratorio e inferencial revisado; notebook, tablas, figuras y fuentes | [PDF](sumativa_1/docs/informe/informe_sumativa1_grupo1.pdf) |
 | [sumativa_2/](sumativa_2/) | Validación por *bootstrap*, permutación, Monte Carlo, *jackknife* y sensibilidad | [PDF](sumativa_2/docs/informe/informe_sumativa2_grupo1.pdf) |
 | [formativa_2/](formativa_2/) | Regresión logística para anticipar atrasos, integrando los resultados de S1 y S2 | [Notebook](formativa_2/notebooks/formativa_2_grupo1.ipynb) |
+| [sumativa_3/](sumativa_3/) | Cierre del proyecto: imputación por regresión lineal múltiple y clasificación con regresión logística, integrando S1 y S2 (en desarrollo) | [PDF](sumativa_3/docs/informe/informe_sumativa3_grupo1.pdf) |
 
 El detalle metodológico y de ejecución de la Sumativa 1 está en [sumativa_1/README.md](sumativa_1/README.md).
 
@@ -54,6 +55,13 @@ Para reproducir la Sumativa 2:
 ```bash
 uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=1800 sumativa_2/notebooks/sumativa_2_grupo1.ipynb
 uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=3600 sumativa_2/notebooks/sumativa_2_validacion_completa_grupo1.ipynb
+```
+
+Para reproducir la Sumativa 3 (ver [sumativa_3/README.md](sumativa_3/README.md)):
+
+```bash
+uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=3600 sumativa_3/notebooks/sumativa_3_grupo1.ipynb
+latexmk -cd -pdf -interaction=nonstopmode -halt-on-error sumativa_3/docs/informe/informe_sumativa3_grupo1.tex
 ```
 
 Para reproducir la Formativa 2:
