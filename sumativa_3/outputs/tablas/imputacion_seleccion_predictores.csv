@@ -1,0 +1,17 @@
+variable,predictor,rho_s1,estable_s2,elegido
+peso_gramos,descuento_ofrecido,-0.3156765462217137,False,True
+peso_gramos,compras_previas,-0.2346734419316868,True,True
+peso_gramos,llamadas_atencion,-0.2329358975532125,True,True
+peso_gramos,costo_producto,-0.1319802063164836,True,True
+costo_producto,llamadas_atencion,0.2936996864622091,True,True
+costo_producto,compras_previas,0.1942161674420757,True,True
+costo_producto,peso_gramos,-0.1319802063164836,True,True
+costo_producto,descuento_ofrecido,-0.1158174835151894,False,False
+compras_previas,llamadas_atencion,0.27299201517192,True,True
+compras_previas,peso_gramos,-0.2346734419316868,True,True
+compras_previas,costo_producto,0.1942161674420757,True,True
+compras_previas,descuento_ofrecido,-0.093871731786643,False,False
+descuento_ofrecido,peso_gramos,-0.3156765462217137,False,True
+descuento_ofrecido,costo_producto,-0.1158174835151894,False,True
+descuento_ofrecido,llamadas_atencion,-0.1042227908415662,False,True
+descuento_ofrecido,compras_previas,-0.093871731786643,False,True
