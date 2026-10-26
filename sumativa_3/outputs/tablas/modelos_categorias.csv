@@ -1,0 +1,5 @@
+variable,referencia,niveles
+importancia_producto,high,"high, low, medium"
+bloque_bodega,A,"A, B, C, D, F"
+modalidad_envio,Flight,"Flight, Road, Ship"
+genero,F,"F, M"

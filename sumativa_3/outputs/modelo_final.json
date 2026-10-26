@@ -1,0 +1,37 @@
+{
+  "estrategia": "regresion",
+  "modelo_final": "M1",
+  "modelos": {
+    "M1": {
+      "numericas": [
+        "peso_gramos",
+        "descuento_ofrecido",
+        "costo_producto",
+        "compras_previas"
+      ],
+      "categoricas": []
+    },
+    "M2": {
+      "numericas": [
+        "peso_gramos",
+        "descuento_ofrecido",
+        "costo_producto",
+        "compras_previas"
+      ],
+      "categoricas": [
+        "importancia_producto"
+      ]
+    },
+    "M3": {
+      "numericas": [
+        "peso_gramos",
+        "descuento_ofrecido",
+        "costo_producto",
+        "compras_previas"
+      ],
+      "categoricas": []
+    }
+  },
+  "umbral": 0.5,
+  "tolerancia_auc": 0.005
+}
