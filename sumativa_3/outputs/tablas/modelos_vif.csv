@@ -1,0 +1,15 @@
+modelo,predictor,vif
+M1,peso_gramos,1.3243428318019415
+M1,descuento_ofrecido,1.2885401919528303
+M1,costo_producto,1.0856229419483117
+M1,compras_previas,1.0755820398659228
+M2,peso_gramos,1.339546305912912
+M2,descuento_ofrecido,1.2949989744761263
+M2,costo_producto,1.086884241242208
+M2,compras_previas,1.0793551578443483
+M2,importancia_producto_low,3.4160636874709174
+M2,importancia_producto_medium,3.3872717388733977
+M3,peso_gramos,1.3243428318019415
+M3,descuento_ofrecido,1.2885401919528303
+M3,costo_producto,1.0856229419483117
+M3,compras_previas,1.0755820398659228

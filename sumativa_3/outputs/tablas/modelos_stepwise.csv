@@ -1,0 +1,6 @@
+iteracion,accion,variable,p_lr
+0,entrada,descuento_ofrecido,0.0
+1,entrada,peso_gramos,1.731763853540953e-15
+2,entrada,compras_previas,1.8204354318816553e-05
+3,entrada,costo_producto,8.882844492514493e-05
+4,entrada,importancia_producto,0.0007803989984928516

@@ -1,5 +1,5 @@
 variable,lr_chi2,gl,p_lr,pseudo_r2,p_valor_propio,conclusion
-peso_gramos,135.5063700654864,9,8.71874326891854e-25,0.019112602028977466,0.1675529618286955,"MAR: depende de lo observado, no del valor propio"
-costo_producto,174.1717521609171,9,8.334122739014227e-33,0.02425005160495053,0.602399700534634,"MAR: depende de lo observado, no del valor propio"
-compras_previas,153.82712105378596,9,1.4196570099578182e-28,0.02212765899768554,0.31587293301075636,"MAR: depende de lo observado, no del valor propio"
-descuento_ofrecido,128.42807423517843,9,2.4957495827752967e-23,0.017826831911941565,0.6519405908402451,"MAR: depende de lo observado, no del valor propio"
+peso_gramos,135.5063700654864,9,8.718743268918548e-25,0.019112602028977466,0.16755296182869517,"MAR: depende de lo observado, no del valor propio"
+costo_producto,174.1717521609171,9,8.334122739014112e-33,0.02425005160495053,0.6023997005346349,"MAR: depende de lo observado, no del valor propio"
+compras_previas,153.82712105378596,9,1.419657009957818e-28,0.02212765899768554,0.3158729330107619,"MAR: depende de lo observado, no del valor propio"
+descuento_ofrecido,128.42807423517752,9,2.4957495827763796e-23,0.017826831911941454,0.6519405908402474,"MAR: depende de lo observado, no del valor propio"

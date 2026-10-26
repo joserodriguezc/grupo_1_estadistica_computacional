@@ -161,9 +161,16 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \subsection{Datos faltantes e imputación por regresión}
 % Yerko. Faltantes en S1, simulación MAR, predictores (S1 + estabilidad S2), supuestos y estrategias.
 \emph{(Pendiente.)}
-\subsection{Regresión logística: preparación, selección y evaluación}
-% Sebastián. Outliers, codificación, M1 (S1 + S2), M2 (stepwise), M3 (AIC/BIC), métricas y criterio de selección.
-\emph{(Pendiente.)}
+\subsection{Regresión logística: preparación, selección y evaluación}\label{sec:met-modelos}
+% Sebastián: secciones 3.1--3.3 del notebook.
+\textbf{Preparación informada por S1 y S2.} Se utiliza el dataset elegido de imputación por regresión y la partición común de la sección~\ref{sec:datos}. Se conservan los extremos: S1 los identificó como válidos y S2 mostró que winsorizar no alteraba las conclusiones. Las numéricas se estandarizan con media y desviación estándar (DE) del entrenamiento; las categóricas se codifican mediante indicadores, omitiendo el primer nivel ordenado como referencia. Se excluyen el identificador por la estructura detectada en S2, y llamadas y calificación por su posible registro posterior a la entrega.
+
+\textbf{Tres especificaciones.} M1 incorpora peso, descuento, costo y compras previas, por las asociaciones de S1 y la continuidad con la Formativa 2; solo el peso fue robusto en todos los escenarios de S2. M2 considera además importancia, bodega, modalidad y género mediante selección \emph{stepwise} bidireccional desde el intercepto, con entrada $p<0{,}05$ y salida $p>0{,}10$. Se emplean pruebas de razón de verosimilitudes, con las categorías de cada variable tratadas como un bloque. M3 minimiza el criterio de información bayesiano (BIC) entre los 256 subconjuntos de las ocho variables, incluido el intercepto solo; se informa también el criterio de información de Akaike (AIC). Ambos procedimientos utilizan exclusivamente entrenamiento. Los ajustes se realizan por máxima verosimilitud; se reportan coeficientes y razones de odds (OR) con intervalos de confianza (IC) de Wald al 95\,\%.
+
+\textbf{Evaluación y elección.} Con umbral fijo 0,5 se calculan matrices de confusión, exactitud, precisión, sensibilidad, F1 y especificidad, además de curvas ROC y AUC, en entrenamiento y prueba. La referencia es la clase mayoritaria del entrenamiento. Se consideran elegibles los modelos a no más de 0,005 de la mayor AUC de prueba y se elige el menor BIC; los empates se resuelven por número de parámetros y nombre. La tolerancia es práctica, no una prueba de equivalencia. Se examinan costos relativos de falsos negativos (FN) frente a falsos positivos (FP) de 1, 2 y 5, sin atribuirles valores monetarios reales.
+
+\textbf{Alcance.} La evaluación es exploratoria: prueba participa en la elección y la imputación principal se ajustó antes de separar los conjuntos. Aunque no utiliza el atraso, incorpora información de los predictores de prueba. Además, llamadas interviene indirectamente en la imputación, por lo que su disponibilidad temporal debe revisarse antes de uso operacional. Los IC son condicionales al modelo y al dataset imputado; no incorporan incertidumbre por selección o imputación.
+
 \subsection{Estabilidad y diagnóstico}
 % Yerko (bootstrap) y Sebastián (VIF, linealidad en el logit, influyentes y residuos).
 \emph{(Pendiente.)}
@@ -173,9 +180,64 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \subsection{Datos faltantes e imputación}
 % Yerko.
 \emph{(Pendiente.)}
-\subsection{Modelos logísticos y desempeño}
-% Sebastián.
-\emph{(Pendiente.)}
+\subsection{Modelos logísticos y desempeño}\label{sec:result-modelos}
+% Sebastián: secciones 3.1--3.3; diagnóstico 3.5 pendiente de integración.
+\textbf{Especificaciones y selección.} M1 y M3 coinciden en las cuatro variables numéricas. M2 añade importancia del producto, pero no modalidad, bodega ni género. La exclusión de modalidad es coherente con S1/S2. La tabla~\ref{tab:seleccion-modelos} muestra que la mejora de AUC de M2 es pequeña (0,0008), mientras BIC favorece M1/M3. Se elige \textbf{M1}, por desempate entre especificaciones idénticas. Esto favorece parsimonia dentro de la tolerancia adoptada, sin demostrar equivalencia predictiva.
+
+\begin{table}[!htb]\centering\footnotesize
+\caption{Selección de modelos: ajuste en entrenamiento y AUC en prueba.}\label{tab:seleccion-modelos}
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Modelo & Variables & Parámetros & AIC & BIC & AUC\\\midrule
+M1 & Cuatro numéricas & 5 & 8.639,72 & 8.674,46 & 0,7154\\
+M2 & Numéricas + importancia & 7 & 8.629,41 & 8.678,05 & 0,7162\\
+M3 & Cuatro numéricas & 5 & 8.639,72 & 8.674,46 & 0,7154\\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{Coeficientes e interpretación.} La tabla~\ref{tab:or-modelos} presenta los coeficientes estandarizados y los OR por DE (o por categoría), con IC de Wald. Todos los términos incluidos tienen $p<0{,}001$; estos valores son condicionales a la selección. En M2, importancia baja y media presentan menores odds de atraso que importancia alta (OR 0,722 y 0,692). Son asociaciones ajustadas, no efectos causales.
+
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Coeficientes y OR de los tres modelos. M1 y M3 tienen ajustes idénticos.}\label{tab:or-modelos}
+\begin{tabular}{@{}llrrl@{}}\toprule
+Modelo & Predictor & $\beta$ & OR & IC 95\,\% del OR\\\midrule
+M1/M3 & Peso & -0,285 & 0,752 & [0,710; 0,798]\\
+M1/M3 & Descuento & 1,575 & 4,829 & [4,204; 5,547]\\
+M1/M3 & Costo & -0,108 & 0,897 & [0,850; 0,947]\\
+M1/M3 & Compras previas & -0,110 & 0,896 & [0,849; 0,945]\\
+M2 & Peso & -0,293 & 0,746 & [0,703; 0,791]\\
+M2 & Descuento & 1,574 & 4,824 & [4,198; 5,542]\\
+M2 & Costo & -0,108 & 0,897 & [0,850; 0,947]\\
+M2 & Compras previas & -0,115 & 0,892 & [0,845; 0,941]\\
+M2 & Importancia baja / alta & -0,325 & 0,722 & [0,597; 0,875]\\
+M2 & Importancia media / alta & -0,369 & 0,692 & [0,571; 0,838]\\
+\bottomrule\end{tabular}
+\end{table}
+
+En unidades del negocio, manteniendo los demás predictores constantes, M1 estima un OR de \textbf{0,835 por 1.000 g} (IC 95\,\%: [0,804; 0,866]), equivalente a odds de atraso 16,5\,\% menores; por \textbf{10 unidades de descuento}, las odds se multiplican por \textbf{2,756} ([2,520; 3,013]). Por 10 USD de costo, el OR es 0,977 ([0,965; 0,988]); por una compra previa adicional, 0,927 ([0,893; 0,962]). Estas lecturas describen el modelo especificado, no cambios porcentuales de probabilidad; su interpretación definitiva requiere completar estabilidad y diagnóstico.
+
+\textbf{Desempeño.} La tabla~\ref{tab:metricas-modelos} y la figura~\ref{fig:roc-modelos} comparan entrenamiento y prueba. M1 obtiene AUC 0,7154 y exactitud 63,03\,\% en prueba. La clase mayoritaria alcanza exactitud 59,67\,\% y F1 74,74\,\%, superior al F1 de M1, pero especificidad cero: clasifica todos los envíos como atrasados. Por ello, M1 no mejora todas las métricas de la referencia.
+
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Métricas con umbral 0,5. Excepto AUC, valores porcentuales; entrenamiento: 7.699 envíos, prueba: 3.300.}\label{tab:metricas-modelos}
+\begin{tabular}{@{}llrrrrrr@{}}\toprule
+Modelo & Conjunto & Exact. & Prec. & Sens. & F1 & Espec. & AUC\\\midrule
+M1 & Entren. & 63,14 & 69,57 & 67,94 & 68,74 & 56,04 & 0,7112\\
+M1 & Prueba & 63,03 & 69,31 & 68,26 & 68,78 & 55,30 & 0,7154\\
+M2 & Entren. & 63,33 & 69,79 & 67,98 & 68,87 & 56,46 & 0,7137\\
+M2 & Prueba & 63,45 & 69,88 & 68,11 & 68,98 & 56,57 & 0,7162\\
+M3 & Entren. & 63,14 & 69,57 & 67,94 & 68,74 & 56,04 & 0,7112\\
+M3 & Prueba & 63,03 & 69,31 & 68,26 & 68,78 & 55,30 & 0,7154\\
+\bottomrule\end{tabular}
+\end{table}
+
+\fig{0.85}{fig_3_3_roc.pdf}{Curvas ROC en entrenamiento y prueba. Las curvas M1 y M3 coinciden; la diagonal representa ausencia de discriminación.}{fig:roc-modelos}
+
+En prueba, M1 identifica 1.344 atrasos, omite 625 y genera 595 falsas alertas; reconoce correctamente 736 envíos puntuales. M2 reduce las falsas alertas a 578, pero omite 628 atrasos. El costo de M1 menos el de M2 es $17-3r$, donde $r$ es el costo relativo FN:FP: M2 tiene menor costo en los escenarios $r=1,2,5$, y M1 lo tendría para $r>17/3$. Por tanto, la elección por parsimonia no garantiza menor costo operacional. Las matrices completas de ambos conjuntos se muestran en la figura~\ref{fig:confusion-modelos}.
+
+\fig{0.75}{fig_3_3_confusion.pdf}{Matrices de confusión de los tres modelos, con clase 1 = atraso y clase 0 = entrega puntual. Filas: clase real; columnas: predicción.}{fig:confusion-modelos}
+
+{\footnotesize\textbf{Trazabilidad:} tablas exportadas por el notebook en \codigo{sumativa\_3/outputs/tablas/}: \codigo{modelos\_resumen.csv}, \codigo{modelos\_coeficientes\_or.csv}, \codigo{modelos\_metricas.csv} y \codigo{modelos\_seleccion.csv}.}
+
 \subsection{Estabilidad del modelo final}
 % Yerko.
 \emph{(Pendiente.)}

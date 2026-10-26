@@ -1,0 +1,4 @@
+modelo,variables,n,n_parametros,aic,bic,intercepto,convergio,auc,fn,fp,elegible_auc,costo_fn_1_fp_1,costo_fn_2_fp_1,costo_fn_5_fp_1,seleccionado
+M1,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas",7699,5,8639.7175212911,8674.46174993749,0.8074409251176056,True,0.7153617739118623,625,595,True,1220,1845,3720,True
+M2,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas, importancia_producto",7699,7,8629.406110826018,8678.048030930964,1.1253041635674663,True,0.7161617391125176,628,578,True,1206,1834,3718,False
+M3,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas",7699,5,8639.7175212911,8674.46174993749,0.8074409251176056,True,0.7153617739118623,625,595,True,1220,1845,3720,False
