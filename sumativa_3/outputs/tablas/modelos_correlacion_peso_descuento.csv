@@ -1,3 +1,5 @@
-dataset,rho_peso_descuento
-original,-0.31567654622171376
-regresion,-0.3587474118177097
+dataset,segmento,rho_peso_descuento
+original,todos,-0.31567654622171376
+original,descuento <= 10,0.006536837911113339
+regresion,todos,-0.3587474118177097
+regresion,descuento <= 10,-0.005003321296899028

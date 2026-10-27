@@ -1,0 +1,5 @@
+estrategia,envios,entrenamiento_segmento,prueba_segmento,tasa_regla_mayor_10,real_le10_asignado_mayor_10,real_mayor_10_asignado_le10
+eliminacion,7213,3840,1635,1.0,0,0
+mediana,10999,6043,2577,1.0,0,268
+regresion,10999,5572,2371,0.925716972261401,428,19
+original,10999,5859,2493,1.0,0,0

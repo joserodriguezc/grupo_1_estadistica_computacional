@@ -1,6 +1,5 @@
-iteracion,accion,variable,p_lr
-0,entrada,descuento_ofrecido,0.0
-1,entrada,peso_gramos,1.731763853540953e-15
-2,entrada,compras_previas,1.820435431879919e-05
-3,entrada,costo_producto,8.882844492523039e-05
-4,entrada,importancia_producto,0.0007803989984928516
+paso,accion,variable,aic_previo,aic
+1,entrada,peso_gramos,7707.813768981193,7677.275948033612
+2,entrada,compras_previas,7677.275948033612,7671.328896973031
+3,entrada,importancia_producto,7671.328896973031,7665.335624823628
+4,entrada,costo_producto,7665.335624823628,7663.622348741414
