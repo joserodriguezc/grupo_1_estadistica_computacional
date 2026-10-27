@@ -113,7 +113,13 @@ Repositorio GitHub:  & \proyRepo \\
 
 \section*{Resumen ejecutivo}
 % 0,5 páginas. Problema, enfoque S1 -> S2 -> S3, resultado principal y recomendación accionable.
-\emph{(Pendiente.)}
+\textbf{Problema.} El 59,67\,\% de los 10.999 envíos de una empresa de comercio electrónico llegó atrasado. El proyecto buscó qué características se asocian con el atraso y qué evidencia orienta una revisión operacional.
+
+\textbf{Enfoque.} La Sumativa 1 (S1) describió e infirió las asociaciones; la Sumativa 2 (S2) las validó por remuestreo y simulación; y esta Sumativa 3 (S3) las modeló. Se simularon faltantes al azar condicionados a lo observado (10\,\%) en cuatro predictores y se compararon tres estrategias; la imputación por regresión lineal múltiple fue la más fiel a los valores reales. Siguiendo la retroalimentación de la Formativa 2 (F2), se ajustaron tres regresiones logísticas en el segmento con descuento $\le 10$ y se clasificó con una regla el segmento $> 10$, todo atrasado. La estabilidad se evaluó con \emph{bootstrap} ($B = 10.000$).
+
+\textbf{Resultado principal.} El modelo final usa \textbf{solo el peso}: cada 1.000 g adicionales reducen las odds de atraso un 9,5\,\% (OR 0,905; IC 95\,\% BCa [0,873; 0,937]), con el mismo signo en el 100\,\% de las réplicas. Dentro del segmento, el descuento no aporta. El clasificador combinado alcanza un AUC de 0,720 (0,714 en F2), pero en el segmento $\le 10$ solo 0,551 (0,521 en F2): fuera del descuento alto, los datos tienen poca señal.
+
+\textbf{Recomendación.} Auditar los envíos con descuento mayor que 10, que concentran el atraso seguro, y revisar el proceso de los envíos livianos; usar el modelo solo como apoyo descriptivo para priorizar revisiones.
 
 \section{Introducción}
 % 0,75 páginas. Contexto, pregunta de S1, qué aportó cada fase y objetivo de S3.
@@ -165,20 +171,19 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \textbf{Imputación por regresión lineal múltiple (S1 y S2 $\to$ S3).} Se ajustó una regresión por variable, por mínimos cuadrados con sus casos completos. Los predictores se tomaron de la matriz de Spearman de S1 con una regla explícita: se incluyen las correlaciones estables en los cuatro escenarios de S2, se agregan las inestables con $|\rho| \ge 0{,}30$ y, si quedan menos de tres, se usan todas las candidatas. Así, el peso se imputa con descuento, compras previas, llamadas y costo; el costo y las compras previas, con sus tres correlatos estables; y el descuento, sin ninguna correlación estable en S2, con las cuatro candidatas. El atraso nunca es predictor. Se evaluaron los supuestos de linealidad, homocedasticidad (Breusch-Pagan), normalidad (Jarque-Bera), independencia (Durbin-Watson) y multicolinealidad (VIF), y el desempeño mediante $R^2$ y la raíz del error cuadrático medio (RMSE) con validación cruzada de 5 particiones. Cuando un predictor también faltaba, se completó provisionalmente con su mediana; las predicciones se recortaron al rango observado y se redondearon, porque las cuatro variables son enteras.
 
 \textbf{Comparación de estrategias.} La imputación por regresión se comparó con la eliminación de filas incompletas y con la imputación por la mediana, con cinco criterios: (a) tamaño resultante; (b) distribución frente a los datos originales (media, DE y prueba de Kolmogorov-Smirnov, KS); (c) preservación de las correlaciones de Spearman de S1; (d) error frente al \textbf{valor real}, que se conoce porque los faltantes son simulados; y (e) asignación al segmento de descuento de S1 ($> 10$, todo atrasado), que la Parte 2 usa para separar el modelo de la regla.
-\subsection{Regresión logística: preparación, selección y evaluación}\label{sec:met-modelos}
-\textbf{Preparación informada por S1 y S2.} Se utiliza el dataset elegido de imputación por regresión y la partición común de la sección~\ref{sec:datos}. Se conservan los extremos: S1 los identificó como válidos y S2 mostró que winsorizar no alteraba las conclusiones. Las numéricas se estandarizan con media y desviación estándar (DE) del entrenamiento; las categóricas se codifican mediante indicadores, omitiendo el primer nivel ordenado como referencia. Se excluyen el identificador por la estructura detectada en S2, y llamadas y calificación por su posible registro posterior a la entrega.
+\subsection{Regresión logística: segmentación, modelos y evaluación}\label{sec:met-modelos}
+\textbf{Segmentación por el descuento (S1, S2 y F2 $\to$ S3).} S1 mostró que los 2.647 envíos con descuento $> 10$ están todos atrasados, y S2, que la asociación del descuento con el atraso existe solo por ese segmento; en la Formativa 2 (F2), fuera de él, el modelo discriminó como el azar (AUC 0,521). Un indicador ``descuento $> 10$'' produciría separación completa: su coeficiente de máxima verosimilitud no existe. Por eso, siguiendo la retroalimentación de F2, los tres modelos se ajustan en el \textbf{segmento $\le 10$}, donde está la incertidumbre real, y el segmento $> 10$ se clasifica con una \textbf{regla}: probabilidad igual a su tasa de atraso en el entrenamiento. El \textbf{clasificador combinado} (modelo más regla) se evalúa sobre todos los envíos, para compararlo con el AUC de 0,714 de F2. El segmento se asigna con el descuento del dataset imputado por regresión.
 
-\textbf{Tres especificaciones.} M1 incorpora peso, descuento, costo y compras previas, por las asociaciones de S1 y la continuidad con la Formativa 2; solo el peso fue robusto en todos los escenarios de S2. M2 considera además importancia, bodega, modalidad y género mediante selección \emph{stepwise} bidireccional desde el intercepto, con entrada $p<0{,}05$ y salida $p>0{,}10$. Se emplean pruebas de razón de verosimilitudes, con las categorías de cada variable tratadas como un bloque. M3 minimiza el criterio de información bayesiano (BIC) entre los 256 subconjuntos de las ocho variables, incluido el intercepto solo; se informa también el criterio de información de Akaike (AIC). Ambos procedimientos utilizan exclusivamente entrenamiento. Los ajustes se realizan por máxima verosimilitud; se reportan coeficientes y razones de odds (OR) con intervalos de confianza (IC) de Wald al 95\,\%.
+\textbf{Preparación.} Se usa la partición común de la sección~\ref{sec:datos}. Se conservan los extremos, válidos según S1 y sin efecto al winsorizar según S2. Las numéricas se estandarizan con la media y la desviación estándar (DE) del entrenamiento del segmento, y las categóricas se codifican con indicadores, con el primer nivel como referencia. Se excluyen el identificador, por la estructura del archivo detectada en S2, y llamadas y calificación, porque pueden registrarse después de la entrega. No se ponderan las clases: en el segmento el atraso es cercano al 47\,\%, y ponderar solo movería el equilibrio entre sensibilidad y especificidad.
 
-\textbf{Evaluación y elección.} Con umbral fijo 0,5 se calculan matrices de confusión, exactitud, precisión, sensibilidad, F1 y especificidad, además de curvas ROC y AUC, en entrenamiento y prueba. La referencia es la clase mayoritaria del entrenamiento. Se consideran elegibles los modelos a no más de 0,005 de la mayor AUC de prueba y se elige el menor BIC; los empates se resuelven por número de parámetros y nombre. La tolerancia es práctica, no una prueba de equivalencia. Se examinan costos relativos de falsos negativos (FN) frente a falsos positivos (FP) de 1, 2 y 5, sin atribuirles valores monetarios reales.
+\textbf{Tres modelos.} \textbf{M1 (variables actuales)} usa peso, descuento, costo y compras previas, las de F2, elegidas por sus correlaciones de S1 validadas en S2. \textbf{M2 (\emph{stepwise} por AIC)} parte del intercepto y en cada paso agrega o quita la variable que más reduce el criterio de información de Akaike (AIC), entre las cuatro numéricas y las cuatro categóricas (importancia, bodega, modalidad y género); las categóricas entran y salen completas. \textbf{M3 (reducido)} es el subconjunto de mínimo criterio de información bayesiano (BIC) entre los 256 posibles, que penaliza más la complejidad. Los tres se ajustan por máxima verosimilitud con el entrenamiento del segmento, y se reportan los coeficientes y las razones de odds (OR) con IC de Wald al 95\,\%, por DE y en unidades del negocio.
 
-\textbf{Alcance.} La evaluación es exploratoria: prueba participa en la elección y la imputación principal se ajustó antes de separar los conjuntos. Aunque no utiliza el atraso, incorpora información de los predictores de prueba. Además, llamadas interviene indirectamente en la imputación, por lo que su disponibilidad temporal debe revisarse antes de uso operacional. Los IC son condicionales al modelo y al dataset imputado; no incorporan incertidumbre por selección o imputación.
+\textbf{Evaluación y elección.} Con umbral 0,5 se calculan matrices de confusión, exactitud, precisión, sensibilidad, F1, especificidad y AUC, en entrenamiento y prueba, en el segmento y en el clasificador combinado; la referencia es la clase mayoritaria. Son candidatos los modelos a no más de 0,005 del mayor AUC de prueba en el segmento, y entre ellos se elige el menor BIC. Esta tolerancia es una regla práctica, no una prueba de equivalencia. Como la prueba participa en la elección y la imputación se ajustó antes de separar los conjuntos, la evaluación es exploratoria; una sensibilidad reajusta la imputación solo con el entrenamiento. Los IC son condicionales al modelo elegido y al dataset imputado.
 
 \subsection{Estabilidad y diagnóstico}
 \textbf{Estabilidad por \emph{bootstrap} (S2 $\to$ S3).} Con el mismo método que S2 validó, se aplicó un \emph{bootstrap} no paramétrico por pares a los coeficientes: $B = 10.000$ remuestras con reemplazo de los 5.572 envíos de entrenamiento del segmento $\le 10$, con el flujo de semilla reservado para S3. En cada remuestra se reajustaron los tres modelos con las mismas filas. Para cada coeficiente se calcularon los IC 95\,\% percentil y BCa (aceleración por \emph{jackknife}), comparados con el IC de Wald; la razón entre el error estándar (EE) \emph{bootstrap} y el de Wald, y el \textbf{porcentaje de réplicas que conservan el signo} de la estimación. Un coeficiente se considera \textbf{inestable} si su IC BCa incluye el cero (el de su OR incluye el 1), si conserva el signo en menos del 97,5\,\% de las réplicas o si su EE \emph{bootstrap} supera en más de un 20\,\% al de Wald.
 
-% Diagnóstico del modelo final (VIF, linealidad en el logit, influyentes y residuos).
-\emph{(Pendiente: diagnóstico.)}
+\textbf{Diagnóstico.} Se evaluaron la multicolinealidad con el factor de inflación de la varianza (VIF), con 5 y 10 como referencias de revisión; la linealidad en el logit con la prueba de Box-Tidwell (término $x \log x$ para las numéricas positivas, con ajuste de Holm) y con el logit empírico por deciles; la influencia con el modelo lineal generalizado binomial equivalente, marcando una alerta si la distancia de Cook supera $4/n$, el \emph{leverage} supera $2p/n$ o algún |DFBETAS| supera $2/\sqrt{n}$; y los residuos de \emph{deviance}, de Pearson y agrupados en 20 grupos de probabilidad, con su banda del 95\,\%. Las alertas de influencia orientan una sensibilidad, no la eliminación de envíos válidos.
 
 \section{Resultados integrados}\label{sec:resultados}
 % 4 páginas en total.
@@ -220,67 +225,37 @@ Criterio & Eliminación & Mediana & Regresión\\\midrule
 \item La \textbf{mediana} es la peor en casi todos los criterios. Atenúa la correlación del descuento con el atraso (0,313 frente a 0,335 en S1) y, al imputar el descuento con 7, lleva al segmento $\le 10$ a 268 envíos con descuento real $> 10$, todos atrasados.
 \item La \textbf{regresión} conserva la muestra completa y tiene el menor error frente al valor real. Mantiene la relación con el atraso de los dos predictores principales de S1: descuento (0,333) y peso ($-0{,}265$ frente a $-0{,}266$). Su costo es el de toda imputación determinista: reduce la variabilidad, acentúa la correlación peso--descuento ($-0{,}316 \to -0{,}359$) y, al predecir descuentos cerca de la media, desplaza al segmento $> 10$ a 428 envíos con descuento real $\le 10$.
 \end{itemize}
-Se eligió la \textbf{imputación por regresión}, con esa limitación explícita, y la eliminación quedó como referencia de sensibilidad; su efecto en el modelo final se cuantifica en el análisis de impacto de la imputación.
+Se eligió la \textbf{imputación por regresión}, con esa limitación explícita, y la eliminación quedó como referencia de sensibilidad; su efecto en el modelo final se cuantifica en la sección~\ref{sec:result-impacto}.
 
-\fig{0.85}{fig_2_3_distribuciones_estrategias.pdf}{Distribución de cada variable según la estrategia de faltantes, frente a los datos originales.}{fig:estrategias}
+\fig{0.75}{fig_2_3_distribuciones_estrategias.pdf}{Distribución de cada variable según la estrategia de faltantes, frente a los datos originales.}{fig:estrategias}
 
 {\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{faltantes\_resumen\_variables.csv}, \codigo{faltantes\_verificacion\_mar.csv}, \codigo{imputacion\_modelos.csv}, \codigo{imputacion\_conteo.csv} y \codigo{estrategias\_resumen.csv}.\par}
 \subsection{Modelos logísticos y desempeño}\label{sec:result-modelos}
-\textbf{Especificaciones y selección.} M1 y M3 coinciden en las cuatro variables numéricas. M2 añade importancia del producto, pero no modalidad, bodega ni género. La exclusión de modalidad es coherente con S1/S2. La tabla~\ref{tab:seleccion-modelos} muestra que la mejora de AUC de M2 es pequeña (0,0008), mientras BIC favorece M1/M3. Se elige \textbf{M1}, por desempate entre especificaciones idénticas. Esto favorece parsimonia dentro de la tolerancia adoptada, sin demostrar equivalencia predictiva.
+\textbf{Segmentación.} El entrenamiento tiene 5.572 envíos con descuento $\le 10$ (47,1\,\% de atraso) y 2.127 con descuento $> 10$; la prueba, 2.371 y 929. Con el descuento imputado, la tasa de atraso del segmento $> 10$ es 92,6\,\% y no el 100\,\% de S1, por la asignación descrita en la sección~\ref{sec:result-faltantes}.
 
-\begin{table}[!htb]\centering\footnotesize
-\caption{Selección de modelos: ajuste en entrenamiento y AUC en prueba.}\label{tab:seleccion-modelos}
-\begin{tabular}{@{}llrrrr@{}}\toprule
-Modelo & Variables & Parámetros & AIC & BIC & AUC\\\midrule
-M1 & Cuatro numéricas & 5 & 8.639,72 & 8.674,46 & 0,7154\\
-M2 & Numéricas + importancia & 7 & 8.629,41 & 8.678,05 & 0,7162\\
-M3 & Cuatro numéricas & 5 & 8.639,72 & 8.674,46 & 0,7154\\
-\bottomrule\end{tabular}
-\end{table}
-
-\textbf{Coeficientes e interpretación.} La tabla~\ref{tab:or-modelos} presenta los coeficientes estandarizados y los OR por DE (o por categoría), con IC de Wald. Todos los términos incluidos tienen $p<0{,}001$; estos valores son condicionales a la selección. En M2, importancia baja y media presentan menores odds de atraso que importancia alta (OR 0,722 y 0,692). Son asociaciones ajustadas, no efectos causales.
+\textbf{Especificaciones.} El \emph{stepwise} por AIC incorporó, en orden, peso, compras previas, importancia y costo; nunca incluyó el descuento ni la modalidad, coherente con S1 (T01). El mínimo BIC conservó \textbf{solo el peso}, la única asociación robusta en todos los escenarios de S2 (tabla~\ref{tab:modelos}).
 
 \begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{Coeficientes y OR de los tres modelos. M1 y M3 tienen ajustes idénticos.}\label{tab:or-modelos}
-\begin{tabular}{@{}llrrl@{}}\toprule
-Modelo & Predictor & $\beta$ & OR & IC 95\,\% del OR\\\midrule
-M1/M3 & Peso & -0,285 & 0,752 & [0,710; 0,798]\\
-M1/M3 & Descuento & 1,575 & 4,829 & [4,204; 5,547]\\
-M1/M3 & Costo & -0,108 & 0,897 & [0,850; 0,947]\\
-M1/M3 & Compras previas & -0,110 & 0,896 & [0,849; 0,945]\\
-M2 & Peso & -0,293 & 0,746 & [0,703; 0,791]\\
-M2 & Descuento & 1,574 & 4,824 & [4,198; 5,542]\\
-M2 & Costo & -0,108 & 0,897 & [0,850; 0,947]\\
-M2 & Compras previas & -0,115 & 0,892 & [0,845; 0,941]\\
-M2 & Importancia baja / alta & -0,325 & 0,722 & [0,597; 0,875]\\
-M2 & Importancia media / alta & -0,369 & 0,692 & [0,571; 0,838]\\
+\caption{Modelos en el segmento $\le 10$ (entrenamiento, $n = 5.572$) y AUC de prueba frente a F2.}\label{tab:modelos}
+\begin{tabular}{@{}llrrrrr@{}}\toprule
+ & & & & & \multicolumn{2}{c}{AUC de prueba}\\\cmidrule(l){6-7}
+Modelo & Variables & Parám. & AIC & BIC & $\le 10$ & Combinado\\\midrule
+F2 (referencia) & Las de M1, sin segmentar & --- & --- & --- & 0,521 & 0,714\\
+M1 & Peso, descuento, costo, compras & 5 & 7.671,0 & 7.704,2 & 0,543 & 0,716\\
+M2 & Peso, compras, importancia, costo & 6 & \textbf{7.663,6} & 7.703,4 & 0,541 & 0,715\\
+M3 & Peso & 2 & 7.677,3 & \textbf{7.690,5} & \textbf{0,551} & \textbf{0,720}\\
 \bottomrule\end{tabular}
 \end{table}
 
-En unidades del negocio, manteniendo los demás predictores constantes, M1 estima un OR de \textbf{0,835 por 1.000 g} (IC 95\,\%: [0,804; 0,866]), equivalente a odds de atraso 16,5\,\% menores; por \textbf{10 unidades de descuento}, las odds se multiplican por \textbf{2,756} ([2,520; 3,013]). Por 10 USD de costo, el OR es 0,977 ([0,965; 0,988]); por una compra previa adicional, 0,927 ([0,893; 0,962]). Estas lecturas describen el modelo especificado, no cambios porcentuales de probabilidad; su interpretación definitiva requiere completar estabilidad y diagnóstico.
+\textbf{Coeficientes.} Dentro del segmento, el \textbf{descuento deja de aportar}: en M1 su OR por unidad es 0,992 (IC 95\,\%: [0,974; 1,010]; $p = 0{,}40$), y el costo queda en el límite (OR por 10 USD 0,988; $p = 0{,}06$). Manteniendo constantes los demás predictores, cada 1.000 g adicionales reducen las odds de atraso un 12,1\,\% en M1 (OR 0,879 [0,846; 0,914]) y un \textbf{9,5\,\% en M3} (OR \textbf{0,905} [0,874; 0,936]); cada compra previa adicional, un 5,2\,\% (OR 0,948 [0,913; 0,985], M1). En M2, la importancia baja y la media tienen odds de atraso un 22\,\% y un 28\,\% menores que la alta (OR 0,778 [0,638; 0,950] y 0,724 [0,593; 0,885]), coherente con la prueba E2 de S1.
 
-\textbf{Desempeño.} La tabla~\ref{tab:metricas-modelos} y la figura~\ref{fig:roc-modelos} comparan entrenamiento y prueba. M1 obtiene AUC 0,7154 y exactitud 63,03\,\% en prueba. La clase mayoritaria alcanza exactitud 59,67\,\% y F1 74,74\,\%, superior al F1 de M1, pero especificidad cero: clasifica todos los envíos como atrasados. Por ello, M1 no mejora todas las métricas de la referencia.
+\textbf{Selección del modelo final: M3.} Es el único a no más de 0,005 del mayor AUC de prueba del segmento y tiene el menor BIC. La diferencia de AUC entre modelos (0,010) es pequeña y no prueba superioridad; lo decisivo es que M3 logra lo mismo con un solo predictor, el más robusto de S1 y S2. No minimiza todos los costos: con un costo relativo FN:FP de 1, M1 tiene el menor costo en el segmento (1.050 frente a 1.056), y con 2 y 5, M2 (1.805 y 4.022 frente a 1.849 y 4.228).
 
-\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{Métricas con umbral 0,5. Excepto AUC, valores porcentuales; entrenamiento: 7.699 envíos, prueba: 3.300.}\label{tab:metricas-modelos}
-\begin{tabular}{@{}llrrrrrr@{}}\toprule
-Modelo & Conjunto & Exact. & Prec. & Sens. & F1 & Espec. & AUC\\\midrule
-M1 & Entren. & 63,14 & 69,57 & 67,94 & 68,74 & 56,04 & 0,7112\\
-M1 & Prueba & 63,03 & 69,31 & 68,26 & 68,78 & 55,30 & 0,7154\\
-M2 & Entren. & 63,33 & 69,79 & 67,98 & 68,87 & 56,46 & 0,7137\\
-M2 & Prueba & 63,45 & 69,88 & 68,11 & 68,98 & 56,57 & 0,7162\\
-M3 & Entren. & 63,14 & 69,57 & 67,94 & 68,74 & 56,04 & 0,7112\\
-M3 & Prueba & 63,03 & 69,31 & 68,26 & 68,78 & 55,30 & 0,7154\\
-\bottomrule\end{tabular}
-\end{table}
+\textbf{Desempeño frente a F2.} En el segmento $\le 10$, el AUC sube de \textbf{0,521 a 0,551} y la exactitud pasa de 0,508, bajo la clase mayoritaria, a 0,555, sobre su 0,533. En el clasificador combinado, el AUC sube de \textbf{0,714 a 0,720} y la exactitud, de 0,628 a 0,659 (figura~\ref{fig:roc-modelos}). En la prueba, el clasificador combinado con M3 identifica 1.176 atrasos, omite 793, genera 331 falsas alertas y reconoce 1.000 envíos puntuales: precisión 0,780, sensibilidad 0,597, F1 0,677 y especificidad 0,751, frente a 0,538 en F2. Dentro del segmento, con probabilidades cercanas a 0,5, el modelo es conservador: sensibilidad 0,284 y especificidad 0,792. El F1 de la clase mayoritaria (0,747) es mayor, pero esa regla no distingue ningún envío puntual.
 
-\fig{0.85}{fig_3_3_roc.pdf}{Curvas ROC en entrenamiento y prueba. Las curvas M1 y M3 coinciden; la diagonal representa ausencia de discriminación.}{fig:roc-modelos}
+\fig{0.8}{fig_3_3_roc.pdf}{Curvas ROC de los tres modelos: en el segmento $\le 10$ (entrenamiento y prueba) y en el clasificador combinado sobre la prueba completa, con los AUC de referencia de F2.}{fig:roc-modelos}
 
-En prueba, M1 identifica 1.344 atrasos, omite 625 y genera 595 falsas alertas; reconoce correctamente 736 envíos puntuales. M2 reduce las falsas alertas a 578, pero omite 628 atrasos. El costo de M1 menos el de M2 es $17-3r$, donde $r$ es el costo relativo FN:FP: M2 tiene menor costo en los escenarios $r=1,2,5$, y M1 lo tendría para $r>17/3$. Por tanto, la elección por parsimonia no garantiza menor costo operacional. Las matrices completas de ambos conjuntos se muestran en la figura~\ref{fig:confusion-modelos}.
-
-\fig{0.75}{fig_3_3_confusion.pdf}{Matrices de confusión de los tres modelos, con clase 1 = atraso y clase 0 = entrega puntual. Filas: clase real; columnas: predicción.}{fig:confusion-modelos}
-
-{\footnotesize\textbf{Trazabilidad:} tablas exportadas por el notebook en \codigo{sumativa\_3/outputs/tablas/}: \codigo{modelos\_resumen.csv}, \codigo{modelos\_coeficientes\_or.csv}, \codigo{modelos\_metricas.csv} y \codigo{modelos\_seleccion.csv}.}
+{\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{modelos\_segmentos.csv}, \codigo{modelos\_stepwise.csv}, \codigo{modelos\_resumen.csv}, \codigo{modelos\_coeficientes\_or.csv}, \codigo{modelos\_metricas.csv}, \codigo{modelos\_metricas\_combinadas.csv}, \codigo{modelos\_seleccion.csv} y \codigo{modelos\_comparacion\_f2.csv}.\par}
 
 \subsection{Estabilidad del modelo final}\label{sec:result-estabilidad}
 \textbf{El coeficiente del modelo final es estable.} El peso conserva su signo negativo en las 10.000 réplicas (tabla~\ref{tab:bootstrap}, figura~\ref{fig:bootstrap}). Su EE \emph{bootstrap} difiere un 1,3\,\% del de Wald y su sesgo es despreciable ($-0{,}0002$). En unidades del negocio, cada 1.000 g adicionales multiplican las odds de atraso por \textbf{0,905} (IC BCa 95\,\%: [0,873; 0,937]), unas odds 9,5\,\% menores, prácticamente igual que el IC de Wald ([0,874; 0,936]).
@@ -301,32 +276,90 @@ M2 & Importancia media / alta & [$-0{,}523$; $-0{,}123$] & [$-0{,}522$; $-0{,}12
 
 \textbf{Los coeficientes inestables son los que S2 había marcado como sensibles.} Dentro del segmento $\le 10$, el descuento cambia de signo en una de cada cinco réplicas: no tiene un efecto definido, lo que confirma con el modelo que su asociación con el atraso de S1 dependía del segmento $> 10$. El costo queda en el límite, con un IC que incluye el cero y el 97,1\,\% de conservación del signo (97,4\,\% en M2). Compras previas e importancia son estables, aunque de magnitud pequeña. En los tres modelos, el \emph{bootstrap} coincide con Wald (EE a lo sumo un 3\,\% distintos), porque con más de 5.000 envíos la aproximación normal es adecuada, como en S2. Su aporte no es corregir los IC, sino mostrar qué coeficientes conservan el signo. El \emph{bootstrap} remuestrea el dataset ya imputado, por lo que no incorpora la incertidumbre de la imputación ni la de la selección del modelo.
 
-\fig{0.85}{fig_3_4_bootstrap.pdf}{\emph{Bootstrap} de los tres modelos. Izquierda: OR por 1 DE con IC de Wald y BCa, y porcentaje de réplicas que conservan el signo. Derecha: distribución \emph{bootstrap} del coeficiente del peso en el modelo final (M3), con sus IC de Wald y BCa.}{fig:bootstrap}
+\fig{0.75}{fig_3_4_bootstrap.pdf}{\emph{Bootstrap} de los tres modelos. Izquierda: OR por 1 DE con IC de Wald y BCa, y porcentaje de réplicas que conservan el signo. Derecha: distribución \emph{bootstrap} del coeficiente del peso en el modelo final (M3), con sus IC de Wald y BCa.}{fig:bootstrap}
 
 {\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{bootstrap\_coeficientes.csv}, \codigo{bootstrap\_replicas\_modelo\_final.csv} y \codigo{modelos\_preparacion.csv} (DE del peso en el entrenamiento: 1.527 g).\par}
-\subsection{Diagnóstico del modelo final}
-\emph{(Pendiente.)}
-\subsection{Impacto de la estrategia de imputación}
-\emph{(Pendiente.)}
+\subsection{Diagnóstico del modelo final}\label{sec:result-diagnostico}
+\textbf{Multicolinealidad.} Los VIF de las variables numéricas no superan 1,26 en ningún modelo, como en F2 (1,25). Los indicadores de importancia de M2 llegan a 3,6 porque comparten la categoría de referencia (alta, 8,6\,\% de los envíos); no es colinealidad entre predictores distintos. Dentro del segmento, la correlación peso--descuento es prácticamente nula ($-0{,}005$), por lo que desaparece la confusión entre ambos que tenía el modelo global.
+
+\textbf{Linealidad en el logit.} Box-Tidwell rechaza la linealidad del peso (razón de verosimilitud 23,9 con 1 gl; $p < 0{,}001$), coherente con su distribución bimodal en S1. El logit empírico por deciles (figura~\ref{fig:logit}) muestra un efecto no monótono: el atraso es máximo cerca de 3.000 g, y la recta del modelo solo captura la tendencia descendente. Los residuos agrupados lo confirman: 7 de los 20 grupos quedan fuera de la banda del 95\,\%, cuando por azar se esperaría uno, y los mayores residuos positivos ($+0{,}15$ a $+0{,}18$) están en las probabilidades de 0,47 a 0,52, que corresponden a esos pesos.
+
+\fig{0.45}{fig_3_5_logit_empirico.pdf}{Logit empírico del atraso por deciles de peso (IC 95\,\%) frente al ajuste lineal de M3, en el segmento $\le 10$.}{fig:logit}
+
+\textbf{Influencia y sensibilidad.} 523 de los 5.572 envíos tienen alguna alerta: todos por \emph{leverage}, porque son los pesos más extremos, y 177 además por DFBETAS; ninguno supera el umbral de Cook. Sin ellos, el OR del peso por 1.000 g pasa de 0,905 a 0,853: misma dirección, más intenso. Se conservan, porque son envíos válidos. Reajustar la imputación solo con el entrenamiento (AUC 0,551) o asignar el segmento con el descuento original (AUC 0,551) no cambia el resultado.
+
+{\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{modelos\_vif.csv}, \codigo{modelos\_box\_tidwell\_conjunto.csv}, \codigo{modelos\_logit\_empirico.csv}, \codigo{modelos\_residuos\_agrupados.csv}, \codigo{modelos\_influencia\_resumen.csv}, \codigo{modelos\_sensibilidad\_influencia.csv} y \codigo{modelos\_sensibilidad\_evaluacion.csv}.\par}
+\subsection{Impacto de la estrategia de imputación}\label{sec:result-impacto}
+M3 se reajustó con cada dataset de la Parte 1 y con los \textbf{datos originales sin faltantes}, con el mismo flujo: partición común, segmento según el descuento de cada dataset y regla para $> 10$. Como los faltantes son simulados, todos los modelos se evaluaron además en una \textbf{prueba común con valores reales} (los mismos 3.300 envíos, con sus valores y segmentos originales), de modo que las diferencias de desempeño se deben solo a los coeficientes.
+
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{M3 según la estrategia de faltantes: segmento, OR del peso por 1.000 g (IC 95\,\% de Wald) y AUC del clasificador combinado en la prueba propia y en la común.}\label{tab:impacto}
+\begin{tabular}{@{}lrrlrrr@{}}\toprule
+ & Entren. & Segmento & & Dif. con & \multicolumn{2}{c}{AUC combinado}\\\cmidrule(l){6-7}
+Estrategia & $\le 10$ & equivocado & OR del peso & el original & Propia & Común\\\midrule
+Eliminación & 3.840 & 0 & 0,899 [0,865; 0,936] & $-0{,}4$\,\% & 0,733 & 0,736\\
+Mediana & 6.043 & 268 & 0,873 [0,844; 0,902] & $\mathbf{-3{,}4}$\,\% & 0,729 & 0,736\\
+Regresión & 5.572 & 447 & \textbf{0,905} [0,874; 0,936] & $\mathbf{+0{,}1}$\,\% & 0,720 & 0,736\\
+Original & 5.859 & --- & 0,903 [0,875; 0,933] & --- & 0,736 & 0,736\\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{¿Cambian las conclusiones?} No en dirección, significancia ni capacidad de ordenar los envíos: el peso es negativo y significativo con las cuatro opciones, y en la prueba común el AUC es idéntico (0,553 en el segmento y 0,736 combinado). Sí cambian dos aspectos (tabla~\ref{tab:impacto}, figura~\ref{fig:impacto}):
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{La magnitud del efecto del peso}, sesgada solo por la mediana: al llevar al segmento $\le 10$ a 268 envíos con descuento real $> 10$, todos atrasados, su OR se aleja un 3,4\,\% del original, que queda fuera de su IC. La regresión (+0,1\,\%) y la eliminación ($-0{,}4$\,\%) lo reproducen, y la regresión da un IC un 12\,\% más estrecho que la eliminación.
+\item \textbf{La asignación del segmento}, que con la regresión reduce el AUC combinado en la prueba propia (0,720 frente a 0,736): la regla clasifica como atrasados a los 428 envíos con descuento real $\le 10$ que la imputación llevó sobre 10. El costo está en la regla, no en el modelo.
+\end{itemize}
+
+\fig{0.72}{fig_4_impacto_imputacion.pdf}{OR del peso por 1.000 g (IC 95\,\%; línea punteada: datos originales) y AUC en el segmento y en el clasificador combinado, según la estrategia de faltantes, en la prueba propia y en la prueba común con valores reales.}{fig:impacto}
+
+{\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{impacto\_imputacion\_segmento.csv}, \codigo{impacto\_imputacion\_coeficientes.csv} e \codigo{impacto\_imputacion\_desempeno.csv}.\par}
 
 \section{Discusión}\label{sec:discusion}
 % 1,25 páginas. Qué se confirma de S1 y S2; límites (descuento, bloque 1-3.135,
 % MAR simulado, causalidad) y validez externa.
-\emph{(Pendiente.)}
+\textbf{Qué confirma S3 de S1 y S2.} El modelamiento llega, por un camino distinto, a la misma jerarquía de evidencia:
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{El peso es el factor robusto.} Es la única variable del modelo de mínimo BIC, conserva su signo en el 100\,\% de las réplicas \emph{bootstrap}, mantiene su efecto con las tres estrategias de faltantes y sobrevive a las alertas de influencia.
+\item \textbf{El descuento importa solo como umbral.} Sobre 10 determina el atraso en S1; bajo 10 su OR es 0,992 ($p = 0{,}40$) y cambia de signo en una de cada cinco réplicas. Esto explica por qué la F2 discriminaba como el azar fuera de ese segmento.
+\item \textbf{La modalidad no se asocia con el atraso} (T01 de S1): ningún procedimiento de selección la incorporó. Importancia, compras previas y costo tienen efectos pequeños y, el costo, inestables.
+\end{itemize}
+
+\textbf{Límites.}
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{Poca señal fuera del descuento alto.} En el segmento $\le 10$ el mejor AUC es 0,551, apenas sobre el 0,521 de F2.
+\item \textbf{Forma funcional del peso.} El efecto es no monótono, con un máximo de atraso cerca de 3.000 g, y el modelo lineal solo captura la tendencia. Los OR describen esa tendencia, no un efecto constante en todo el rango.
+\item \textbf{El segmento $> 10$ podría ser un artefacto de registro.} S2 mostró que coincide con los envíos 1 a 3.135 del archivo. La regla funciona en estos datos, pero si el segmento refleja la forma en que se armó el archivo y no una política de descuentos, no se trasladaría a envíos nuevos.
+\item \textbf{Faltantes simulados.} El mecanismo MAR es conocido y moderado; con faltantes reales, el mecanismo es desconocido y podría ser MNAR. La imputación por regresión es determinista: reduce la variabilidad y no propaga su incertidumbre a los IC, algo que haría la imputación múltiple. Además, al imputar una variable con efecto de umbral, desplazó envíos entre segmentos, un efecto que las métricas habituales de imputación no anticipaban.
+\item \textbf{Evaluación exploratoria.} La prueba participó en la elección del modelo y la imputación se ajustó antes de separar los conjuntos (sin efecto en el AUC, según la sensibilidad); los IC no incorporan la incertidumbre de la selección.
+\item \textbf{Causalidad y validez externa.} Los datos son observacionales, de una sola fuente y sin fechas: los OR son asociaciones, sin validez probada para otros períodos o empresas.
+\end{itemize}
 
 \section{Conclusiones y recomendaciones}\label{sec:conclusiones}
 % 0,75 páginas. Respuestas accionables para la empresa y para un análisis futuro.
-\emph{(Pendiente.)}
+\textbf{Respuesta a la pregunta de S1.} El atraso se asocia sobre todo con dos características: un \textbf{descuento mayor que 10}, que en estos datos implica atraso en el 100\,\% de los casos, y, fuera de ese segmento, un \textbf{menor peso}, cuyo efecto es el único robusto a todas las validaciones de S2 y S3. Las demás variables tienen efectos pequeños, inestables o nulos.
+
+\textbf{Recomendaciones para la empresa:}
+\begin{enumerate}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item \textbf{Auditar los envíos con descuento mayor que 10} (24\,\% de los envíos), como propuso S1: verificar si el descuento es una compensación posterior al atraso, una política comercial o un efecto de cómo se registraron los envíos 1 a 3.135. Es la acción con mayor potencial y la que define si la regla sirve para envíos futuros.
+\item \textbf{Revisar el proceso de los envíos livianos}, en especial los cercanos a 3.000 g, donde el atraso es máximo dentro del segmento $\le 10$.
+\item \textbf{Usar el clasificador combinado (M3 más la regla) solo como apoyo descriptivo para priorizar revisiones}, no como predictor operacional: identifica el 59,7\,\% de los atrasos con un 78\,\% de precisión, pero dentro del segmento $\le 10$ su capacidad de discriminación es baja (AUC 0,551).
+\item \textbf{Mejorar el registro}: fechas, transportista, distancia y el momento en que se registran llamadas y calificación.
+\end{enumerate}
+
+\textbf{Recomendaciones para un análisis futuro:} modelar la forma no lineal del peso (por tramos o con \emph{splines}); validar con envíos nuevos; fijar los costos reales de cada tipo de error para elegir el umbral; y, con faltantes reales, usar imputación múltiple e imputar la pertenencia al segmento de descuento en lugar de su valor continuo.
 
 \section*{Referencias}
 % 0,25 páginas.
-\begin{small}
-\begin{itemize}
+\begin{footnotesize}
+\begin{itemize}[itemsep=0pt,topsep=2pt]
+\item Box, G. E. P. y Tidwell, P. W. (1962). Transformation of the independent variables. \emph{Technometrics}, 4(4), 531--550.
+\item Efron, B. (1987). Better bootstrap confidence intervals. \emph{JASA}, 82(397), 171--185.
 \item Efron, B. y Tibshirani, R. J. (1993). \emph{An Introduction to the Bootstrap}. Chapman \& Hall.
 \item Gopalani, P. (2021). \emph{E-Commerce Shipping Data}, versión 1. Kaggle.
 \item Hosmer, D. W., Lemeshow, S. y Sturdivant, R. X. (2013). \emph{Applied Logistic Regression} (3.\textsuperscript{a} ed.). Wiley.
 \item Little, R. J. A. y Rubin, D. B. (2019). \emph{Statistical Analysis with Missing Data} (3.\textsuperscript{a} ed.). Wiley.
+\item Rubin, D. B. (1976). Inference and missing data. \emph{Biometrika}, 63(3), 581--592.
 \end{itemize}
-\end{small}
+\end{footnotesize}
 
 \end{document}
