@@ -106,17 +106,17 @@ Repositorio GitHub:  & \proyRepo \\
 \pagenumbering{arabic}
 
 % =====================================================================
-% Máximo 10 páginas (portada aparte). Presupuesto y responsables según la planificación.
+% Máximo 10 páginas (portada aparte). Presupuesto de páginas por sección.
 % Cada sección declara qué fase (S1, S2, S3) informa a la siguiente.
 % Todas las cifras deben provenir de sumativa_3/outputs/tablas/.
 % =====================================================================
 
 \section*{Resumen ejecutivo}
-% 0,5 páginas - José. Problema, enfoque S1 -> S2 -> S3, resultado principal y recomendación accionable.
+% 0,5 páginas. Problema, enfoque S1 -> S2 -> S3, resultado principal y recomendación accionable.
 \emph{(Pendiente.)}
 
 \section{Introducción}
-% 0,75 páginas - José. Contexto, pregunta de S1, qué aportó cada fase y objetivo de S3.
+% 0,75 páginas. Contexto, pregunta de S1, qué aportó cada fase y objetivo de S3.
 Una empresa de comercio electrónico de productos electrónicos registró 10.999 envíos (Gopalani, 2021), de los cuales el \textbf{59,67\,\%} llegó atrasado (IC de Wilson al 95\,\%: [58,75; 60,58]). El proyecto se organizó en tres fases que se apoyan una en otra.
 
 \textbf{Sumativa 1 (S1): análisis exploratorio e inferencial.} Preguntó \emph{qué características se asocian con el atraso y qué evidencia orienta una revisión operacional}. Encontró que los envíos atrasados pesan en promedio 896 g menos que los puntuales ($d_{av} = -0{,}57$) y reciben 13,1 unidades más de descuento ($d_{av} = 0{,}96$), mientras que la modalidad de envío no se asocia con el atraso ($p$ de Holm $= 0{,}69$). Recomendó auditar los 2.647 envíos con descuento mayor que 10, todos atrasados.
@@ -135,7 +135,7 @@ La sección~\ref{sec:metodologia} describe la metodología integrada, la~\ref{se
 \section{Metodología integrada}\label{sec:metodologia}
 % 2,5 páginas en total.
 \subsection{Datos, trazabilidad y punto de partida}\label{sec:datos}
-% José. Datos de S1 con huella, semilla del beacon, partición común; hallazgos de S1 y S2 que guían S3 (figura 0).
+% Datos de S1 con huella, semilla del beacon, partición común; hallazgos de S1 y S2 que guían S3 (figura 0).
 \textbf{Datos y reproducibilidad.} Antes de usar el CSV original de S1, el notebook maestro verifica su huella SHA-256; el archivo se lee desde \codigo{sumativa\_1/data/raw/}, sin copiarlo. Las cifras de S1, S2 y la Formativa 2 se leen desde sus tablas publicadas, sin recalcularse. Toda la aleatoriedad usa la semilla de S2 (\codigo{1505514103}), obtenida del pulso 1.053.589 del faro de aleatoriedad de la Universidad de Chile. De \codigo{SeedSequence(SEMILLA).spawn(10)} se derivan flujos independientes: los siete primeros son los de S2, el octavo es el de la Formativa 2, el noveno simula los faltantes y el décimo alimenta el \emph{bootstrap} de S3.
 
 \textbf{Partición común.} La partición 70/30, estratificada por el atraso, se define una sola vez sobre los 10.999 envíos: 7.699 de entrenamiento y 3.300 de prueba, ambos con 59,67\,\% de atraso. Es la misma de la Formativa 2. Todas las estrategias de imputación y todos los modelos usan esos mismos envíos, de modo que las diferencias entre resultados no dependen del azar de la partición. La preparación, el ajuste y las métricas usan funciones compartidas; con los datos completos, reproducen el AUC de la Formativa 2 (0,721).
@@ -159,10 +159,9 @@ Envíos 1 a 3.135 todos atrasados & S2 & Excluir el identificador (fuga de infor
 IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estabilidad del modelo final\\\bottomrule
 \end{tabular}\end{table}
 \subsection{Datos faltantes e imputación por regresión}
-% Yerko. Faltantes en S1, simulación MAR, predictores (S1 + estabilidad S2), supuestos y estrategias.
+% Faltantes en S1, simulación MAR, predictores (S1 + estabilidad S2), supuestos y estrategias.
 \emph{(Pendiente.)}
 \subsection{Regresión logística: preparación, selección y evaluación}\label{sec:met-modelos}
-% Sebastián: secciones 3.1--3.3 del notebook.
 \textbf{Preparación informada por S1 y S2.} Se utiliza el dataset elegido de imputación por regresión y la partición común de la sección~\ref{sec:datos}. Se conservan los extremos: S1 los identificó como válidos y S2 mostró que winsorizar no alteraba las conclusiones. Las numéricas se estandarizan con media y desviación estándar (DE) del entrenamiento; las categóricas se codifican mediante indicadores, omitiendo el primer nivel ordenado como referencia. Se excluyen el identificador por la estructura detectada en S2, y llamadas y calificación por su posible registro posterior a la entrega.
 
 \textbf{Tres especificaciones.} M1 incorpora peso, descuento, costo y compras previas, por las asociaciones de S1 y la continuidad con la Formativa 2; solo el peso fue robusto en todos los escenarios de S2. M2 considera además importancia, bodega, modalidad y género mediante selección \emph{stepwise} bidireccional desde el intercepto, con entrada $p<0{,}05$ y salida $p>0{,}10$. Se emplean pruebas de razón de verosimilitudes, con las categorías de cada variable tratadas como un bloque. M3 minimiza el criterio de información bayesiano (BIC) entre los 256 subconjuntos de las ocho variables, incluido el intercepto solo; se informa también el criterio de información de Akaike (AIC). Ambos procedimientos utilizan exclusivamente entrenamiento. Los ajustes se realizan por máxima verosimilitud; se reportan coeficientes y razones de odds (OR) con intervalos de confianza (IC) de Wald al 95\,\%.
@@ -172,16 +171,14 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \textbf{Alcance.} La evaluación es exploratoria: prueba participa en la elección y la imputación principal se ajustó antes de separar los conjuntos. Aunque no utiliza el atraso, incorpora información de los predictores de prueba. Además, llamadas interviene indirectamente en la imputación, por lo que su disponibilidad temporal debe revisarse antes de uso operacional. Los IC son condicionales al modelo y al dataset imputado; no incorporan incertidumbre por selección o imputación.
 
 \subsection{Estabilidad y diagnóstico}
-% Yerko (bootstrap) y Sebastián (VIF, linealidad en el logit, influyentes y residuos).
+% Bootstrap de los coeficientes y diagnóstico (VIF, linealidad en el logit, influyentes y residuos).
 \emph{(Pendiente.)}
 
 \section{Resultados integrados}\label{sec:resultados}
 % 4 páginas en total.
 \subsection{Datos faltantes e imputación}
-% Yerko.
 \emph{(Pendiente.)}
 \subsection{Modelos logísticos y desempeño}\label{sec:result-modelos}
-% Sebastián: secciones 3.1--3.3; diagnóstico 3.5 pendiente de integración.
 \textbf{Especificaciones y selección.} M1 y M3 coinciden en las cuatro variables numéricas. M2 añade importancia del producto, pero no modalidad, bodega ni género. La exclusión de modalidad es coherente con S1/S2. La tabla~\ref{tab:seleccion-modelos} muestra que la mejora de AUC de M2 es pequeña (0,0008), mientras BIC favorece M1/M3. Se elige \textbf{M1}, por desempate entre especificaciones idénticas. Esto favorece parsimonia dentro de la tolerancia adoptada, sin demostrar equivalencia predictiva.
 
 \begin{table}[!htb]\centering\footnotesize
@@ -239,26 +236,23 @@ En prueba, M1 identifica 1.344 atrasos, omite 625 y genera 595 falsas alertas; r
 {\footnotesize\textbf{Trazabilidad:} tablas exportadas por el notebook en \codigo{sumativa\_3/outputs/tablas/}: \codigo{modelos\_resumen.csv}, \codigo{modelos\_coeficientes\_or.csv}, \codigo{modelos\_metricas.csv} y \codigo{modelos\_seleccion.csv}.}
 
 \subsection{Estabilidad del modelo final}
-% Yerko.
 \emph{(Pendiente.)}
 \subsection{Diagnóstico del modelo final}
-% Sebastián.
 \emph{(Pendiente.)}
 \subsection{Impacto de la estrategia de imputación}
-% José.
 \emph{(Pendiente.)}
 
 \section{Discusión}\label{sec:discusion}
-% 1,25 páginas - los tres; José integra. Qué se confirma de S1 y S2; límites (descuento, bloque 1-3.135,
+% 1,25 páginas. Qué se confirma de S1 y S2; límites (descuento, bloque 1-3.135,
 % MAR simulado, causalidad) y validez externa.
 \emph{(Pendiente.)}
 
 \section{Conclusiones y recomendaciones}\label{sec:conclusiones}
-% 0,75 páginas - José. Respuestas accionables para la empresa y para un análisis futuro.
+% 0,75 páginas. Respuestas accionables para la empresa y para un análisis futuro.
 \emph{(Pendiente.)}
 
 \section*{Referencias}
-% 0,25 páginas - José.
+% 0,25 páginas.
 \begin{small}
 \begin{itemize}
 \item Efron, B. y Tibshirani, R. J. (1993). \emph{An Introduction to the Bootstrap}. Chapman \& Hall.

@@ -11,20 +11,20 @@ Proyecto final integrado. Aplica **regresión lineal múltiple** para imputar da
 | Presentación (video, 10 minutos) | *(enlace pendiente)* |
 | Tablas y figuras | `outputs/tablas/` y `outputs/figuras/` |
 
-## Estructura del notebook y responsables
+## Estructura del notebook
 
-| Sección | Contenido | Responsable |
-|---|---|---|
-| 0 | Configuración, datos, semilla, partición común y funciones compartidas | José |
-| 1 | Punto de partida: hallazgos de S1 y S2 | José |
-| 2 | Parte 1: datos faltantes, imputación por regresión y comparación de estrategias | Yerko |
-| 3 | Parte 2: tres modelos logísticos, desempeño, selección, *bootstrap* (3.4, Yerko) y diagnóstico | Sebastián |
-| 4 | Parte 3: impacto de la estrategia de imputación | José |
-| 5 | Síntesis | José, con el equipo |
+| Sección | Contenido |
+|---|---|
+| 0 | Configuración, datos, semilla, partición común y funciones compartidas |
+| 1 | Punto de partida: hallazgos de S1 y S2 |
+| 2 | Parte 1: datos faltantes, imputación por regresión y comparación de estrategias |
+| 3 | Parte 2: tres modelos logísticos en el segmento con descuento ≤ 10, desempeño, selección, *bootstrap* y diagnóstico |
+| 4 | Parte 3: impacto de la estrategia de imputación |
+| 5 | Síntesis y recomendaciones |
 
-## Contrato entre secciones
+## Objetos compartidos entre secciones
 
-Cada parte deja definidos estos objetos para las siguientes:
+Cada sección deja definidos estos objetos, que usan las siguientes:
 
 - **Sección 0:**
   - `df`: datos completos de S1 (10.999 envíos);
@@ -39,7 +39,7 @@ Cada parte deja definidos estos objetos para las siguientes:
   - `ESTRATEGIA`, la clave elegida.
 - **Parte 2:**
   - `MODELOS = {'M1', 'M2', 'M3'}`, cada uno con sus `numericas` y `categoricas`;
-  - `MODELO_FINAL`.
+  - `MODELO_FINAL` y `UMBRAL_SEGMENTO` (descuento ≤ 10).
 
 ## Datos y reproducibilidad
 
@@ -54,12 +54,3 @@ uv sync --locked
 uv run jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=3600 sumativa_3/notebooks/sumativa_3_grupo1.ipynb
 latexmk -cd -pdf -interaction=nonstopmode -halt-on-error sumativa_3/docs/informe/informe_sumativa3_grupo1.tex
 ```
-
-## Normas de trabajo
-
-- **Ramas y commits:** una rama por tarea (`s3/...`) y PR a `main`; los commits van sin coautoría.
-- **Notebook:**
-  - cada integrante edita solo sus celdas;
-  - se commitea con salidas;
-  - antes de entregar, se reejecuta completo con el kernel limpio.
-- **Redacción:** las siglas se escriben con su nombre completo en la primera mención; se usa formato numérico es-CL y la convención de figuras de S2.
