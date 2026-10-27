@@ -1,0 +1,633 @@
+\documentclass[11pt,a4paper]{article}
+
+% ===================== Codificación y fuentes =====================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% ===================== Página y utilidades ========================
+\usepackage[left=2.3cm,right=2.3cm,top=2.3cm,bottom=2.3cm]{geometry}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\renewcommand{\contentsname}{Índice}
+\renewcommand{\tablename}{Tabla}
+
+\definecolor{negro}{RGB}{0,0,0}
+\definecolor{gris}{RGB}{90,90,90}
+\definecolor{grisclaro}{RGB}{150,150,150}
+\hypersetup{colorlinks=true, linkcolor=negro, urlcolor=negro, citecolor=negro,
+  pdftitle={Anexo técnico: técnicas estadísticas del proyecto},
+  pdfauthor={José Ignacio Rodríguez, Yerko Gallardo Miranda, Sebastián Rojas Araya}}
+
+\titleformat{\section}{\large\bfseries\color{negro}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{negro}}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.1em}{0.4em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.25em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\footnotesize\color{gris}Anexo técnico · Grupo 1 · MCDI501}
+\fancyfoot[R]{\footnotesize\color{gris}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlist{nosep,leftmargin=1.2em}
+\newcommand{\codigo}[1]{{\small\texttt{#1}}}
+% Bloques de cada técnica
+\newcommand{\desc}{\textbf{Descripción.} }
+\newcommand{\formula}{\textbf{Fórmula.} }
+\newcommand{\uso}{\textbf{Uso en el proyecto.} }
+\newcommand{\fase}[1]{{\footnotesize\color{gris}[#1]}}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+\includegraphics[height=3.8cm]{logo_unab.png}\\[1.1cm]
+{\footnotesize\color{gris}\MakeUppercase{Magíster en Ciencia de Datos e Inteligencia Artificial}}\\[0.15cm]
+{\footnotesize\color{grisclaro}MCDI501: Estadística Computacional para la Toma de Decisiones}\\[1.8cm]
+{\Large\bfseries Anexo técnico}\\[0.4cm]
+{\large Técnicas estadísticas utilizadas en el proyecto}\\[0.3cm]
+{\normalsize\color{gris} Factores asociados al atraso en envíos de comercio electrónico}\\[1.4cm]
+\end{center}
+\begin{flushleft}
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{@{}>{\bfseries}l >{\raggedright\arraybackslash}p{10.8cm}@{}}
+Integrantes: & José Ignacio Rodríguez, Yerko Gallardo Miranda y Sebastián Rojas Araya\\
+Dataset: & \emph{E-Commerce Shipping Data} (Gopalani, 2021), 10.999 envíos\\
+Fases: & Sumativa 1 (S1), Sumativa 2 (S2), Formativa 2 (F2) y Sumativa 3 (S3)\\
+Repositorio: & \url{https://github.com/joserodriguezc/grupo_1_estadistica_computacional}\\
+\end{tabular}
+\end{flushleft}
+\vspace{0.8cm}
+{\small Este anexo reúne, en un solo documento, todas las técnicas estadísticas aplicadas a lo largo del proyecto. Para cada una se indica su nombre, una descripción breve, su formulación matemática y cómo se usó en el proyecto, con la fase en que se aplicó. La notación es común: $n$ es el tamaño de muestra; $y_i\in\{0,1\}$ indica atraso ($1$) o entrega puntual ($0$); $\bar x$ y $s$ son la media y la desviación estándar (DE) muestrales; $z_{q}$ es el cuantil $q$ de la normal estándar, y $B$ es el número de réplicas de una técnica de remuestreo o simulación.}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% =====================================================================
+\section*{Resumen de técnicas por fase}
+\addcontentsline{toc}{section}{Resumen de técnicas por fase}
+{\small\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}p{7.3cm} c c c c p{3.6cm}@{}}
+\toprule
+Técnica & S1 & S2 & F2 & S3 & Sección\\\midrule\endhead
+Medidas de tendencia central, dispersión y posición & $\checkmark$ & $\checkmark$ & & & \ref{sec:descriptiva}\\
+Asimetría y curtosis en exceso & $\checkmark$ & $\checkmark$ & & & \ref{sec:descriptiva}\\
+Regla del rango intercuartílico para extremos & $\checkmark$ & $\checkmark$ & & & \ref{sec:descriptiva}\\
+IC de Wilson para una proporción & $\checkmark$ & $\checkmark$ & & $\checkmark$ & \ref{sec:estimacion}\\
+IC $t$ de Student para una media & $\checkmark$ & $\checkmark$ & & & \ref{sec:estimacion}\\
+IC de Newcombe para una diferencia de proporciones & $\checkmark$ & & & & \ref{sec:estimacion}\\
+Tamaño de efecto $d_{av}$ y riesgo relativo & $\checkmark$ & $\checkmark$ & & & \ref{sec:estimacion}\\
+Prueba $\chi^2$ de independencia y V de Cramér & $\checkmark$ & $\checkmark$ & & & \ref{sec:pruebas}\\
+Prueba $t$ de Welch & $\checkmark$ & $\checkmark$ & & & \ref{sec:pruebas}\\
+Prueba U de Mann--Whitney y correlación biserial de rangos & $\checkmark$ & $\checkmark$ & & & \ref{sec:pruebas}\\
+Prueba $z$ de dos proporciones & $\checkmark$ & $\checkmark$ & & & \ref{sec:pruebas}\\
+Corrección de Holm por comparaciones múltiples & $\checkmark$ & $\checkmark$ & & $\checkmark$ & \ref{sec:pruebas}\\
+Correlación de Spearman y punto-biserial & $\checkmark$ & $\checkmark$ & & $\checkmark$ & \ref{sec:correlacion}\\
+\emph{Bootstrap} no paramétrico: IC percentil y BCa & & $\checkmark$ & & $\checkmark$ & \ref{sec:remuestreo}\\
+\emph{Bootstrap} estratificado y emparejado & & $\checkmark$ & & $\checkmark$ & \ref{sec:remuestreo}\\
+Prueba de permutación & & $\checkmark$ & & & \ref{sec:remuestreo}\\
+\emph{Jackknife}: error estándar e influencia & & $\checkmark$ & & $\checkmark$ & \ref{sec:remuestreo}\\
+Error estándar Monte Carlo e IC de Clopper--Pearson & & $\checkmark$ & & & \ref{sec:simulacion}\\
+Simulación Monte Carlo binomial y uniformes comunes & & $\checkmark$ & & & \ref{sec:simulacion}\\
+Generación reproducible de números aleatorios & & $\checkmark$ & $\checkmark$ & $\checkmark$ & \ref{sec:simulacion}\\
+Análisis de sensibilidad por escenarios y winsorización & & $\checkmark$ & & $\checkmark$ & \ref{sec:simulacion}\\
+Mecanismos de faltantes y su simulación (MCAR, MAR) & & & $\checkmark$ & $\checkmark$ & \ref{sec:faltantes}\\
+Eliminación de casos e imputación por mediana & & & $\checkmark$ & $\checkmark$ & \ref{sec:faltantes}\\
+Imputación por regresión lineal múltiple & & & & $\checkmark$ & \ref{sec:faltantes}\\
+Prueba de Kolmogorov--Smirnov de dos muestras & & & & $\checkmark$ & \ref{sec:faltantes}\\
+Regresión lineal múltiple por mínimos cuadrados & & & & $\checkmark$ & \ref{sec:lineal}\\
+Pruebas de Jarque--Bera, Breusch--Pagan y Durbin--Watson & & & & $\checkmark$ & \ref{sec:lineal}\\
+Factor de inflación de la varianza (VIF) & & & $\checkmark$ & $\checkmark$ & \ref{sec:lineal}\\
+Partición estratificada y estandarización & & & $\checkmark$ & $\checkmark$ & \ref{sec:logistica}\\
+Regresión logística por máxima verosimilitud & & & $\checkmark$ & $\checkmark$ & \ref{sec:logistica}\\
+Odds ratio e IC de Wald & & & $\checkmark$ & $\checkmark$ & \ref{sec:logistica}\\
+Prueba de razón de verosimilitudes y pseudo-$R^2$ de McFadden & & & $\checkmark$ & $\checkmark$ & \ref{sec:logistica}\\
+Criterios de información AIC y BIC & & & & $\checkmark$ & \ref{sec:seleccion}\\
+Selección \emph{stepwise} por AIC y mejor subconjunto por BIC & & & & $\checkmark$ & \ref{sec:seleccion}\\
+Prueba de Box--Tidwell y logit empírico & & & & $\checkmark$ & \ref{sec:diagnostico}\\
+Influencia: \emph{leverage}, distancia de Cook y DFBETAS & & & & $\checkmark$ & \ref{sec:diagnostico}\\
+Residuos de \emph{deviance}, de Pearson y agrupados & & & & $\checkmark$ & \ref{sec:diagnostico}\\
+Matriz de confusión y métricas de clasificación & & & $\checkmark$ & $\checkmark$ & \ref{sec:evaluacion}\\
+Curva ROC, AUC y umbral de Youden & & & $\checkmark$ & $\checkmark$ & \ref{sec:evaluacion}\\
+Validación cruzada estratificada de $k$ particiones & & & $\checkmark$ & $\checkmark$ & \ref{sec:evaluacion}\\
+Clasificador combinado por segmento y análisis de costos & & & & $\checkmark$ & \ref{sec:evaluacion}\\
+Regularización, búsqueda en grilla, RFE y puntaje de Brier & & & $\checkmark$ & & \ref{sec:complementarias}\\
+\bottomrule
+\end{longtable}}
+
+% =====================================================================
+\section{Estadística descriptiva}\label{sec:descriptiva}
+
+\subsection{Medidas de tendencia central, dispersión y posición}
+\desc Resumen de la distribución de una variable cuantitativa mediante su centro (media y mediana), su dispersión (DE y rango intercuartílico) y su posición (cuartiles, mínimo y máximo).
+
+\formula
+\[
+\bar x=\frac1n\sum_{i=1}^n x_i,\qquad s=\sqrt{\frac{1}{n-1}\sum_{i=1}^n (x_i-\bar x)^2},\qquad \mathrm{IQR}=Q_3-Q_1,
+\]
+donde $Q_1$, la mediana $Q_2$ y $Q_3$ son los cuantiles 0,25, 0,50 y 0,75, calculados por interpolación lineal entre observaciones ordenadas.
+
+\uso \fase{S1, S2} Caracterizaron las cinco variables cuantitativas en S1 (por ejemplo, peso medio de 3.634 g y descuento con mediana 7). En S2 se validaron con \emph{bootstrap} los 128 estimandos descriptivos y de efecto del inventario de S1. En S3, la mediana es la regla de la imputación simple.
+
+\subsection{Asimetría y curtosis en exceso}
+\desc Coeficientes de forma: la asimetría mide el desequilibrio entre las colas y la curtosis en exceso (definición de Fisher), el peso de las colas respecto de una normal, para la que ambas valen cero. Se usan las versiones corregidas por sesgo.
+
+\formula Con $m_k=\frac1n\sum(x_i-\bar x)^k$:
+\[
+G_1=\frac{\sqrt{n(n-1)}}{n-2}\,\frac{m_3}{m_2^{3/2}},\qquad
+G_2=\frac{(n-1)\big[(n+1)\,g_2+6\big]}{(n-2)(n-3)},\quad g_2=\frac{m_4}{m_2^2}-3 .
+\]
+
+\uso \fase{S1, S2} Describieron la forma de cada variable: el descuento y las compras previas son muy asimétricos ($G_1\approx1{,}8$ y $1{,}7$) y el peso es bimodal ($G_2=-1{,}45$). Esto justificó usar la mediana para imputar en F2 y S3, y el \emph{bootstrap} en S2 para no depender de la normalidad.
+
+\subsection{Regla del rango intercuartílico para valores extremos}
+\desc Criterio de Tukey que marca como extremo a todo valor alejado más de 1,5 rangos intercuartílicos de los cuartiles.
+
+\formula $x_i$ es extremo si $x_i<Q_1-1{,}5\,\mathrm{IQR}$ o $x_i>Q_3+1{,}5\,\mathrm{IQR}$.
+
+\uso \fase{S1, S2, S3} S1 identificó 2.209 extremos en el descuento y 1.003 en compras previas, y los consideró válidos. En S2, el escenario de exclusión IQR (3.028 envíos) mostró que eliminarlos cambia la población. Por eso F2 y S3 conservan todos los envíos.
+
+% =====================================================================
+\section{Estimación por intervalos y tamaños de efecto}\label{sec:estimacion}
+
+\subsection{Intervalo de confianza de Wilson para una proporción}
+\desc Intervalo obtenido al invertir la prueba de puntaje para una proporción. Tiene mejor cobertura que el intervalo de Wald, sobre todo cerca de 0 o 1.
+
+\formula Con $\hat p=k/n$ y $z=z_{0,975}$:
+\[
+\frac{\hat p+\dfrac{z^2}{2n}\pm z\sqrt{\dfrac{\hat p(1-\hat p)}{n}+\dfrac{z^2}{4n^2}}}{1+\dfrac{z^2}{n}} .
+\]
+
+\uso \fase{S1, S2, S3} Estimó la proporción de atraso, 59,67\,\% con IC [58,75\,\%; 60,58\,\%], y la tasa del segmento con descuento $>10$, cuyo IC [99,86\,\%; 100\,\%] reconoce incertidumbre aunque todos los envíos estén atrasados. En S2, sus extremos definieron los escenarios de sensibilidad del Monte Carlo; en S3, el segmento $>10$ fundamenta la regla del clasificador combinado.
+
+\subsection{Intervalo de confianza $t$ de Student para una media}
+\desc Intervalo para la media poblacional basado en la distribución $t$, válido bajo normalidad o, con muestras grandes, por el teorema central del límite.
+
+\formula $\bar x\pm t_{0,975;\,n-1}\,\dfrac{s}{\sqrt n}$.
+
+\uso \fase{S1, S2} Estimó las medias de peso, costo y llamadas en S1. En S2 se compararon con los IC \emph{bootstrap}: los anchos difirieron a lo sumo un 2,3\,\%, lo que confirmó que la bimodalidad del peso no comprometía el intervalo.
+
+\subsection{Intervalo de Newcombe para una diferencia de proporciones}
+\desc Método híbrido de puntaje que combina los intervalos de Wilson de cada grupo. Es preferible al de Wald cuando alguna proporción está cerca de 0 o 1.
+
+\formula Con $(l_1,u_1)$ y $(l_0,u_0)$ los IC de Wilson de $\hat p_1$ y $\hat p_0$:
+\[
+\Big[\hat p_1-\hat p_0-\sqrt{(\hat p_1-l_1)^2+(u_0-\hat p_0)^2}\ ;\ \hat p_1-\hat p_0+\sqrt{(u_1-\hat p_1)^2+(\hat p_0-l_0)^2}\Big].
+\]
+
+\uso \fase{S1} Acotó la diferencia de tasas de atraso entre descuento $>10$ y $\le10$ (IC [52,03; 54,18] puntos porcentuales) y entre importancia alta y el resto, donde una proporción está en la frontera de 1.
+
+\subsection{Tamaño de efecto $d_{av}$ y riesgo relativo}
+\desc $d_{av}$ es una diferencia de medias estandarizada por la DE promedio de los dos grupos, sin suponer varianzas iguales. El riesgo relativo (RR) es el cociente de dos tasas.
+
+\formula
+\[
+d_{av}=\frac{\bar x_1-\bar x_0}{\sqrt{(s_1^2+s_0^2)/2}},\qquad RR=\frac{\hat p_1}{\hat p_0}.
+\]
+
+\uso \fase{S1, S2} Expresó la magnitud de las diferencias: los envíos atrasados pesan 896 g menos ($d_{av}=-0{,}57$) y reciben 13,1 unidades más de descuento ($d_{av}=0{,}96$). En S2 se validaron con \emph{bootstrap} y se examinaron por escenario.
+
+% =====================================================================
+\section{Pruebas de hipótesis}\label{sec:pruebas}
+
+\subsection{Prueba $\chi^2$ de independencia y V de Cramér}
+\desc Contrasta si dos variables categóricas son independientes comparando las frecuencias observadas con las esperadas bajo independencia. La V de Cramér mide la intensidad de la asociación entre 0 y 1.
+
+\formula Con $E_{ij}=n_{i\cdot}n_{\cdot j}/n$:
+\[
+\chi^2=\sum_{i,j}\frac{(O_{ij}-E_{ij})^2}{E_{ij}}\sim\chi^2_{(r-1)(c-1)},\qquad V=\sqrt{\frac{\chi^2}{n\,\min(r-1,\,c-1)}} .
+\]
+
+\uso \fase{S1, S2} La prueba T01 no rechazó la independencia entre modalidad de envío y atraso ($\chi^2(2)=0{,}74$; $p$ de Holm $=0{,}69$; $V=0{,}008$). S2 lo confirmó por permutación. Por eso la modalidad no forma parte del modelo basado en S1 y S2 en S3.
+
+\subsection{Prueba $t$ de Welch}
+\desc Compara las medias de dos grupos sin suponer varianzas iguales, con grados de libertad de Welch--Satterthwaite.
+
+\formula
+\[
+t=\frac{\bar x_1-\bar x_0}{\sqrt{s_1^2/n_1+s_0^2/n_0}},\qquad
+\nu=\frac{\big(s_1^2/n_1+s_0^2/n_0\big)^2}{\dfrac{(s_1^2/n_1)^2}{n_1-1}+\dfrac{(s_0^2/n_0)^2}{n_0-1}} .
+\]
+
+\uso \fase{S1, S2} Contrastó peso (T02, $t=-29{,}27$), descuento (T03, $t=54{,}70$) y costo (E4) entre envíos atrasados y puntuales. En S2 fue el estadístico de las pruebas de permutación y de los escenarios de sensibilidad.
+
+\subsection{Prueba U de Mann--Whitney y correlación biserial de rangos}
+\desc Prueba no paramétrica que compara dos distribuciones por sus rangos. La correlación biserial de rangos expresa su tamaño de efecto entre $-1$ y $1$.
+
+\formula Con $R_1$ la suma de rangos del grupo 1 (rangos promedio ante empates):
+\[
+U=R_1-\frac{n_1(n_1+1)}{2},\qquad z=\frac{|U-n_1n_0/2|-0{,}5}{\sigma_U},\qquad r_{rb}=\frac{2U}{n_1n_0}-1,
+\]
+donde $\sigma_U$ incluye la corrección por empates.
+
+\uso \fase{S1, S2} La prueba E1 verificó que la diferencia de peso no dependiera de la normalidad, porque el peso es bimodal ($p<10^{-170}$). Su $r_{rb}$ se validó en S2.
+
+\subsection{Prueba $z$ de dos proporciones}
+\desc Compara dos tasas usando la proporción combinada bajo la hipótesis nula de igualdad.
+
+\formula Con $\hat p=(k_1+k_0)/(n_1+n_0)$:
+\[
+z=\frac{\hat p_1-\hat p_0}{\sqrt{\hat p(1-\hat p)\left(\dfrac1{n_1}+\dfrac1{n_0}\right)}} .
+\]
+
+\uso \fase{S1, S2} Comparó el atraso entre importancia alta y el resto (E2) y entre descuento $>10$ y $\le10$ (E3).
+
+\subsection{Corrección de Holm por comparaciones múltiples}
+\desc Procedimiento secuencial que controla la probabilidad de cometer al menos un error tipo I en una familia de $m$ pruebas. Es uniformemente más potente que Bonferroni.
+
+\formula Con los valores $p$ ordenados $p_{(1)}\le\dots\le p_{(m)}$:
+\[
+p^{\text{Holm}}_{(i)}=\min\Big\{1,\ \max_{j\le i}\,(m-j+1)\,p_{(j)}\Big\}.
+\]
+
+\uso \fase{S1, S2, S3} Ajustó la familia de siete pruebas de S1 y sus versiones por permutación en S2. En S3 ajustó los valores $p$ de la prueba de Box--Tidwell.
+
+% =====================================================================
+\section{Correlación}\label{sec:correlacion}
+
+\subsection{Correlación de Spearman y correlación punto-biserial}
+\desc Spearman mide asociaciones monótonas mediante la correlación de Pearson entre rangos, por lo que es robusta a extremos y a formas no lineales. La punto-biserial es la correlación de Pearson entre una variable cuantitativa y una binaria.
+
+\formula Con $R(\cdot)$ el rango promedio:
+\[
+\rho_S=\operatorname{corr}\big(R(x),R(y)\big),\qquad
+r_{pb}=\frac{\bar x_1-\bar x_0}{s_x}\sqrt{\frac{n_1n_0}{n(n-1)}} .
+\]
+
+\uso \fase{S1, S2, S3} S1 construyó la matriz de Spearman entre las variables numéricas y las correlaciones con el atraso (descuento $r_{pb}=0{,}397$; peso $-0{,}269$). S2 les asignó IC \emph{bootstrap} y estabilidad por escenario. En S3, esa matriz y su estabilidad definieron los predictores de cada regresión de imputación.
+
+% =====================================================================
+\section{Remuestreo}\label{sec:remuestreo}
+
+\subsection{\emph{Bootstrap} no paramétrico: IC percentil y BCa}
+\desc Aproxima la distribución muestral de un estimador $\hat\theta$ remuestreando con reemplazo la muestra observada $B$ veces. El IC percentil usa los cuantiles de las réplicas. El IC BCa los corrige por sesgo ($z_0$) y por asimetría (aceleración $a$, estimada por \emph{jackknife}).
+
+\formula Con las réplicas $\hat\theta^*_1,\dots,\hat\theta^*_B$ y $\Phi$ la distribución normal estándar:
+\[
+\hat z_0=\Phi^{-1}\!\left(\frac{\#\{\hat\theta^*_b<\hat\theta\}+\tfrac12\#\{\hat\theta^*_b=\hat\theta\}}{B}\right),\qquad
+\hat a=\frac{\sum_i(\bar\theta_{(\cdot)}-\hat\theta_{(i)})^3}{6\big[\sum_i(\bar\theta_{(\cdot)}-\hat\theta_{(i)})^2\big]^{3/2}},
+\]
+\[
+\alpha_{1,2}=\Phi\!\left(\hat z_0+\frac{\hat z_0+z_{\alpha/2,\,1-\alpha/2}}{1-\hat a\,(\hat z_0+z_{\alpha/2,\,1-\alpha/2})}\right),\qquad
+\text{IC}_{\text{BCa}}=\big[\hat\theta^*_{(\alpha_1)};\ \hat\theta^*_{(\alpha_2)}\big].
+\]
+
+\uso \fase{S2, S3} En S2, con $B=10.000$, validó los IC de S1 (implementación verificada frente a \codigo{scipy.stats.bootstrap}). En S3 estimó los IC de los coeficientes de los tres modelos logísticos y los comparó con los de Wald.
+
+\subsection{\emph{Bootstrap} estratificado, emparejado y por pares}
+\desc Variantes del \emph{bootstrap} que conservan la estructura del diseño. El estratificado remuestrea dentro de cada grupo; el emparejado remuestrea filas completas, de modo que varios estadísticos comparten las mismas remuestras; el de pares, en regresión, remuestrea pares $(x_i,y_i)$ y reajusta el modelo.
+
+\formula Estratificado: $\{x^{*}_{g}\}\sim\text{Unif}\{x_{g1},\dots,x_{gn_g}\}$ para cada grupo $g$. Pares: $(X^*,y^*)=\{(x_{i_b},y_{i_b})\}_{b=1}^n$ con $i_b\sim\text{Unif}\{1,\dots,n\}$; luego $\hat\beta^*=\arg\max\ell(\beta;X^*,y^*)$.
+
+\uso \fase{S2, S3} En S2, el estratificado conservó los 6.563 envíos atrasados y los 4.436 puntuales al remuestrear diferencias de medias, y el emparejado mantuvo comparables las 35 correlaciones y asociaciones. En S3, el \emph{bootstrap} por pares ($B=10.000$) reajustó los tres modelos con las mismas filas y midió el porcentaje de réplicas que \textbf{conservan el signo} de cada coeficiente: el peso lo conserva en el 100\,\%; el descuento, solo en el 79,9\,\%.
+
+\subsection{Prueba de permutación}
+\desc Construye la distribución nula de un estadístico reasignando al azar las etiquetas de grupo, lo que es válido bajo la hipótesis de intercambiabilidad. No supone una distribución de referencia.
+
+\formula Con $T_{obs}$ el estadístico observado y $T^*_b$ los de $B$ permutaciones:
+\[
+p_{perm}=\frac{1+\#\{|T^*_b|\ge|T_{obs}|\}}{B+1} .
+\]
+
+\uso \fase{S2} Validó las siete pruebas de S1 con $B=10.000$. Las decisiones coincidieron con las de S1; en las pruebas sin excedencias, $p\le1/10.001$ se informó como una cota de resolución, no como un valor estimado.
+
+\subsection{\emph{Jackknife}: error estándar e influencia}
+\desc Recalcula el estimador omitiendo una observación a la vez. Estima el error estándar y mide cuánto influye cada observación.
+
+\formula Con $\hat\theta_{(i)}$ el estimador sin la observación $i$ y $\bar\theta_{(\cdot)}$ su promedio:
+\[
+\widehat{\mathrm{EE}}_{jack}=\sqrt{\frac{n-1}{n}\sum_{i=1}^n\big(\hat\theta_{(i)}-\bar\theta_{(\cdot)}\big)^2},\qquad \Delta_i=\hat\theta_{(i)}-\hat\theta .
+\]
+
+\uso \fase{S2, S3} En S2 mostró que ningún envío individual cambia una conclusión (cambio máximo de 0,08\,\% en la diferencia de peso) y reveló que los envíos 1 a 3.135 están todos atrasados, por lo que S3 excluyó el identificador. En S3 estimó la aceleración del IC BCa de los coeficientes logísticos.
+
+% =====================================================================
+\section{Simulación y sensibilidad}\label{sec:simulacion}
+
+\subsection{Error estándar Monte Carlo e IC de Clopper--Pearson}
+\desc El error estándar Monte Carlo (MCSE) cuantifica la imprecisión de una estimación que proviene de $B$ simulaciones. El IC de Clopper--Pearson es el intervalo exacto para una proporción binomial.
+
+\formula
+\begin{gather*}
+\mathrm{MCSE}(\bar\theta^*)=\frac{s_{\theta^*}}{\sqrt B},\qquad \mathrm{MCSE}(\hat q)=\sqrt{\frac{\hat q(1-\hat q)}{B}},\\
+\text{IC}_{CP}=\Big[\mathrm{Beta}_{\alpha/2}(k,\,B-k+1);\ \mathrm{Beta}_{1-\alpha/2}(k+1,\,B-k)\Big].
+\end{gather*}
+
+\uso \fase{S2} Controló la convergencia del Monte Carlo con tolerancias fijadas antes de ejecutar ($\mathrm{MCSE}\le0{,}005$ para una probabilidad). El IC de Clopper--Pearson, simultáneo por Bonferroni, diagnosticó si la decisión de cada permutación podía cambiar por error de simulación.
+
+\subsection{Simulación Monte Carlo binomial y uniformes comunes}
+\desc Genera escenarios sintéticos a partir de un modelo probabilístico con parámetros estimados. Con uniformes comunes, se transforma la misma secuencia aleatoria bajo distintos parámetros, de modo que las diferencias entre escenarios no se deben al ruido de la simulación.
+
+\formula Tasa de un lote de $N$ envíos: $K\sim\mathrm{Binomial}(N,p)$, con tasa $K/N$; $\mathbb E[K/N]=p$ y $\mathrm{DE}=\sqrt{p(1-p)/N}$. Uniformes comunes: $K=F^{-1}_{\mathrm{Bin}(N,p)}(U)$ con la misma $U\sim\mathrm U(0,1)$ para cada $p$.
+
+\uso \fase{S2} Con $p=0{,}5967$ de S1, simuló lotes de 100 a 5.000 envíos ($B=10.000$). Mostró que un lote de 1.000 supera el 60\,\% de atraso en el 40\,\% de los casos solo por azar, y propuso el percentil 99 como límite de alerta. Los uniformes comunes aislaron el efecto de mover $p$ dentro de su IC de Wilson.
+
+\subsection{Generación reproducible de números aleatorios}
+\desc Toda la aleatoriedad del proyecto parte de una semilla externa y verificable, de la que se derivan flujos independientes. Así, reejecutar una técnica no altera las demás.
+
+\formula Semilla $=\mathrm{int}(\texttt{outputValue},16)\bmod 2^{32}$ del pulso 1.053.589 del faro de aleatoriedad de la Universidad de Chile; flujos $=\texttt{SeedSequence(semilla).spawn(10)}$.
+
+\uso \fase{S2, F2, S3} Los hijos 0 a 6 alimentan las técnicas de S2; el 7, la simulación de faltantes de F2; el 8 y el 9, los faltantes y el \emph{bootstrap} de S3. La partición 70/30 de F2 y S3 usa la misma semilla.
+
+\subsection{Análisis de sensibilidad por escenarios y winsorización}
+\desc Evalúa si una conclusión se mantiene cuando cambian los datos o los supuestos. La winsorización recorta los valores extremos a percentiles fijos sin eliminar observaciones.
+
+\formula Winsorización 1/99: $x_i^{w}=\min\{\max\{x_i,\,P_{1}\},\,P_{99}\}$. Escenarios: datos completos, winsorización, exclusión IQR y restricción a descuento $\le10$.
+
+\uso \fase{S2, S3} En S2, la winsorización no cambió ninguna conclusión. En cambio, al restringir a descuento $\le10$ desapareció la asociación del descuento y solo el peso conservó la suya. Esa estabilidad por escenario guió la selección de predictores de la imputación en S3 y, junto con la retroalimentación de F2, el modelamiento por segmento.
+
+% =====================================================================
+\section{Datos faltantes e imputación}\label{sec:faltantes}
+
+\subsection{Mecanismos de faltantes y su simulación}
+\desc Según Little y Rubin, los faltantes son completamente al azar (MCAR) si no dependen de ningún valor; al azar condicionados a lo observado (MAR) si dependen solo de variables observadas, y no aleatorios (MNAR) si dependen del propio valor faltante.
+
+\formula Con $R_{ij}$ el indicador de faltante: MCAR, $P(R\mid Y_{obs},Y_{mis})=P(R)$; MAR, $P(R\mid Y_{obs},Y_{mis})=P(R\mid Y_{obs})$. La simulación MAR de S3 usa
+\[
+P(R_{ij}=1)=\frac1{1+\exp\!\big(-(b_{0j}+\sum_c \gamma_{jc}\,\mathbb 1[z_{ic}])\big)},
+\]
+donde $b_{0j}$ se obtiene por búsqueda de raíces (método de Brent) para que la tasa media sea 10\,\%. La verificación usa una regresión logística de $R_{ij}$ sobre las variables observadas.
+
+\uso \fase{F2, S3} S1 no tenía faltantes, así que se simularon. En F2: MCAR al 5\,\% por predictor, verificado con una prueba $\chi^2$ entre el indicador de faltante y el atraso. En S3: MAR al 10\,\% en peso, costo, compras previas y descuento, dependiente de importancia, bodega, modalidad y género. La prueba de razón de verosimilitudes rechazó MCAR ($p<0{,}001$) y el valor propio no agregó información ($p$ entre 0,17 y 0,65), lo que confirma que el mecanismo es MAR.
+
+\subsection{Eliminación de casos e imputación por mediana}
+\desc La eliminación conserva solo las filas completas. La imputación simple reemplaza cada faltante por la mediana observada, que es robusta a la asimetría.
+
+\formula Eliminación: $\{i: R_{ij}=0\ \forall j\}$. Mediana: $\tilde x_{ij}=\mathrm{mediana}\{x_{kj}:R_{kj}=0\}$ si $R_{ij}=1$.
+
+\uso \fase{F2, S3} En F2, la mediana se calculó solo con el entrenamiento. En S3 fueron dos de las tres estrategias comparadas: la eliminación conservó 7.213 envíos (pierde el 34,4\,\%) y la mediana generó un pico artificial y llevó al segmento $\le10$ a 268 envíos con descuento real mayor que 10.
+
+\subsection{Imputación por regresión lineal múltiple}
+\desc Predice cada valor faltante con una regresión lineal ajustada sobre los casos completos, usando predictores correlacionados con la variable.
+
+\formula $\tilde x_{ij}=\hat\beta_{0}+\sum_k\hat\beta_{k}x_{ik}$, con $\hat\beta$ estimado por mínimos cuadrados (sección~\ref{sec:lineal}); los predictores faltantes se completan provisionalmente con la mediana, y la predicción se recorta al rango observado y se redondea en las variables enteras.
+
+\uso \fase{S3} Imputó 4.360 valores. Los predictores se eligieron de la matriz de Spearman de S1, priorizando las correlaciones estables en S2. Fue la estrategia elegida: tiene el menor error frente a los valores reales (RMSE de 0,92 DE) y conserva toda la muestra. Su limitación es que asignó al segmento $>10$ a 428 envíos con descuento real $\le10$.
+
+\subsection{Prueba de Kolmogorov--Smirnov de dos muestras}
+\desc Compara dos distribuciones mediante la máxima distancia entre sus funciones de distribución empíricas.
+
+\formula $D=\sup_x\big|\hat F_1(x)-\hat F_2(x)\big|$.
+
+\uso \fase{S3} Midió cuánto altera cada estrategia de imputación la distribución de cada variable frente a los datos originales: KS medio de 0,004 (eliminación), 0,048 (mediana) y 0,030 (regresión).
+
+% =====================================================================
+\section{Regresión lineal múltiple}\label{sec:lineal}
+
+\subsection{Regresión lineal múltiple por mínimos cuadrados}
+\desc Modela una variable continua como combinación lineal de predictores, minimizando la suma de residuos al cuadrado.
+
+\formula
+\[
+y=X\beta+\varepsilon,\qquad \hat\beta=(X^\top X)^{-1}X^\top y,\qquad R^2=1-\frac{\sum e_i^2}{\sum(y_i-\bar y)^2},\qquad R^2_{aj}=1-(1-R^2)\frac{n-1}{n-p-1},
+\]
+\[
+\mathrm{RMSE}=\sqrt{\tfrac1n\textstyle\sum e_i^2},\qquad \mathrm{MAE}=\tfrac1n\textstyle\sum|e_i| ,
+\]
+con RMSE y MAE estimados por validación cruzada de 5 particiones.
+
+\uso \fase{S3} Fue el modelo de imputación de cada variable con faltantes. Su capacidad predictiva fue modesta, como anticipaba S1 ($|\rho|\le0{,}32$): $R^2$ de validación cruzada de 0,27 (peso), 0,22 (descuento), 0,11 (costo) y 0,05 (compras previas).
+
+\subsection{Pruebas de supuestos: Jarque--Bera, Breusch--Pagan y Durbin--Watson}
+\desc Jarque--Bera contrasta la normalidad de los residuos por su asimetría y curtosis; Breusch--Pagan, la homocedasticidad; Durbin--Watson, la autocorrelación de primer orden.
+
+\formula Con $S$ y $K$ la asimetría y la curtosis de los residuos, y $R^2_{aux}$ el de regresionar $e_i^2$ sobre los predictores:
+\[
+JB=\frac n6\Big(S^2+\frac{(K-3)^2}{4}\Big)\sim\chi^2_2,\qquad LM_{BP}=n\,R^2_{aux}\sim\chi^2_p,\qquad d=\frac{\sum_{t=2}^n(e_t-e_{t-1})^2}{\sum_t e_t^2} .
+\]
+
+\uso \fase{S3} Diagnosticaron las regresiones de imputación. Jarque--Bera y Breusch--Pagan rechazaron en las cuatro variables, que son discretas y acotadas, lo que afecta los errores estándar pero no la predicción puntual. Durbin--Watson mostró autocorrelación en peso (1,01) y descuento (1,33), coherente con el orden del archivo detectado en S2.
+
+\subsection{Factor de inflación de la varianza (VIF)}
+\desc Mide cuánto aumenta la varianza de un coeficiente por la correlación de su predictor con los demás.
+
+\formula $\mathrm{VIF}_j=\dfrac1{1-R_j^2}$, con $R_j^2$ el de regresionar el predictor $j$ sobre los demás. Referencias: $\mathrm{VIF}<5$ sin problema; 5 a 10, moderado; $>10$, severo.
+
+\uso \fase{F2, S3} En F2, los VIF fueron $\le1{,}25$. En S3 se calcularon para las regresiones de imputación (máximo 1,21) y para los tres modelos logísticos: $\le1{,}26$ en las variables numéricas; las \emph{dummies} de importancia llegan a 3,5 porque comparten la misma referencia.
+
+% =====================================================================
+\section{Regresión logística}\label{sec:logistica}
+
+\subsection{Partición estratificada y estandarización}
+\desc La partición estratificada separa entrenamiento y prueba conservando la proporción de la clase. La estandarización lleva cada predictor a media 0 y DE 1, con parámetros calculados solo en el entrenamiento para evitar fuga de información.
+
+\formula $z_{ij}=(x_{ij}-\bar x_j^{\,tr})/s_j^{\,tr}$; las categóricas se codifican con indicadores $\mathbb 1[x_i=c]$, omitiendo una categoría de referencia.
+
+\uso \fase{F2, S3} Partición 70/30 (7.699 y 3.300 envíos, ambos con 59,67\,\% de atraso), común a todas las estrategias y modelos de S3. Los coeficientes estandarizados permiten comparar predictores con escalas muy distintas.
+
+\subsection{Regresión logística por máxima verosimilitud}
+\desc Modela la probabilidad de un evento binario como una función logística de una combinación lineal de predictores. Los coeficientes se estiman maximizando la log-verosimilitud con el método de Newton--Raphson.
+
+\formula
+\[
+\log\frac{p_i}{1-p_i}=x_i^\top\beta,\qquad \ell(\beta)=\sum_i\big[y_i\log p_i+(1-y_i)\log(1-p_i)\big],
+\]
+\[
+\beta^{(t+1)}=\beta^{(t)}+\big(X^\top W X\big)^{-1}X^\top(y-p),\qquad W=\mathrm{diag}\{p_i(1-p_i)\}.
+\]
+
+\uso \fase{F2, S3} En F2 clasificó el atraso con cuatro predictores (AUC 0,714). En S3 se ajustaron tres modelos en el segmento con descuento $\le10$. Un indicador de descuento $>10$ habría producido separación completa, porque todo ese segmento está atrasado y su coeficiente de máxima verosimilitud no existe. El \emph{bootstrap} reajustó cada modelo con un Newton--Raphson vectorizado, verificado frente a \codigo{statsmodels}.
+
+\subsection{Odds ratio e intervalo de confianza de Wald}
+\desc El odds ratio (OR) indica por cuánto se multiplican las chances del evento al aumentar un predictor, manteniendo constantes los demás.
+
+\formula
+\[
+\mathrm{OR}_j=e^{\beta_j},\qquad \text{IC}_{95\,\%}=\exp\!\big(\hat\beta_j\pm z_{0,975}\,\widehat{\mathrm{EE}}(\hat\beta_j)\big),\qquad \mathrm{OR}_{j}(u)=\exp\!\Big(\hat\beta_j\,\frac{u}{s_j}\Big),
+\]
+donde $\mathrm{OR}_j(u)$ expresa el efecto por $u$ unidades del negocio cuando el predictor está estandarizado.
+
+\uso \fase{F2, S3} En S3, el modelo final da un OR de 0,905 por cada 1.000 g de peso (IC [0,874; 0,936]): cada kilo adicional reduce las chances de atraso en un 9,5\,\%. Los IC de Wald se compararon con los BCa del \emph{bootstrap}.
+
+\subsection{Prueba de razón de verosimilitudes y pseudo-$R^2$ de McFadden}
+\desc La prueba de razón de verosimilitudes (LR) compara modelos anidados. El pseudo-$R^2$ de McFadden mide la mejora de la log-verosimilitud frente al modelo nulo.
+
+\formula $\mathrm{LR}=2\big(\ell_1-\ell_0\big)\sim\chi^2_{\Delta k}$; $\quad R^2_{McF}=1-\ell/\ell_{nulo}$.
+
+\uso \fase{F2, S3} En F2, el pseudo-$R^2$ fue 0,179. En S3, la prueba LR verificó el mecanismo MAR (indicador de faltante sobre variables observadas) y la prueba conjunta de Box--Tidwell.
+
+% =====================================================================
+\section{Selección de modelos}\label{sec:seleccion}
+
+\subsection{Criterios de información AIC y BIC}
+\desc Equilibran ajuste y complejidad. El BIC penaliza más los parámetros cuando $n$ es grande, por lo que favorece modelos más parsimoniosos.
+
+\formula $\mathrm{AIC}=2k-2\ell(\hat\beta),\qquad \mathrm{BIC}=k\ln n-2\ell(\hat\beta)$, con $k$ el número de parámetros.
+
+\uso \fase{S3} El AIC guió el \emph{stepwise} y el BIC eligió el modelo reducido. Fue además el criterio de desempate entre modelos con AUC de prueba equivalente (tolerancia de 0,005).
+
+\subsection{Selección \emph{stepwise} por AIC y mejor subconjunto por BIC}
+\desc El \emph{stepwise} bidireccional parte del intercepto; en cada paso aplica la entrada o salida de variable que más reduce el AIC y se detiene cuando ningún cambio lo reduce. El mejor subconjunto evalúa todas las combinaciones de candidatas y elige la de mínimo BIC.
+
+\formula $\mathcal M_{t+1}=\arg\min_{\mathcal M\in\mathcal N(\mathcal M_t)}\mathrm{AIC}(\mathcal M)$ mientras $\mathrm{AIC}(\mathcal M_{t+1})<\mathrm{AIC}(\mathcal M_t)$; $\quad\mathcal M^\star=\arg\min_{\mathcal M\subseteq\mathcal C}\mathrm{BIC}(\mathcal M)$, con $|\mathcal C|=8$ ($2^8=256$ subconjuntos).
+
+\uso \fase{S3} En el segmento $\le10$, el \emph{stepwise} eligió peso, compras previas, importancia y costo (M2); el mejor subconjunto por BIC eligió solo el peso (M3), que fue el modelo final y coincide con la única asociación robusta de S2. Las variables categóricas entran y salen como bloque.
+
+% =====================================================================
+\section{Diagnóstico de la regresión logística}\label{sec:diagnostico}
+
+\subsection{Prueba de Box--Tidwell y logit empírico}
+\desc Box--Tidwell contrasta la linealidad en el logit agregando el término $x\ln x$ de cada predictor continuo positivo. El logit empírico por grupos muestra gráficamente la forma de la relación.
+
+\formula Modelo ampliado: $\log\frac{p}{1-p}=\beta_0+\beta_1x+\gamma\,x\ln x$, con $H_0:\gamma=0$. Logit empírico del grupo $g$: $\log\dfrac{y_g+0{,}5}{n_g-y_g+0{,}5}$.
+
+\uso \fase{S3} Rechazó la linealidad del peso ($p<0{,}001$). El logit empírico por deciles mostró un efecto no monótono, con el atraso máximo cerca de 3.000 g, coherente con la bimodalidad del peso descrita en S1.
+
+\subsection{Influencia: \emph{leverage}, distancia de Cook y DFBETAS}
+\desc Identifican observaciones con gran peso en el ajuste: el \emph{leverage}, por la posición en el espacio de predictores; Cook, por el cambio global de las predicciones; DFBETAS, por el cambio de cada coeficiente.
+
+\formula Con $H=W^{1/2}X(X^\top WX)^{-1}X^\top W^{1/2}$ y $r_{P,i}$ el residuo de Pearson:
+\[
+h_{ii}=H_{ii},\qquad D_i=\frac{r_{P,i}^2\,h_{ii}}{p\,(1-h_{ii})^2},\qquad \mathrm{DFBETAS}_{ij}=\frac{\hat\beta_j-\hat\beta_{j(i)}}{\widehat{\mathrm{EE}}_{(i)}(\hat\beta_j)} .
+\]
+Umbrales: $h_{ii}>2p/n$, $D_i>4/n$ y $|\mathrm{DFBETAS}_{ij}|>2/\sqrt n$.
+
+\uso \fase{S3} 523 de 5.572 envíos tuvieron alguna alerta: todas por \emph{leverage} (pesos extremos), 177 también por DFBETAS y ninguna por Cook. Al excluirlos, el OR del peso pasa de 0,905 a 0,853, con la misma dirección; se conservaron por ser valores válidos.
+
+\subsection{Residuos de \emph{deviance}, de Pearson y agrupados}
+\desc En la regresión logística los residuos individuales toman dos valores para cada probabilidad. Por eso el diagnóstico se basa en residuos agrupados: el promedio de $y-\hat p$ dentro de grupos de probabilidad ajustada similar, con su banda de confianza.
+
+\formula
+\[
+r_{P,i}=\frac{y_i-\hat p_i}{\sqrt{\hat p_i(1-\hat p_i)}},\qquad
+r_{D,i}=\operatorname{sign}(y_i-\hat p_i)\sqrt{-2\big[y_i\log\hat p_i+(1-y_i)\log(1-\hat p_i)\big]},
+\]
+\[
+\bar r_g=\frac1{n_g}\sum_{i\in g}(y_i-\hat p_i),\qquad \text{banda}_g=\pm1{,}96\,\frac{\sqrt{\sum_{i\in g}\hat p_i(1-\hat p_i)}}{n_g} .
+\]
+
+\uso \fase{S3} 7 de los 20 grupos quedaron fuera de la banda, cuando por azar se esperaría uno. Los residuos positivos se concentran en los pesos cercanos a 3.000 g: es la misma falta de linealidad que detectó Box--Tidwell.
+
+% =====================================================================
+\section{Evaluación del desempeño predictivo}\label{sec:evaluacion}
+
+\subsection{Matriz de confusión y métricas de clasificación}
+\desc Con un umbral sobre la probabilidad predicha, cada envío se clasifica como verdadero positivo (VP), falso positivo (FP), verdadero negativo (VN) o falso negativo (FN). Las métricas resumen esos conteos.
+
+\formula
+\begin{gather*}
+\text{Exactitud}=\frac{VP+VN}{n},\qquad \text{Precisión}=\frac{VP}{VP+FP},\qquad \text{Sensibilidad}=\frac{VP}{VP+FN},\\
+\text{Especificidad}=\frac{VN}{VN+FP},\qquad F_1=\frac{2\,\text{Prec}\cdot\text{Sens}}{\text{Prec}+\text{Sens}} .
+\end{gather*}
+
+\uso \fase{F2, S3} Con umbral 0,5 y frente a la línea base de la clase mayoritaria (59,67\,\%). En S3, el clasificador combinado alcanza una exactitud de 0,659, frente a 0,628 en F2, y una especificidad de 0,751, frente a 0,538.
+
+\subsection{Curva ROC, AUC y umbral de Youden}
+\desc La curva ROC representa la sensibilidad frente a $1-$especificidad para todos los umbrales. El AUC es la probabilidad de que un envío atrasado reciba mayor probabilidad que uno puntual, por lo que no depende del umbral. El umbral de Youden maximiza la distancia de la curva a la diagonal.
+
+\formula
+\[
+\mathrm{AUC}=P(\hat p_{1}>\hat p_{0})=\frac{U}{n_1n_0},\qquad J=\max_c\,\big[\text{Sens}(c)+\text{Espec}(c)-1\big].
+\]
+Lectura (Hosmer et al., 2013): 0,5--0,7 pobre; 0,7--0,8 aceptable; 0,8--0,9 excelente.
+
+\uso \fase{F2, S3} En F2, el AUC fue 0,714 en la prueba, pero 0,521 en el segmento con descuento $\le10$; el umbral de Youden mostró que el modelo reconocía casi solo el segmento $>10$. En S3, el modelo final por segmento sube el AUC a 0,551 en el segmento $\le10$ y a 0,720 en todos los envíos. La equivalencia con la U de Mann--Whitney se usó como verificación.
+
+\subsection{Validación cruzada estratificada de $k$ particiones}
+\desc Divide los datos en $k$ partes con la misma proporción de la clase; entrena con $k-1$ y evalúa en la restante, rotando $k$ veces. Estima el desempeño y su variabilidad.
+
+\formula $\widehat{\mathrm{AUC}}_{CV}=\frac1k\sum_{f=1}^k\mathrm{AUC}_f$, con $\mathrm{DE}$ entre particiones; en S3, $\mathrm{RMSE}_{CV}$ y $R^2_{CV}$ con $k=5$.
+
+\uso \fase{F2, S3} En F2, con $k=10$: AUC $0{,}714\pm0{,}010$, igual al de la prueba, sin sobreajuste. En S3 estimó el desempeño de las regresiones de imputación.
+
+\subsection{Clasificador combinado por segmento y análisis de costos}
+\desc Combina una regla determinística para el segmento cuyo resultado es conocido con un modelo estadístico para el resto. El análisis de costos compara modelos según el peso relativo de los dos tipos de error.
+
+\formula
+\[
+\hat p_i=\begin{cases}\hat\pi_{>10}, & \text{descuento}_i>10\\ \operatorname{logit}^{-1}(x_i^\top\hat\beta), & \text{descuento}_i\le10\end{cases},\qquad \text{Costo}(r)=r\cdot FN+FP,
+\]
+con $\hat\pi_{>10}$ la tasa observada en el entrenamiento y $r$ el costo relativo FN:FP (1, 2 y 5).
+
+\uso \fase{S3} Aplicó la recomendación de F2: el segmento $>10$ (100\,\% atrasado en S1) se clasifica con la regla y el segmento $\le10$ con el modelo logístico, lo que evita la separación completa. Permitió comparar el desempeño global con el AUC de 0,714 de F2.
+
+% =====================================================================
+\section{Técnicas complementarias de la Formativa 2}\label{sec:complementarias}
+Se aplicaron en F2 como análisis adicionales para confirmar decisiones. La retroalimentación de F2 indicó que quedan fuera del alcance del curso, por lo que S3 no las usa.
+
+\subsection{Regularización L1 y L2 con búsqueda en grilla}
+\desc Penaliza la magnitud de los coeficientes para reducir la varianza del modelo; la búsqueda en grilla elige la intensidad de la penalización por validación cruzada.
+
+\formula $\hat\beta=\arg\min_\beta\Big[-\ell(\beta)+\frac1C\big(\lambda_1\|\beta\|_1+\tfrac{1-\lambda_1}{2}\|\beta\|_2^2\big)\Big]$, con $C\in\{10^{-3},\dots,10^3\}$ y $\lambda_1\in\{0,1\}$.
+
+\uso \fase{F2} La penalización más fuerte ganó 0,007 de AUC, pero empeoró la calibración y sesgó los OR. Se interpretó como síntoma de que el término lineal del descuento estaba mal especificado.
+
+\subsection{Eliminación recursiva de variables (RFE)}
+\desc Ajusta el modelo, elimina el predictor con menor $|\hat\beta|$ estandarizado y repite hasta quedar con $k$ variables; su versión con validación cruzada elige $k$.
+
+\formula $\mathcal M_{k-1}=\mathcal M_k\setminus\{\arg\min_{j\in\mathcal M_k}|\hat\beta_j|\}$.
+
+\uso \fase{F2} Confirmó el orden de importancia de la selección analítica: descuento, peso, compras previas y costo.
+
+\subsection{Puntaje de Brier}
+\desc Error cuadrático medio entre la probabilidad predicha y el resultado observado; menor es mejor. Mide la calibración y la discriminación conjuntamente.
+
+\formula $\mathrm{BS}=\dfrac1n\displaystyle\sum_{i=1}^n(\hat p_i-y_i)^2$.
+
+\uso \fase{F2} Mostró que el modelo penalizado empeoraba la calibración: el puntaje subió de 0,197 a 0,204.
+
+% =====================================================================
+\section*{Bibliografía}
+\addcontentsline{toc}{section}{Bibliografía}
+{\footnotesize\setlength{\parindent}{-1.5em}\setlength{\leftskip}{1.5em}\setlength{\parskip}{0.2em}
+Box, G. E. P., \& Tidwell, P. W. (1962). Transformation of the independent variables. \emph{Technometrics, 4}(4), 531--550.
+
+Breusch, T. S., \& Pagan, A. R. (1979). A simple test for heteroscedasticity and random coefficient variation. \emph{Econometrica, 47}(5), 1287--1294.
+
+Clopper, C. J., \& Pearson, E. S. (1934). The use of confidence or fiducial limits illustrated in the case of the binomial. \emph{Biometrika, 26}(4), 404--413.
+
+Cook, R. D. (1977). Detection of influential observation in linear regression. \emph{Technometrics, 19}(1), 15--18.
+
+Cramér, H. (1946). \emph{Mathematical methods of statistics}. Princeton University Press.
+
+Durbin, J., \& Watson, G. S. (1950). Testing for serial correlation in least squares regression. \emph{Biometrika, 37}(3/4), 409--428.
+
+Efron, B. (1987). Better bootstrap confidence intervals. \emph{Journal of the American Statistical Association, 82}(397), 171--185.
+
+Efron, B., \& Tibshirani, R. J. (1993). \emph{An introduction to the bootstrap}. Chapman \& Hall.
+
+Gelman, A., \& Hill, J. (2007). \emph{Data analysis using regression and multilevel/hierarchical models}. Cambridge University Press.
+
+Gopalani, P. (2021). \emph{E-Commerce Shipping Data} (versión 1) [Conjunto de datos]. Kaggle.
+
+Holm, S. (1979). A simple sequentially rejective multiple test procedure. \emph{Scandinavian Journal of Statistics, 6}(2), 65--70.
+
+Hosmer, D. W., Lemeshow, S., \& Sturdivant, R. X. (2013). \emph{Applied logistic regression} (3.\textsuperscript{a} ed.). Wiley.
+
+Jarque, C. M., \& Bera, A. K. (1987). A test for normality of observations and regression residuals. \emph{International Statistical Review, 55}(2), 163--172.
+
+Little, R. J. A., \& Rubin, D. B. (2019). \emph{Statistical analysis with missing data} (3.\textsuperscript{a} ed.). Wiley.
+
+Mann, H. B., \& Whitney, D. R. (1947). On a test of whether one of two random variables is stochastically larger than the other. \emph{The Annals of Mathematical Statistics, 18}(1), 50--60.
+
+McFadden, D. (1974). Conditional logit analysis of qualitative choice behavior. En P. Zarembka (Ed.), \emph{Frontiers in econometrics} (pp. 105--142). Academic Press.
+
+Newcombe, R. G. (1998). Interval estimation for the difference between independent proportions: Comparison of eleven methods. \emph{Statistics in Medicine, 17}(8), 873--890.
+
+Spearman, C. (1904). The proof and measurement of association between two things. \emph{The American Journal of Psychology, 15}(1), 72--101.
+
+Welch, B. L. (1947). The generalization of ``Student's'' problem when several different population variances are involved. \emph{Biometrika, 34}(1/2), 28--35.
+
+Wilson, E. B. (1927). Probable inference, the law of succession, and statistical inference. \emph{Journal of the American Statistical Association, 22}(158), 209--212.
+
+Youden, W. J. (1950). Index for rating diagnostic tests. \emph{Cancer, 3}(1), 32--35.
+}
+
+\end{document}
