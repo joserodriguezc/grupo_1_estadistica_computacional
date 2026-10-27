@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 
 % ===================== Página y utilidades ========================
-\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[left=2.3cm,right=2.3cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{array}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -42,8 +42,8 @@
 % ===================== Estilo de títulos ===========================
 \titleformat{\section}{\large\bfseries\color{negro}}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalsize\bfseries\color{negro}}{\thesubsection}{0.5em}{}
-\titlespacing*{\section}{0pt}{1.0em}{0.3em}
-\titlespacing*{\subsection}{0pt}{0.7em}{0.2em}
+\titlespacing*{\section}{0pt}{0.7em}{0.2em}
+\titlespacing*{\subsection}{0pt}{0.5em}{0.15em}
 
 % ===================== Pie de página ===============================
 \pagestyle{fancy}
@@ -54,8 +54,13 @@
 \renewcommand{\footrulewidth}{0.4pt}
 
 % ===================== Ajustes del informe =========================
-\captionsetup{font=small,labelfont=bf,skip=3pt}
-\setlength{\floatsep}{6pt}\setlength{\textfloatsep}{8pt}\setlength{\intextsep}{6pt}
+\captionsetup{font=small,labelfont=bf,skip=2pt}
+\setlength{\floatsep}{4pt}\setlength{\textfloatsep}{5pt}\setlength{\intextsep}{4pt}
+% Permite ubicar tablas y figuras sin dejar grandes huecos al final de página.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
 \setlist{nosep,leftmargin=1.2em}
 \newcommand{\fig}[4]{\begin{figure}[!htb]\centering\includegraphics[width=#1\linewidth]{../../outputs/figuras/#2}\caption{#3}\label{#4}\end{figure}}
 \newcommand{\codigo}[1]{{\small\texttt{#1}}}
@@ -69,7 +74,7 @@
 \newcommand{\proyRepo}{\url{https://github.com/joserodriguezc/grupo_1_estadistica_computacional}}
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.3em}
+\setlength{\parskip}{0.15em}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -106,7 +111,7 @@ Repositorio GitHub:  & \proyRepo \\
 \pagenumbering{arabic}
 
 % =====================================================================
-% Máximo 10 páginas (portada aparte). Presupuesto de páginas por sección.
+% Máximo 10 páginas totales, incluida la portada.
 % Cada sección declara qué fase (S1, S2, S3) informa a la siguiente.
 % Todas las cifras deben provenir de sumativa_3/outputs/tablas/.
 % =====================================================================
@@ -220,7 +225,7 @@ Criterio & Eliminación & Mediana & Regresión\\\midrule
 \end{table}
 
 \textbf{Comparación y decisión.} La tabla~\ref{tab:estrategias} y la figura~\ref{fig:estrategias} muestran un compromiso:
-\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=1pt]
 \item La \textbf{eliminación} conserva distribuciones, correlaciones y segmentos, porque las variables que generan los faltantes se relacionan poco con las numéricas. A cambio, pierde el 34,4\,\% de los envíos y reduce el entrenamiento a 5.058.
 \item La \textbf{mediana} es la peor en casi todos los criterios. Atenúa la correlación del descuento con el atraso (0,313 frente a 0,335 en S1) y, al imputar el descuento con 7, lleva al segmento $\le 10$ a 268 envíos con descuento real $> 10$, todos atrasados.
 \item La \textbf{regresión} conserva la muestra completa y tiene el menor error frente al valor real. Mantiene la relación con el atraso de los dos predictores principales de S1: descuento (0,333) y peso ($-0{,}265$ frente a $-0{,}266$). Su costo es el de toda imputación determinista: reduce la variabilidad, acentúa la correlación peso--descuento ($-0{,}316 \to -0{,}359$) y, al predecir descuentos cerca de la media, desplaza al segmento $> 10$ a 428 envíos con descuento real $\le 10$.
@@ -293,19 +298,20 @@ M2 & Importancia media / alta & [$-0{,}523$; $-0{,}123$] & [$-0{,}522$; $-0{,}12
 M3 se reajustó con cada dataset de la Parte 1 y con los \textbf{datos originales sin faltantes}, con el mismo flujo: partición común, segmento según el descuento de cada dataset y regla para $> 10$. Como los faltantes son simulados, todos los modelos se evaluaron además en una \textbf{prueba común con valores reales} (los mismos 3.300 envíos, con sus valores y segmentos originales), de modo que las diferencias de desempeño se deben solo a los coeficientes.
 
 \begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
-\caption{M3 según la estrategia de faltantes: segmento, OR del peso por 1.000 g (IC 95\,\% de Wald) y AUC del clasificador combinado en la prueba propia y en la común.}\label{tab:impacto}
-\begin{tabular}{@{}lrrlrrr@{}}\toprule
- & Entren. & Segmento & & Dif. con & \multicolumn{2}{c}{AUC combinado}\\\cmidrule(l){6-7}
-Estrategia & $\le 10$ & equivocado & OR del peso & el original & Propia & Común\\\midrule
-Eliminación & 3.840 & 0 & 0,899 [0,865; 0,936] & $-0{,}4$\,\% & 0,733 & 0,736\\
-Mediana & 6.043 & 268 & 0,873 [0,844; 0,902] & $\mathbf{-3{,}4}$\,\% & 0,729 & 0,736\\
-Regresión & 5.572 & 447 & \textbf{0,905} [0,874; 0,936] & $\mathbf{+0{,}1}$\,\% & 0,720 & 0,736\\
-Original & 5.859 & --- & 0,903 [0,875; 0,933] & --- & 0,736 & 0,736\\
+\caption{M3 según la estrategia de faltantes: OR del peso por 1.000 g (IC 95\,\% de Wald), AUC y exactitud (accuracy) del clasificador combinado.}\label{tab:impacto}
+\begin{tabular}{@{}lrlrrrr@{}}\toprule
+ & Entren. & & \multicolumn{2}{c}{AUC combinado} & \multicolumn{2}{c}{Accuracy (\%)}\\\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Estrategia & $\le 10$ & OR del peso & Propia & Común & Propia & Común\\\midrule
+Eliminación & 3.840 & 0,899 [0,865; 0,936] & 0,733 & 0,736 & 66,73 & 66,67\\
+Mediana & 6.043 & 0,873 [0,844; 0,902] & 0,729 & 0,736 & 66,52 & 67,48\\
+Regresión & 5.572 & \textbf{0,905} [0,874; 0,936] & 0,720 & 0,736 & 65,94 & 66,70\\
+Original & 5.859 & 0,903 [0,875; 0,933] & 0,736 & 0,736 & 66,67 & 66,67\\
 \bottomrule\end{tabular}
 \end{table}
 
-\textbf{¿Cambian las conclusiones?} No en dirección, significancia ni capacidad de ordenar los envíos: el peso es negativo y significativo con las cuatro opciones, y en la prueba común el AUC es idéntico (0,553 en el segmento y 0,736 combinado). Sí cambian dos aspectos (tabla~\ref{tab:impacto}, figura~\ref{fig:impacto}):
-\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\textbf{Exactitud a umbral 0,5.} La prueba propia usa 2.155 envíos con eliminación y 3.300 con las demás estrategias; la común usa los mismos 3.300 en todos los casos. Aunque el AUC común coincide, la exactitud varía: la regresión no la maximiza. Su elección prioriza conservar la muestra y aproximar el OR de los datos originales.
+
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=1pt]
 \item \textbf{La magnitud del efecto del peso}, sesgada solo por la mediana: al llevar al segmento $\le 10$ a 268 envíos con descuento real $> 10$, todos atrasados, su OR se aleja un 3,4\,\% del original, que queda fuera de su IC. La regresión (+0,1\,\%) y la eliminación ($-0{,}4$\,\%) lo reproducen, y la regresión da un IC un 12\,\% más estrecho que la eliminación.
 \item \textbf{La asignación del segmento}, que con la regresión reduce el AUC combinado en la prueba propia (0,720 frente a 0,736): la regla clasifica como atrasados a los 428 envíos con descuento real $\le 10$ que la imputación llevó sobre 10. El costo está en la regla, no en el modelo.
 \end{itemize}
@@ -318,14 +324,14 @@ Original & 5.859 & --- & 0,903 [0,875; 0,933] & --- & 0,736 & 0,736\\
 % 1,25 páginas. Qué se confirma de S1 y S2; límites (descuento, bloque 1-3.135,
 % MAR simulado, causalidad) y validez externa.
 \textbf{Qué confirma S3 de S1 y S2.} El modelamiento llega, por un camino distinto, a la misma jerarquía de evidencia:
-\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=1pt]
 \item \textbf{El peso es el factor robusto.} Es la única variable del modelo de mínimo BIC, conserva su signo en el 100\,\% de las réplicas \emph{bootstrap}, mantiene su efecto con las tres estrategias de faltantes y sobrevive a las alertas de influencia.
 \item \textbf{El descuento importa solo como umbral.} Sobre 10 determina el atraso en S1; bajo 10 su OR es 0,992 ($p = 0{,}40$) y cambia de signo en una de cada cinco réplicas. Esto explica por qué la F2 discriminaba como el azar fuera de ese segmento.
 \item \textbf{La modalidad no se asocia con el atraso} (T01 de S1): ningún procedimiento de selección la incorporó. Importancia, compras previas y costo tienen efectos pequeños y, el costo, inestables.
 \end{itemize}
 
 \textbf{Límites.}
-\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\begin{itemize}[leftmargin=*,itemsep=0pt,topsep=1pt]
 \item \textbf{Poca señal fuera del descuento alto.} En el segmento $\le 10$ el mejor AUC es 0,551, apenas sobre el 0,521 de F2.
 \item \textbf{Forma funcional del peso.} El efecto es no monótono, con un máximo de atraso cerca de 3.000 g, y el modelo lineal solo captura la tendencia. Los OR describen esa tendencia, no un efecto constante en todo el rango.
 \item \textbf{El segmento $> 10$ podría ser un artefacto de registro.} S2 mostró que coincide con los envíos 1 a 3.135 del archivo. La regla funciona en estos datos, pero si el segmento refleja la forma en que se armó el archivo y no una política de descuentos, no se trasladaría a envíos nuevos.
@@ -339,7 +345,7 @@ Original & 5.859 & --- & 0,903 [0,875; 0,933] & --- & 0,736 & 0,736\\
 \textbf{Respuesta a la pregunta de S1.} El atraso se asocia sobre todo con dos características: un \textbf{descuento mayor que 10}, que en estos datos implica atraso en el 100\,\% de los casos, y, fuera de ese segmento, un \textbf{menor peso}, cuyo efecto es el único robusto a todas las validaciones de S2 y S3. Las demás variables tienen efectos pequeños, inestables o nulos.
 
 \textbf{Recomendaciones para la empresa:}
-\begin{enumerate}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\begin{enumerate}[leftmargin=*,itemsep=0pt,topsep=1pt]
 \item \textbf{Auditar los envíos con descuento mayor que 10} (24\,\% de los envíos), como propuso S1: verificar si el descuento es una compensación posterior al atraso, una política comercial o un efecto de cómo se registraron los envíos 1 a 3.135. Es la acción con mayor potencial y la que define si la regla sirve para envíos futuros.
 \item \textbf{Revisar el proceso de los envíos livianos}, en especial los cercanos a 3.000 g, donde el atraso es máximo dentro del segmento $\le 10$.
 \item \textbf{Usar el clasificador combinado (M3 más la regla) solo como apoyo descriptivo para priorizar revisiones}, no como predictor operacional: identifica el 59,7\,\% de los atrasos con un 78\,\% de precisión, pero dentro del segmento $\le 10$ su capacidad de discriminación es baja (AUC 0,551).
