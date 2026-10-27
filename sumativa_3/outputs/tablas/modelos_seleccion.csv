@@ -1,4 +1,4 @@
-modelo,variables,n,n_parametros,aic,bic,intercepto,convergio,auc,fn,fp,elegible_auc,costo_fn_1_fp_1,costo_fn_2_fp_1,costo_fn_5_fp_1,seleccionado
-M1,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas",7699,5,8639.7175212911,8674.46174993749,0.8074409251176053,True,0.7153617739118623,625,595,True,1220,1845,3720,True
-M2,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas, importancia_producto",7699,7,8629.406110826018,8678.048030930964,1.1253041635674654,True,0.7161617391125176,628,578,True,1206,1834,3718,False
-M3,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas",7699,5,8639.7175212911,8674.46174993749,0.8074409251176053,True,0.7153617739118623,625,595,True,1220,1845,3720,False
+modelo,variables,n,n_parametros,aic,bic,intercepto,convergio,auc,fn,fp,auc_combinado_prueba,elegible_auc,costo_fn_1_fp_1,costo_fn_2_fp_1,costo_fn_5_fp_1,seleccionado
+M1,"peso_gramos, descuento_ofrecido, costo_producto, compras_previas",5572,5,7671.04313909407,7704.170685768569,-0.11653323727290117,True,0.5426227879868859,775,275,0.7158536199140776,False,1050,1825,4150,False
+M2,"peso_gramos, costo_producto, compras_previas, importancia_producto",5572,6,7663.622348741414,7703.375404750812,0.14381716640209746,True,0.540510817462291,739,327,0.7147258845691997,False,1066,1805,4022,False
+M3,peso_gramos,5572,2,7677.275948033612,7690.526966703411,-0.11615144624752051,True,0.5508198490214405,793,263,0.7202306296048557,True,1056,1849,4228,True

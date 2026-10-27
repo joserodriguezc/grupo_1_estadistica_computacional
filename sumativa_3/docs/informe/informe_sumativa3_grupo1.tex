@@ -126,7 +126,7 @@ Una empresa de comercio electrónico de productos electrónicos registró 10.999
 \textbf{Sumativa 3 (S3): modelamiento.} Esta fase pasa de describir asociaciones a \textbf{clasificar el atraso}. Cada decisión se fundamenta en un resultado de S1 o de S2:
 \begin{itemize}
 \item manejo de datos faltantes, con imputación por regresión lineal múltiple y comparación de estrategias;
-\item tres modelos de regresión logística, con variables elegidas por S1 y S2, por selección \emph{stepwise} y por criterios de información;
+\item tres modelos de regresión logística en el segmento con descuento $\le 10$ (variables de S1 y S2, \emph{stepwise} por AIC y reducido por BIC), con una regla para el segmento $> 10$, todo atrasado;
 \item estabilidad de los coeficientes por \emph{bootstrap} y diagnóstico de supuestos;
 \item impacto de la estrategia de imputación sobre el modelo final.
 \end{itemize}
@@ -152,7 +152,7 @@ Ningún valor faltante en 10.999 envíos & S1 & Simular faltantes con un mecanis
 Matriz de Spearman entre variables numéricas & S1 & Origen de los predictores de cada regresión de imputación\\
 Bloque peso--costo--compras--llamadas estable; descuento inestable & S2 & Priorizar predictores estables al imputar\\
 Extremos IQR válidos; winsorizar no cambia nada y excluir cambia la población & S1, S2 & Conservar los outliers\\
-Peso robusto; descuento dependiente del segmento $> 10$; costo y compras débiles & S1, S2 & Variables del modelo basado en S1 y S2; diagnóstico de linealidad del descuento\\
+Peso robusto; descuento dependiente del segmento $> 10$ (100\,\% atrasado); costo y compras débiles & S1, S2, F2 & Modelos en el segmento $\le 10$ y regla para $> 10$; variables del modelo basado en S1 y S2\\
 Modalidad sin asociación (T01) & S1, S2 & Candidata solo para la selección automática\\
 Llamadas y calificación posiblemente posteriores a la entrega & S1 & Excluidas como predictores del atraso\\
 Envíos 1 a 3.135 todos atrasados & S2 & Excluir el identificador (fuga de información)\\

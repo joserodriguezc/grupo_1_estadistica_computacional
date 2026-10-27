@@ -1,0 +1,5 @@
+conjunto,segmento,envios,tasa_atraso
+entrenamiento,descuento <= 10 (modelo),5572,0.47110552763819097
+entrenamiento,descuento > 10 (regla),2127,0.925716972261401
+prueba,descuento <= 10 (modelo),2371,0.467313369886124
+prueba,descuento > 10 (regla),929,0.9268030139935415
