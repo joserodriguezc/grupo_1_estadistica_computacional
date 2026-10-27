@@ -160,7 +160,11 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \end{tabular}\end{table}
 \subsection{Datos faltantes e imputación por regresión}
 % Faltantes en S1, simulación MAR, predictores (S1 + estabilidad S2), supuestos y estrategias.
-\emph{(Pendiente.)}
+\textbf{Simulación de faltantes (S1 $\to$ S3).} Como S1 no registró faltantes, se eliminó cerca del 10\,\% de los valores de las cuatro variables numéricas candidatas a predictor (peso, costo, compras previas y descuento) mediante un mecanismo \textbf{de faltantes al azar condicionados a lo observado (MAR)}, declarado de antemano. La probabilidad de faltar es una función logística de variables completas (importancia, bodega, modalidad y género), con efectos distintos para cada variable y un intercepto calibrado para una tasa media del 10\,\%. Por diseño, el mecanismo no depende del valor propio, lo que lo haría no aleatorio (MNAR), ni del atraso, para no contaminar la evaluación posterior. El mecanismo se verificó con una regresión logística del indicador de faltante: la prueba de razón de verosimilitud (LR) sobre las variables observadas contrasta la hipótesis de faltantes completamente al azar (MCAR), y el coeficiente del valor propio contrasta la de MNAR.
+
+\textbf{Imputación por regresión lineal múltiple (S1 y S2 $\to$ S3).} Se ajustó una regresión por variable, por mínimos cuadrados con sus casos completos. Los predictores se tomaron de la matriz de Spearman de S1 con una regla explícita: se incluyen las correlaciones estables en los cuatro escenarios de S2, se agregan las inestables con $|\rho| \ge 0{,}30$ y, si quedan menos de tres, se usan todas las candidatas. Así, el peso se imputa con descuento, compras previas, llamadas y costo; el costo y las compras previas, con sus tres correlatos estables; y el descuento, sin ninguna correlación estable en S2, con las cuatro candidatas. El atraso nunca es predictor. Se evaluaron los supuestos de linealidad, homocedasticidad (Breusch-Pagan), normalidad (Jarque-Bera), independencia (Durbin-Watson) y multicolinealidad (VIF), y el desempeño mediante $R^2$ y la raíz del error cuadrático medio (RMSE) con validación cruzada de 5 particiones. Cuando un predictor también faltaba, se completó provisionalmente con su mediana; las predicciones se recortaron al rango observado y se redondearon, porque las cuatro variables son enteras.
+
+\textbf{Comparación de estrategias.} La imputación por regresión se comparó con la eliminación de filas incompletas y con la imputación por la mediana, con cinco criterios: (a) tamaño resultante; (b) distribución frente a los datos originales (media, DE y prueba de Kolmogorov-Smirnov, KS); (c) preservación de las correlaciones de Spearman de S1; (d) error frente al \textbf{valor real}, que se conoce porque los faltantes son simulados; y (e) asignación al segmento de descuento de S1 ($> 10$, todo atrasado), que la Parte 2 usa para separar el modelo de la regla.
 \subsection{Regresión logística: preparación, selección y evaluación}\label{sec:met-modelos}
 \textbf{Preparación informada por S1 y S2.} Se utiliza el dataset elegido de imputación por regresión y la partición común de la sección~\ref{sec:datos}. Se conservan los extremos: S1 los identificó como válidos y S2 mostró que winsorizar no alteraba las conclusiones. Las numéricas se estandarizan con media y desviación estándar (DE) del entrenamiento; las categóricas se codifican mediante indicadores, omitiendo el primer nivel ordenado como referencia. Se excluyen el identificador por la estructura detectada en S2, y llamadas y calificación por su posible registro posterior a la entrega.
 
@@ -171,13 +175,56 @@ IC percentil y BCa validados con $B = 10.000$ & S2 & Mismo método para la estab
 \textbf{Alcance.} La evaluación es exploratoria: prueba participa en la elección y la imputación principal se ajustó antes de separar los conjuntos. Aunque no utiliza el atraso, incorpora información de los predictores de prueba. Además, llamadas interviene indirectamente en la imputación, por lo que su disponibilidad temporal debe revisarse antes de uso operacional. Los IC son condicionales al modelo y al dataset imputado; no incorporan incertidumbre por selección o imputación.
 
 \subsection{Estabilidad y diagnóstico}
-% Bootstrap de los coeficientes y diagnóstico (VIF, linealidad en el logit, influyentes y residuos).
-\emph{(Pendiente.)}
+\textbf{Estabilidad por \emph{bootstrap} (S2 $\to$ S3).} Con el mismo método que S2 validó, se aplicó un \emph{bootstrap} no paramétrico por pares a los coeficientes: $B = 10.000$ remuestras con reemplazo de los 5.572 envíos de entrenamiento del segmento $\le 10$, con el flujo de semilla reservado para S3. En cada remuestra se reajustaron los tres modelos con las mismas filas. Para cada coeficiente se calcularon los IC 95\,\% percentil y BCa (aceleración por \emph{jackknife}), comparados con el IC de Wald; la razón entre el error estándar (EE) \emph{bootstrap} y el de Wald, y el \textbf{porcentaje de réplicas que conservan el signo} de la estimación. Un coeficiente se considera \textbf{inestable} si su IC BCa incluye el cero (el de su OR incluye el 1), si conserva el signo en menos del 97,5\,\% de las réplicas o si su EE \emph{bootstrap} supera en más de un 20\,\% al de Wald.
+
+% Diagnóstico del modelo final (VIF, linealidad en el logit, influyentes y residuos).
+\emph{(Pendiente: diagnóstico.)}
 
 \section{Resultados integrados}\label{sec:resultados}
 % 4 páginas en total.
-\subsection{Datos faltantes e imputación}
-\emph{(Pendiente.)}
+\subsection{Datos faltantes e imputación}\label{sec:result-faltantes}
+\textbf{Faltantes simulados.} Cada variable perdió entre el 9,6\,\% y el 10,1\,\% de sus valores (tabla~\ref{tab:imputacion}); 3.786 envíos (34,4\,\%) tienen al menos un faltante y quedan 7.213 casos completos. El mecanismo es MAR: la prueba LR rechaza MCAR en las cuatro variables ($\chi^2_9$ entre 128,4 y 174,2; $p < 0{,}001$), mientras que el valor propio no aporta una vez controladas las observadas ($p$ entre 0,17 y 0,65).
+
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Faltantes simulados y desempeño de las regresiones de imputación ($R^2$ y RMSE con validación cruzada de 5 particiones).}\label{tab:imputacion}
+\begin{tabular}{@{}lrrlrrr@{}}\toprule
+Variable & Faltantes & \% & Predictores & $n$ de ajuste & $R^2$ & RMSE / DE\\\midrule
+Peso & 1.086 & 9,87 & Descuento, compras, llamadas, costo & 7.213 & 0,272 & 0,85\\
+Costo & 1.107 & 10,06 & Llamadas, compras, peso & 8.043 & 0,111 & 0,94\\
+Compras previas & 1.055 & 9,59 & Llamadas, peso, costo & 8.043 & 0,054 & 0,97\\
+Descuento & 1.112 & 10,11 & Peso, costo, llamadas, compras & 7.213 & 0,217 & 0,88\\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{Regresiones de imputación.} Como anticipaban las correlaciones débiles de S1 ($|\rho| \le 0{,}32$), la capacidad predictiva es modesta: el RMSE equivale al 85--97\,\% de la DE de cada variable. El $R^2$ de validación cruzada coincide con el de ajuste, por lo que no hay sobreajuste, y todos los coeficientes tienen el signo de la $\rho$ de S1. Jarque-Bera y Breusch-Pagan rechazan normalidad y homocedasticidad, esperable en variables discretas y acotadas, pero ambas violaciones afectan a los errores estándar y no a la predicción puntual que usa la imputación. Durbin-Watson indica autocorrelación en peso (1,01) y descuento (1,33), coherente con el orden del archivo que detectó S2; el VIF máximo es 1,21. Se imputaron 4.360 valores; entre 189 y 282 por variable usaron un predictor provisional y 29 predicciones se recortaron al rango observado.
+
+\begin{table}[!htb]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Comparación de las tres estrategias. En negrita, el mejor valor de cada criterio.}\label{tab:estrategias}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Criterio & Eliminación & Mediana & Regresión\\\midrule
+(a) Envíos conservados & 7.213 & \textbf{10.999} & \textbf{10.999}\\
+(a) Entrenamiento / prueba & 5.058 / 2.155 & \textbf{7.699 / 3.300} & \textbf{7.699 / 3.300}\\
+(b) KS medio frente al original & \textbf{0,004} & 0,048 & 0,030\\
+(b) DE relativa media & \textbf{1,00} & 0,95 & 0,96\\
+(c) Máx. $|\Delta\rho|$ entre numéricas (S1) & \textbf{0,012} & 0,027 & 0,043\\
+(c) Máx. $|\Delta\rho|$ con el atraso (S1) & \textbf{0,006} & 0,023 & 0,012\\
+(d) RMSE / DE frente al valor real & --- & 1,05 & \textbf{0,92}\\
+(e) Envíos en el segmento equivocado & \textbf{0} & 268 & 447\\
+(e) Atraso en el segmento $> 10$ (S1: 100\,\%) & \textbf{100\,\%} & \textbf{100\,\%} & 92,6\,\%\\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{Comparación y decisión.} La tabla~\ref{tab:estrategias} y la figura~\ref{fig:estrategias} muestran un compromiso:
+\begin{itemize}[leftmargin=*,itemsep=1pt,topsep=2pt]
+\item La \textbf{eliminación} conserva distribuciones, correlaciones y segmentos, porque las variables que generan los faltantes se relacionan poco con las numéricas. A cambio, pierde el 34,4\,\% de los envíos y reduce el entrenamiento a 5.058.
+\item La \textbf{mediana} es la peor en casi todos los criterios. Atenúa la correlación del descuento con el atraso (0,313 frente a 0,335 en S1) y, al imputar el descuento con 7, lleva al segmento $\le 10$ a 268 envíos con descuento real $> 10$, todos atrasados.
+\item La \textbf{regresión} conserva la muestra completa y tiene el menor error frente al valor real. Mantiene la relación con el atraso de los dos predictores principales de S1: descuento (0,333) y peso ($-0{,}265$ frente a $-0{,}266$). Su costo es el de toda imputación determinista: reduce la variabilidad, acentúa la correlación peso--descuento ($-0{,}316 \to -0{,}359$) y, al predecir descuentos cerca de la media, desplaza al segmento $> 10$ a 428 envíos con descuento real $\le 10$.
+\end{itemize}
+Se eligió la \textbf{imputación por regresión}, con esa limitación explícita, y la eliminación quedó como referencia de sensibilidad; su efecto en el modelo final se cuantifica en el análisis de impacto de la imputación.
+
+\fig{0.85}{fig_2_3_distribuciones_estrategias.pdf}{Distribución de cada variable según la estrategia de faltantes, frente a los datos originales.}{fig:estrategias}
+
+{\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{faltantes\_resumen\_variables.csv}, \codigo{faltantes\_verificacion\_mar.csv}, \codigo{imputacion\_modelos.csv}, \codigo{imputacion\_conteo.csv} y \codigo{estrategias\_resumen.csv}.\par}
 \subsection{Modelos logísticos y desempeño}\label{sec:result-modelos}
 \textbf{Especificaciones y selección.} M1 y M3 coinciden en las cuatro variables numéricas. M2 añade importancia del producto, pero no modalidad, bodega ni género. La exclusión de modalidad es coherente con S1/S2. La tabla~\ref{tab:seleccion-modelos} muestra que la mejora de AUC de M2 es pequeña (0,0008), mientras BIC favorece M1/M3. Se elige \textbf{M1}, por desempate entre especificaciones idénticas. Esto favorece parsimonia dentro de la tolerancia adoptada, sin demostrar equivalencia predictiva.
 
@@ -235,8 +282,28 @@ En prueba, M1 identifica 1.344 atrasos, omite 625 y genera 595 falsas alertas; r
 
 {\footnotesize\textbf{Trazabilidad:} tablas exportadas por el notebook en \codigo{sumativa\_3/outputs/tablas/}: \codigo{modelos\_resumen.csv}, \codigo{modelos\_coeficientes\_or.csv}, \codigo{modelos\_metricas.csv} y \codigo{modelos\_seleccion.csv}.}
 
-\subsection{Estabilidad del modelo final}
-\emph{(Pendiente.)}
+\subsection{Estabilidad del modelo final}\label{sec:result-estabilidad}
+\textbf{El coeficiente del modelo final es estable.} El peso conserva su signo negativo en las 10.000 réplicas (tabla~\ref{tab:bootstrap}, figura~\ref{fig:bootstrap}). Su EE \emph{bootstrap} difiere un 1,3\,\% del de Wald y su sesgo es despreciable ($-0{,}0002$). En unidades del negocio, cada 1.000 g adicionales multiplican las odds de atraso por \textbf{0,905} (IC BCa 95\,\%: [0,873; 0,937]), unas odds 9,5\,\% menores, prácticamente igual que el IC de Wald ([0,874; 0,936]).
+
+\begin{table}[!htb]\centering\scriptsize\setlength{\tabcolsep}{3.5pt}
+\caption{\emph{Bootstrap} de los coeficientes estandarizados ($B = 10.000$; segmento $\le 10$). EE B/W: razón entre el EE \emph{bootstrap} y el de Wald; signo: \% de réplicas que lo conservan.}\label{tab:bootstrap}
+\begin{tabular}{@{}llrrrrl@{}}\toprule
+Modelo & Coeficiente & IC 95\,\% Wald & IC 95\,\% BCa & EE B/W & Signo & Estabilidad\\\midrule
+M3 (final) & Peso & [$-0{,}206$; $-0{,}101$] & [$-0{,}207$; $-0{,}100$] & 1,01 & \textbf{100\,\%} & Estable\\
+M1 & Peso & [$-0{,}256$; $-0{,}138$] & [$-0{,}256$; $-0{,}138$] & 1,00 & 100\,\% & Estable\\
+M1 & Compras previas & [$-0{,}133$; $-0{,}021$] & [$-0{,}135$; $-0{,}022$] & 1,02 & 99,8\,\% & Estable\\
+M1 & Costo & [$-0{,}112$; 0,002] & [$-0{,}111$; 0,002] & 1,00 & 97,1\,\% & Inestable\\
+M1 & Descuento & [$-0{,}076$; 0,030] & [$-0{,}076$; 0,030] & 1,00 & \textbf{79,9\,\%} & Inestable\\
+M2 & Importancia baja / alta & [$-0{,}450$; $-0{,}051$] & [$-0{,}445$; $-0{,}047$] & 1,00 & 99,4\,\% & Estable\\
+M2 & Importancia media / alta & [$-0{,}523$; $-0{,}123$] & [$-0{,}522$; $-0{,}120$] & 1,00 & 99,9\,\% & Estable\\
+\bottomrule\end{tabular}
+\end{table}
+
+\textbf{Los coeficientes inestables son los que S2 había marcado como sensibles.} Dentro del segmento $\le 10$, el descuento cambia de signo en una de cada cinco réplicas: no tiene un efecto definido, lo que confirma con el modelo que su asociación con el atraso de S1 dependía del segmento $> 10$. El costo queda en el límite, con un IC que incluye el cero y el 97,1\,\% de conservación del signo (97,4\,\% en M2). Compras previas e importancia son estables, aunque de magnitud pequeña. En los tres modelos, el \emph{bootstrap} coincide con Wald (EE a lo sumo un 3\,\% distintos), porque con más de 5.000 envíos la aproximación normal es adecuada, como en S2. Su aporte no es corregir los IC, sino mostrar qué coeficientes conservan el signo. El \emph{bootstrap} remuestrea el dataset ya imputado, por lo que no incorpora la incertidumbre de la imputación ni la de la selección del modelo.
+
+\fig{0.85}{fig_3_4_bootstrap.pdf}{\emph{Bootstrap} de los tres modelos. Izquierda: OR por 1 DE con IC de Wald y BCa, y porcentaje de réplicas que conservan el signo. Derecha: distribución \emph{bootstrap} del coeficiente del peso en el modelo final (M3), con sus IC de Wald y BCa.}{fig:bootstrap}
+
+{\footnotesize\raggedright\textbf{Trazabilidad:} \codigo{bootstrap\_coeficientes.csv}, \codigo{bootstrap\_replicas\_modelo\_final.csv} y \codigo{modelos\_preparacion.csv} (DE del peso en el entrenamiento: 1.527 g).\par}
 \subsection{Diagnóstico del modelo final}
 \emph{(Pendiente.)}
 \subsection{Impacto de la estrategia de imputación}
