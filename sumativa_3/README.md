@@ -8,7 +8,9 @@ Proyecto final integrado. Aplica **regresión lineal múltiple** para imputar da
 |---|---|
 | Notebook maestro | [`notebooks/sumativa_3_grupo1.ipynb`](notebooks/sumativa_3_grupo1.ipynb) |
 | Informe final (PDF, máximo 10 páginas) | [`docs/informe/informe_sumativa3_grupo1.pdf`](docs/informe/informe_sumativa3_grupo1.pdf) |
-| Presentación (video, 10 minutos) | *(enlace pendiente)* |
+| Anexo técnico: técnicas estadísticas del proyecto (PDF) | [`docs/informe/anexo_tecnico_grupo1.pdf`](docs/informe/anexo_tecnico_grupo1.pdf) |
+| Presentación (video, 10 minutos) | [Video en Google Drive](https://drive.google.com/file/d/17S2-DDoHsmyMLkQLdXjXKSkJi6s6zR37/view?usp=sharing) |
+| Láminas de la presentación | [`docs/presentacion/presentacion_sumativa3_estilo_UNAB.pptx`](docs/presentacion/presentacion_sumativa3_estilo_UNAB.pptx) |
 | Tablas y figuras | `outputs/tablas/` y `outputs/figuras/` |
 
 ## Estructura del notebook

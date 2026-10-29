@@ -13,7 +13,7 @@ El proyecto estudia asociaciones entre características de envíos y entregas at
 | [sumativa_1/](sumativa_1/) | Análisis exploratorio e inferencial revisado; notebook, tablas, figuras y fuentes | [PDF](sumativa_1/docs/informe/informe_sumativa1_grupo1.pdf) |
 | [sumativa_2/](sumativa_2/) | Validación por *bootstrap*, permutación, Monte Carlo, *jackknife* y sensibilidad | [PDF](sumativa_2/docs/informe/informe_sumativa2_grupo1.pdf) |
 | [formativa_2/](formativa_2/) | Regresión logística para anticipar atrasos, integrando los resultados de S1 y S2 | [Notebook](formativa_2/notebooks/formativa_2_grupo1.ipynb) |
-| [sumativa_3/](sumativa_3/) | Cierre del proyecto: imputación por regresión lineal múltiple y clasificación con regresión logística, integrando S1 y S2 (en desarrollo) | [PDF](sumativa_3/docs/informe/informe_sumativa3_grupo1.pdf) |
+| [sumativa_3/](sumativa_3/) | Cierre del proyecto: imputación por regresión lineal múltiple y clasificación con regresión logística, integrando S1 y S2; incluye anexo técnico y [video de la presentación](https://drive.google.com/file/d/17S2-DDoHsmyMLkQLdXjXKSkJi6s6zR37/view?usp=sharing) | [PDF](sumativa_3/docs/informe/informe_sumativa3_grupo1.pdf) |
 
 El detalle metodológico y de ejecución de la Sumativa 1 está en [sumativa_1/README.md](sumativa_1/README.md).
 
@@ -23,7 +23,7 @@ La Sumativa 2 lee el CSV y las tablas de referencia de `sumativa_1/`, sin copiar
 
 | Notebook | Alcance | Salidas en `sumativa_2/` |
 |---|---|---|
-| [Entrega](sumativa_2/notebooks/sumativa_2_grupo1.ipynb) | Resultados seleccionados que sostienen las conclusiones de S1, ajustados a la rúbrica | `outputs/tablas/`, `outputs/figuras/`, `outputs/resultados_validados.csv` y `docs/resultados_validados.md` |
+| [Entrega](sumativa_2/notebooks/sumativa_2_grupo1.ipynb) | Resultados seleccionados que sostienen las conclusiones de S1 | `outputs/tablas/`, `outputs/figuras/`, `outputs/resultados_validados.csv` y `docs/resultados_validados.md` |
 | [Validación completa](sumativa_2/notebooks/sumativa_2_validacion_completa_grupo1.ipynb) | Respaldo inferencial de los 194 resultados del inventario de S1 | `outputs/validacion_completa/` |
 
 El [informe](sumativa_2/docs/informe/informe_sumativa2_grupo1.pdf) integra el análisis y los anexos A–C. Estos se generan desde las tablas de ambos notebooks mediante [generar_anexos.py](sumativa_2/docs/informe/generar_anexos.py). La [matriz de resultados validados](sumativa_2/docs/resultados_validados.md) resume la evidencia y los insumos para la Sumativa 3.
